@@ -1,0 +1,18 @@
+ext {
+    jposVersion = '2.1.8-SNAPSHOT'
+    jposeeVersion = '2.2.7-SNAPSHOT'
+
+    flywaydbVersion = '5.0.7'
+    //noinspection GroovyAssignabilityCheck
+    libraries = [
+        junit: 'junit:junit:4.12',
+        jpos: "org.jpos:jpos:${jposVersion}",
+        jposee_core: "org.jpos.ee:jposee-core:${jposeeVersion}",
+        jposee_db_mysql: "org.jpos.ee:jposee-db-mysql:${jposeeVersion}",
+        jposee_db_h2: "org.jpos.ee:jposee-db-h2:${jposeeVersion}",
+        jposee_db: "org.jpos.ee:jposee-dbsupport:${jposeeVersion}",
+        flywaydb: "org.flywaydb:flyway-gradle-plugin:${flywaydbVersion}",
+
+    ]
+}
+

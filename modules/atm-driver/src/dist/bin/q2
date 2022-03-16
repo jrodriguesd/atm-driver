@@ -1,0 +1,16 @@
+#!/bin/sh
+
+cd `dirname $0`/.. || exit 1
+rm -f deploy/shutdown.xml
+
+if [ -f jpos.pid ] && ps -p $(cat jpos.pid) > /dev/null 2>&1
+then
+   echo "Process $(cat jpos.pid) is running"
+else
+  rm -f jpos.pid
+  exec java -server \
+    -Xmx1G \
+    -Djava.net.preferIPv4Stack=true \
+    -jar @jarname@  --pid="jpos.pid" "$@"
+fi
+

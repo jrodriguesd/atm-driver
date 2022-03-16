@@ -1,0 +1,8 @@
+<txnmgr class="org.jpos.transaction.TransactionManager" logger="Q2">
+  <property name="queue" value="TXNMGR"/>
+  <property name="sessions" value="2"/>
+  <property name="max-sessions" value="128"/>
+  <property name="debug" value="true"/>
+  <participant class="org.jpos.transaction.participant.QueryHost"/>
+  <participant class="org.jpos.atmc.ATMSendResponse"/>
+</txnmgr>

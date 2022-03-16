@@ -1,0 +1,7 @@
+include ':modules:ndcplus'
+include ':modules:atm-driver'
+include ':modules:atm-driver-web'
+include ':modules:iso-server-simulator'
+
+rootProject.name = 'atm-driver'
+

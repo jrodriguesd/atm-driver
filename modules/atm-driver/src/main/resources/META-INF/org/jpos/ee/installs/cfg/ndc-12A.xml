@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Time-Of-Day Clock Status -->
+<schema id="12A">
+  <field id="device-status"  type="AFS" length="1" />
+  <field id="error-severity" type="A" length="1" />
+</schema>

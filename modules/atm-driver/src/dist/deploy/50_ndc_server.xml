@@ -1,0 +1,19 @@
+<server class="org.jpos.q2.iso.QServer" logger="Q2"
+  name="xml-server-8000" realm="xml-server-8000">
+  <attr name="port" type="java.lang.Integer">8000</attr>
+  <channel class="org.jpos.iso.channel.FSDChannel"
+      packager="org.jpos.iso.packager.FSDPackager"
+      type="server"
+      logger="Q2"
+      realm="xml-server-8000">
+	  <property name="schema" value="file:cfg/ndc-" />
+      <property name="connection-timeout" value="15000" /> <!-- 15 seconds -->
+      <property name="timeout" value="0" />
+      <property name="keep-alive" value="true" />
+  </channel>
+  <connection-listener class="org.jpos.atmc.ATMConnectionManager" logger="Q2" realm="connection-listener" />
+  <request-listener class="org.jpos.atmc.ATMRequestListener" logger="atm-logger" realm="incoming-request-listener">
+      <property name="queue" value="TXNMGR" />
+      <property name="ctx.DESTINATION" value="jPOS-jPTS" />
+  </request-listener>
+</server>

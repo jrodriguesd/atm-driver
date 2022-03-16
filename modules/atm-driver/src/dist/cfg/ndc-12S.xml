@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Cardholder Display Alarm -->
+<schema id="12S">
+  <field id="device-status"     type="NFS" length="1" />
+  <field id="error-severity"    type="NFS" length="1" />
+</schema>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Cash Handler -->
+<schema id="12Y">
+  <field id="device-status"            type="N"   length="1" />
+  <field id="coins-dispensed-counts-1" type="N"   length="2" />
+  <field id="coins-dispensed-counts-2" type="N"   length="2" />
+  <field id="coins-dispensed-counts-3" type="N"   length="2" />
+  <field id="coins-dispensed-counts-4" type="N"   length="2" />
+  <field id="error-severity"           type="NFS" length="1"  />
+  <field id="diagnostic-status"        type="AFS" length="10" />
+  <field id="supplies-status"          type="N"   length="1"  />
+</schema>

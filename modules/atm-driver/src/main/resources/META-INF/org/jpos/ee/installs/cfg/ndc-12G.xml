@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Receipt Printer -->
+<schema id="12G">
+  <field id="device-status"               type="NFS" length="1"  />
+  <field id="error-severity"              type="NFS" length="1"  />
+  <field id="diagnostic-status"           type="AFS" length="10" />
+  <field id="supplies-status-paper"       type="N"   length="1"  />
+  <field id="supplies-status-ribbon"      type="N"   length="1"  />
+  <field id="supplies-status-print-head"  type="N"   length="1"  />
+  <field id="supplies-status-knife"       type="N"   length="1"  />
+  <field id="supplies-status-capture-bin" type="N"   length="1"  />
+</schema>

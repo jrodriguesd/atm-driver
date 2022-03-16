@@ -1,0 +1,9 @@
+<channel-adaptor name='jpos-channel' class="org.jpos.q2.iso.ChannelAdaptor" logger="Q2">
+  <channel class="org.jpos.iso.channel.XMLChannel" packager="org.jpos.iso.packager.XMLPackager">
+    <property name="host" value="localhost" />
+    <property name="port" value="9000" /> 
+  </channel>
+  <in>jpos-send</in>
+  <out>jpos-receive</out>
+  <reconnect-delay>10000</reconnect-delay>
+</channel-adaptor>

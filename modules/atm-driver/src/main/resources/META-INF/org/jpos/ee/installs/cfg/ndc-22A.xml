@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Command Reject -->
+<schema id="22A">
+  <field id="fs-1" type="AEOF" length="1" />
+</schema>

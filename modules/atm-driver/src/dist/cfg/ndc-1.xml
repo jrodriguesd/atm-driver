@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Terminal Commands -->
+<schema id="1">
+  <field id="luno"                         type="AFS"  length="3"    />
+  <field id="time-variant-number"          type="AFS"  length="3"    />
+  <field id="command-code"                 type="AEOF" length="1" />
+</schema>

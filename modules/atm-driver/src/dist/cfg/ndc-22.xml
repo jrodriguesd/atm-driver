@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Solicited Status Message -->
+<schema id="22">
+  <field id="luno"                   type="AFS"  length="9"            />
+  <field id="time-variant-number"    type="AFS"  length="8"            />
+  <field id="status-descriptor"      type="A"    length="1" key="true" />
+</schema>

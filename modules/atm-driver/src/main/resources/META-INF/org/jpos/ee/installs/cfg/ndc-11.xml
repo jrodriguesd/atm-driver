@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema id="11">
+  <field id="luno"                        type="AFS"  length="9"   />
+  <field id="fs-1"                        type="AFS"  length="1"   />
+  <field id="time-variant-number"         type="AFS"  length="8"   />
+  <field id="top-of-receipt-flag"         type="A"    length="1"   />
+  <field id="message-coordination-number" type="AFS"  length="1"   />
+  <field id="track2"                      type="AFS"  length="39"  />
+  <field id="track3"                      type="AFS"  length="106" />
+  <field id="operation-code-data"         type="AFS"  length="8"   />
+  <field id="amount-entered"              type="AFS"  length="12"  />
+  <field id="buffer-A-pin"                type="AFS"  length="32"  />
+  <field id="buffer-B"                    type="AFS"  length="32"  />
+  <field id="buffer-C"                    type="AFS"  length="32"  />
+  <field id="track1"                      type="AFS"  length="79"  />
+  <field id="last-status-data"            type="AFS"  length="26"  />
+  <field id="unknow"                      type="AFS"  length="1"   />
+  <field id="buffer-id "                  type="N"    length="1"   /> <!-- 5 -->
+  <field id="smart-card-data-id"          type="A"    length="3"   /> <!-- CAM -->
+  <field id="cam-flags"                   type="A"    length="4"   />
+  <field id="emv-data"                    type="AFS"  length="612" />
+  <field id="mac"                         type="AEOF" length="8"   />
+</schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sensors Status -->
+<schema id="12P">
+  <field id="device-status"                type="N"   length="1" />
+  <field id="type-change"                  type="N"   length="1" />
+  <field id="supervisor-mode"              type="N"   length="1" />
+  <field id="vibration-heat"               type="N"   length="1" />
+  <field id="door-contact"                 type="N"   length="1" />
+  <field id="silent-signal"                type="N"   length="1" />
+  <field id="electronics-enclosure"        type="N"   length="1" />
+  <field id="deposit-bin"                  type="N"   length="1" />
+  <field id="card-bin"                     type="N"   length="1" />
+  <field id="currency-reject-bin"          type="N"   length="1" />
+  <field id="currency-cassette-1"          type="N"   length="1" />
+  <field id="currency-cassette-2"          type="N"   length="1" />
+  <field id="currency-cassette-3"          type="N"   length="1" />
+  <field id="currency-cassette-4"          type="N"   length="1" />
+  <field id="coin-dispenser"               type="N"   length="1" />
+  <field id="coin-dispenser-hopper-1"      type="N"   length="1" />
+  <field id="coin-dispenser-hopper-2"      type="N"   length="1" />
+  <field id="coin-dispenser-hopper-3"      type="N"   length="1" />
+  <field id="coin-dispenser-hopper-4"      type="N"   length="1" />
+</schema>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Bunch Note Acceptor -->
+<schema id="12w">
+  <field id="device-status"                      type="N"   length="1"  />
+  <field id="error-code"                         type="N"   length="1"  />
+  <field id="escrow-counts"                      type="N"   length="50" />
+  <field id="vaulted-counts"                     type="N"   length="50" />
+  <field id="returned-counts"                    type="N"   length="50" />
+  <field id="total-number-bills-returned"        type="N"   length="2"  />
+  <field id="total-number-bills-in-escrow"       type="N"   length="2"  />
+  <field id="total-number-bills-vaulted"         type="N"   length="2"  />
+  <field id="hex-value-denomination-1"           type="A"   length="2"  />
+  <field id="dec-value-to-be-added-prev-count-1" type="N"   length="3"  />
+  <field id="hex-value-denomination-2"           type="A"   length="2"  />
+  <field id="dec-value-to-be-added-prev-count-2" type="N"   length="3"  />
+  <field id="hex-value-denomination-3"           type="A"   length="2"  />
+  <field id="dec-value-to-be-added-prev-count-3" type="N"   length="3"  />
+  <field id="total-number-bills-returned-90"     type="N"   length="3"  />
+  <field id="total-number-bills-in-escrow-90"    type="N"   length="3"  />
+  <field id="total-number-bills-vaulted-90"      type="NFS" length="3"  />
+  <field id="error-severity"                     type="NFS" length="1"  />
+  <field id="diagnostic-status"                  type="AFS" length="10" />
+  <field id="supplies-status"                    type="N"   length="1"  />
+
+</schema>

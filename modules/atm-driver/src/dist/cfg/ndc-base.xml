@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema>
+  <!--field id="header" type="A" length="4"/-->
+  <field id="message-class"       type="NFS"   length="2" key="true"   />
+</schema>

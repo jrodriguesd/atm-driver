@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Cash Handler -->
+<schema id="12E">
+  <field id="device-status"               type="N"   length="1"  />
+  <field id="notes-dispensed-counts-1"    type="N"   length="2"  />
+  <field id="notes-dispensed-counts-2"    type="N"   length="2"  />
+  <field id="notes-dispensed-counts-3"    type="N"   length="2"  />
+  <field id="notes-dispensed-counts-4"    type="NFS" length="2"  />
+  <field id="error-severity-cash-handler" type="N"   length="1"  />
+  <field id="error-severity-cassette-1"   type="N"   length="1"  />
+  <field id="error-severity-cassette-2"   type="N"   length="1"  />
+  <field id="error-severity-cassette-3"   type="N"   length="1"  />
+  <field id="error-severity-cassette-4"   type="NFS" length="1"  />
+  <field id="diagnostic-status"           type="AFS" length="10" />
+  <field id="supplies-status-reject bin"  type="N"   length="1"  />
+  <field id="supplies-status-cassette-1"  type="N"   length="1"  />
+  <field id="supplies-status-cassette-2"  type="N"   length="1"  />
+  <field id="supplies-status-cassette-3"  type="N"   length="1"  />
+  <field id="supplies-status-cassette-4"  type="N"   length="1"  />
+</schema>

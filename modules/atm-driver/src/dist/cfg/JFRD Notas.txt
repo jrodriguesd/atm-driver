@@ -1,0 +1,11 @@
+Problemas Para Definir Los Formatos
+
+ndc-12\.xml    Envelope Dispenser               \ Caracter invalido
+nndc-12a.xml   Voice Guidance Status            Nombre choca con ndc-12A.xml
+nndc-12q.xml   Cheque Processing Module (CPM)   Nombre choca con ndc-12Q.xml
+nndc-12f.xml   Barcode Reader                   Nombre choca con ndc-12F.xml
+
+para los dos ultimos casos podemos usar fsutil.exe
+fsutil.exe file setCaseSensitiveInfo C:Carpeta enable
+fsutil.exe file setCaseSensitiveInfo C:Carpeta disable
+https://www.softzone.es/2018/06/07/windows-10-distingir-mayusculas-minusculas/

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Card Reader/Writer -->
+<schema id="12D">
+  <field id="device-status"     type="NFS" length="1" />
+  <field id="error-severity"    type="NFS" length="2" />
+  <field id="diagnostic-status" type="AFS" length="10" />
+  <field id="supplies-status"   type="N"   length="1" />
+</schema>

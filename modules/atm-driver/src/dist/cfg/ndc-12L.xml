@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Encryptor -->
+<schema id="12L">
+  <field id="device-status"     type="NFS" length="1" />
+  <field id="error-severity"    type="NFS" length="1" />
+  <field id="diagnostic-status" type="AFS" length="10" />
+</schema>

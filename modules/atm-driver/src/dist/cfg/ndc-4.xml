@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema id="4">
+  <field id="luno"                         type="AFS"  length="9"   />
+  <field id="time-variant-number"          type="AFS"  length="8"   />
+  <field id="next-state-number"            type="AFS"  length="3"   />
+  <field id="number-notes-dispense"        type="NFS"  length="14"  />
+  <field id="transaction-serial-number"    type="N"    length="4"   />
+  <field id="function-identifier"          type="A"    length="1"   />
+  <field id="screen-number"                type="N"    length="3"   />
+  <field id="screen-display-update"        type="AFS"  length="900" />
+  <field id="message-coordination-number"  type="A"    length="1"   />
+  <field id="card-return-retain-flag"      type="N"    length="1"   />
+  <field id="printer-flag"                 type="A"    length="1"   />
+  <field id="printer-data"                 type="AEOF" length="500" />
+</schema>

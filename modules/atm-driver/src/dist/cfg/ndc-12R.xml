@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Supervisor Keys -->
+<schema id="12R">
+  <field id="data" type="AEOF" length="500" />
+</schema>

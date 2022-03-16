@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Power Failure -->
+<schema id="12B">
+  <field id="device-status" type="A" length="4" />
+</schema>

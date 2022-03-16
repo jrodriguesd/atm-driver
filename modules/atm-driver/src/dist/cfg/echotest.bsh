@@ -1,0 +1,12 @@
+import org.jpos.iso.*;
+import org.jpos.space.*;
+
+Space sp = SpaceFactory.getSpace("jdbm:stan");
+long stan = SpaceUtil.nextLong (sp, "stan");
+
+ISOMsg m = new ISOMsg();
+m.set (0, "0800");
+m.set (7, ISODate.getDateTime(new Date()));
+m.set (11, ISOUtil.zeropad (Long.toString(stan % 1000000), 6));
+m.set (70, "301");
+sp.out ("send", m);

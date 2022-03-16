@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Specific Command Reject -->
+<schema id="22C">
+  <field id="fs-1"             type="AFS" length="1" />
+  <field id="status-value"     type="N"   length="1" />
+  <field id="status-qualifier" type="N"   length="2" />
+</schema>

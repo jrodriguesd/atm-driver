@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Unsolicited Status: Message -->
+<schema id="12">
+  <field id="luno"                          type="AFS"  length="9"            />
+  <field id="time-variant-number"           type="AFS"  length="8"            />
+  <field id="device-identification-graphic" type="A"    length="1" key="true" />
+</schema>

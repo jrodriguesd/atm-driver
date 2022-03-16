@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Depository -->
+<schema id="12F">
+  <field id="device-status"     type="NFS" length="1" />
+  <field id="error-severity"    type="NFS" length="1" />
+  <field id="diagnostic-status" type="NFS" length="10" />
+  <field id="supplies-status"   type="N"   length="1" />
+</schema>

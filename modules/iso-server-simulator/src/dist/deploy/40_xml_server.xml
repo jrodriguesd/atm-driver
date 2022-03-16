@@ -1,0 +1,16 @@
+<server class="org.jpos.q2.iso.QServer" logger="Q2"
+  name="xml-server-9000" realm="xml-server-9000">
+  <attr name="port" type="java.lang.Integer">9000</attr>
+  <channel class="org.jpos.iso.channel.XMLChannel"
+      packager="org.jpos.iso.packager.XMLPackager"
+      type="server"
+      logger="Q2"
+	  name="xml-channel"
+      realm="xml-server-9000">
+      <property name="timeout" value="180000"/>
+  </channel>
+  <request-listener class="jfrd.MYISORequestListener" logger="Q2" realm="incoming-request-listener">
+      <property name="queue" value="TXNMGR" />
+      <property name="ctx.DESTINATION" value="jPOS-AUTORESPONDER" />
+  </request-listener>
+</server>

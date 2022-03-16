@@ -1,0 +1,5 @@
+dependencies {
+    implementation libraries.jpos
+}
+
+apply from: '../../jpos-app.gradle'

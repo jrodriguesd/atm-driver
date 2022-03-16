@@ -1,0 +1,53 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+
+buildscript 
+{
+  repositories 
+  {
+    maven 
+	{
+	  mavenCentral()
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+}
+
+group = 'org.jpos.template'
+version = '2.1.5'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jpos.org/maven' }
+    mavenLocal()
+}
+
+dependencies {
+    implementation ('org.jpos:jpos:2.1.+') 
+	{
+      exclude(module: 'junit')
+      exclude(module: 'hamcrest-core')
+    }
+
+    implementation "org.eclipse.jetty:apache-jsp:9.4.45+"
+    implementation "org.jpos.ee:jposee-eerest:2.2.7-SNAPSHOT"
+	implementation "org.jpos.ee:jposee-jetty:2.2.7-SNAPSHOT"
+	implementation "javax.ws.rs:javax.ws.rs-api:2.0.1"
+	implementation "org.glassfish.jersey.media:jersey-media-json-jackson:2.22.1"
+	implementation "org.glassfish.jersey.core:jersey-server:2.22.1"
+	implementation "org.glassfish.jersey.containers:jersey-container-servlet:2.22.1"
+}
+
+configurations.all
+{
+  resolutionStrategy.force 'org.slf4j:slf4j-api:1.7.30'
+}
+
+apply from: "${rootProject.projectDir}/jpos-app.gradle"
+
+installApp.dependsOn('war')
+dist.dependsOn('war')

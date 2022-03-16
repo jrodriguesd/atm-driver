@@ -1,0 +1,46 @@
+group = 'org.jpos.atmc'
+version = '0.1.0-SNAPSHOT'
+
+buildscript {
+  repositories {
+    maven {
+	  mavenCentral()
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "org.flywaydb:flyway-mysql:8.5.2"
+    classpath "gradle.plugin.org.flywaydb:gradle-plugin-publishing:8.5.2"
+  }
+}
+
+apply plugin: "org.flywaydb.flyway"
+
+dependencies {
+	implementation 'javax.persistence:javax.persistence-api:2.2'
+	implementation "org.flywaydb:flyway-core:8.5.2"
+	implementation "org.flywaydb:flyway-mysql:8.5.2"
+    implementation 'org.hibernate:hibernate-search-orm:5.5.0.Final'
+    implementation 'org.jpos:jpos:2.1.7'
+    implementation 'org.jpos.ee:jposee-dbsupport:2.2.8-SNAPSHOT'
+    implementation 'org.jpos.ee:jposee-freemarker-decorator:2.2.9-SNAPSHOT'
+    implementation 'org.jpos.ee:jposee-jetty:2.2.9-SNAPSHOT'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.3'
+    implementation (libraries.jpos)  {
+        exclude(module: 'junit')
+        exclude(module: 'hamcrest-core')
+    }
+    testImplementation libraries.junit
+}
+
+apply from: "${rootProject.projectDir}/jpos-app.gradle"
+
+flyway {
+    def tcfg= targetConfiguration
+    driver = "org.mariadb.jdbc.Driver"
+	url= "jdbc:mariadb://${tcfg.dbhost}:${tcfg.dbport}/${tcfg.dbname}?autoReconnect=true"
+    user= tcfg.dbuser
+    password= tcfg.dbpass
+    baselineOnMigrate= true
+    cleanDisabled = true
+}
