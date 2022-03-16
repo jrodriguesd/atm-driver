@@ -5,7 +5,8 @@
 This project has the following modules:
 - `atm-driver`: It provides the connection with the atms and sends the authorization to an ISO switch or authorizer.
 - `iso-server-simulator`: An ISO authorizer simulator that has hardcoded return parameters.
-- `ndcplus`: An alternate atm driver implementation as provided by Alejandro Revilla <apr@jpos.org>, it implements the server using `java.nio`.
+- `atm-driver-web`: Web services to manage atm-driver.
+
 
 ## Database
 
