@@ -499,7 +499,7 @@ $(document).ready(function()
 		let i = 0;
         while (i < screen.length)
 		{
-		    if (screen[i] === '')
+		    if (screen[i] === '\x0c')         // FF
 			{
 				i++;
 			    cy = '@';
@@ -508,7 +508,7 @@ $(document).ready(function()
 		        x = c2i(cx);
 	            position = (y * cols) + x;
 			}
-		    else if (screen[i] === '')
+		    else if (screen[i] === '\x0f')    // SI
 			{
 				i++;
 			    cy  = screen[i];
@@ -519,7 +519,7 @@ $(document).ready(function()
 		        x = c2i(cx);
 	            position = (y * cols) + x;
 			}
-		    else if (screen[i] === '')
+		    else if (screen[i] === '\x0e')    // SO
 			{
 				i++
 				// Creo el Numero de la Pantalla
@@ -534,11 +534,11 @@ $(document).ready(function()
                 if (! isNumeric(screenNum) )
 				{
 					// Image Name Extension .jpg, .pcx, etc
-					while (isPrintable(screen[i]))
-					{
-				        screenNum += screen[i]
-                        i++;
-					}
+					// while (isPrintable(screen[i]))
+					// {
+				    //     screenNum += screen[i]
+                    //     i++;
+					// }
                     writeImg2Screen(getCy(position), getCx(position), screenNum);
 					continue;
 				}
@@ -557,15 +557,15 @@ $(document).ready(function()
 				    putScreen(scr['scr_data']);
 				}
 			}
-		    else if (screen[i] === '')
+		    else if (screen[i] === '\x1b')    // ESC
 			{
 				i++
 				if (screen[i] === '[')
 				{
 					i++;
-					while (! isPrintable(screen[i]) )
-					    i++;
-					i++;
+					var chars = '\x0c\x0f\x0e\x1b';
+					while ( chars.indexOf(screen[i]) < 0)
+						i++;
 				}
 				else if (screen[i] === 'P')
 				{
@@ -612,7 +612,11 @@ $(document).ready(function()
 				}
 				else
 				{
-					while (isPrintable(screen[i]))
+					
+					// while ( chars.indexof     isPrintable(screen[i]) )
+					
+					var chars = '\x0c\x0f\x0e\x1b';
+					while ( chars.indexOf(screen[i]) < 0)
 						i++;
 				}
 			}
@@ -868,8 +872,8 @@ $(document).ready(function()
     var screens = [];
 	var configId = '0000';
 
-    $("#config_id").change( function() {
-		configId = this.value;
+    function configIdChange() 
+	{
 	    console.log('configId: ' + configId);
         $.ajax(
         {
@@ -889,10 +893,16 @@ $(document).ready(function()
                     $('#screenList').append(optionStr);
                 });
                 clearScreen();
+	            putScreen($("#cmdTxtArea").val());
 				$('#screenList').prop('selectedIndex',-1);
 		        $("#screenList").focus();
             }
         });
+	}
+
+    $("#config_id").change( function() {
+		configId = this.value;
+		configIdChange();
     });
 
     $("#screenList").change(function () 
@@ -942,13 +952,12 @@ $(document).ready(function()
             }
         });
 
+		configIdChange();
+		// $('#cmdTxtArea').val('');
+		// $('#scr_number').val('');
+		// $('#scr_desc').val('');
     }
 
     $("#screensForm").submit(handleSubmit);
-
-	// {
-    //   alert( "Handler for .submit() called." );
-    //   event.preventDefault();
-    // });
 
 });

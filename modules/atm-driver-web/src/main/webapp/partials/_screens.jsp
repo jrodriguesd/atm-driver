@@ -53,7 +53,7 @@
                                         <div class="col-sm-12">
                                             <div class="form-group">
                                                 <label>Screen</label>
-                                                <textarea id="cmdTxtArea" class="form-control" type="text" name="scr_data" rows="3">&#x240c;&#x240f;@1COPIN ATM&#x240f;@@&#x240e;G01&#x240f;BNENTER YOUR PIN&#x240f;DNAFTER PIN ENTERED&#x240f;F6PRESS -- >&#x240f;MNTO OBTAIN CARD&#x240f;ONPRESS CANCEL&#x240f;I0</textarea>
+                                                <textarea id="cmdTxtArea" class="form-control" type="text" name="scr_data" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>

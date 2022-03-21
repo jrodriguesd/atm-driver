@@ -48,6 +48,7 @@ public class ScreenWSEndpoint
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public List<Screen> hello(@PathParam("scr_config_id") String scr_config_id) 
 	{
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		try 
 		{
 			List<Screen> screens = DB.exec(db -> new ScreenManager(db).getItemsByParam("scr_config_id", scr_config_id) );
@@ -62,12 +63,24 @@ public class ScreenWSEndpoint
     }
 
     @POST
+    @Path("/Create")
+    @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response create(Screen scr) 
+    {
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
+	    String json = "{\"msg:\":\"Ok\"}";
+	    return Response.ok(json, MediaType.APPLICATION_JSON).build();
+    }
+
+	
+    @POST
     @Path("/Update")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response  save(Screen scr) 
+    public Response update(Screen scr) 
     {
-    	Log.staticPrintln( scr.toString() );
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
     	try 
     	{
 		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getScr_config_id(),
@@ -95,4 +108,16 @@ public class ScreenWSEndpoint
     	return Response.ok(json, MediaType.APPLICATION_JSON).build();
     }
 
+    @POST
+    @Path("/Delete")
+    @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response delete(Screen scr) 
+    {
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
+	    String json = "{\"msg:\":\"Ok\"}";
+	    return Response.ok(json, MediaType.APPLICATION_JSON).build();
+    }
+    
+    
 }
