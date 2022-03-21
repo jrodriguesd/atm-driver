@@ -10,7 +10,7 @@ buildscript
     maven 
 	{
 	  mavenCentral()
-      url "https://plugins.gradle.org/m2/"
+      url 'https://plugins.gradle.org/m2/'
     }
   }
 }
@@ -20,31 +20,56 @@ version = '2.1.5'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-repositories {
+repositories 
+{
     mavenCentral()
     maven { url 'https://jpos.org/maven' }
     mavenLocal()
 }
 
-dependencies {
-    implementation ('org.jpos:jpos:2.1.+') 
-	{
-      exclude(module: 'junit')
-      exclude(module: 'hamcrest-core')
-    }
+dependencies 
+{
+    implementation 'joda-time:joda-time:2.10.12'
 
-    implementation "org.eclipse.jetty:apache-jsp:9.4.45+"
-    implementation "org.jpos.ee:jposee-eerest:2.2.7-SNAPSHOT"
-	implementation "org.jpos.ee:jposee-jetty:2.2.7-SNAPSHOT"
-	implementation "javax.ws.rs:javax.ws.rs-api:2.0.1"
-	implementation "org.glassfish.jersey.media:jersey-media-json-jackson:2.22.1"
-	implementation "org.glassfish.jersey.core:jersey-server:2.22.1"
-	implementation "org.glassfish.jersey.containers:jersey-container-servlet:2.22.1"
+    implementation 'org.slf4j:slf4j-simple:1.7.32'
+
+	providedRuntime 'org.jpos.ee:jposee-jetty:2.2.9-SNAPSHOT'
+    implementation 'org.jpos.ee:jposee-dbsupport:2.2.9-SNAPSHOT'
+
+    providedRuntime 'org.eclipse.jetty:apache-jsp:9.4.45+'
+
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.1'
+	implementation 'javax.persistence:javax.persistence-api:2.2'
+
+    implementation 'org.glassfish.jersey.containers:jersey-container-jetty-servlet:2.26-b09'
+    implementation 'org.glassfish.jersey.containers:jersey-container-jetty-http:2.26-b09'
+    implementation 'org.glassfish.jersey.containers:jersey-container-servlet:2.26-b09'
+    implementation 'org.glassfish.jersey.inject:jersey-hk2:2.26-b09'
+    implementation 'org.glassfish.jersey.core:jersey-server:2.26-b09'
+    implementation 'org.glassfish.jersey.core:jersey-common:2.26-b09'
+    implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:2.26-b09'
+    
+    // implementation 'org.hibernate:hibernate-search-orm:5.5.0.Final'
+
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.3'
 }
+
+// war 
+// {
+//     metaInf
+//     { 
+//         from fileTree('src/main/resources/META-INF/org/jpos/ee/modules')
+//         {
+//             include('atm-driver-web.xml')
+//             into('org/jpos/ee/modules/')
+//         }
+//     }
+//     rootSpec.exclude("**/hibernate*.jar")
+// }
 
 configurations.all
 {
-  resolutionStrategy.force 'org.slf4j:slf4j-api:1.7.30'
+  resolutionStrategy.force 'org.slf4j:slf4j-api:1.7.32'
 }
 
 apply from: "${rootProject.projectDir}/jpos-app.gradle"
