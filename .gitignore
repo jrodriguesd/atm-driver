@@ -1,6 +1,6 @@
 *.swp
 .DS_Store
-.bin
+bin/
 
 # IDEA Ignores
 *.iml
