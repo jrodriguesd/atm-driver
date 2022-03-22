@@ -1,4 +1,4 @@
-package org.jfrd.webapp.Util;
+package org.jfrd.webapp.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

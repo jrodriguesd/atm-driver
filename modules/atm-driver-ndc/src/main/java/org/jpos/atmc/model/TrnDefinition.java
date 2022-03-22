@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class TrnDefinition 
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "trndef_id", updatable = false, nullable = false)
     private Long id;    
 

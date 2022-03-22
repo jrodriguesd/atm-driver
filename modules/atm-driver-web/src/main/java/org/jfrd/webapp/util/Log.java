@@ -20,7 +20,7 @@
  * Returns days to New Year.
  * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
  */
-package org.jfrd.webapp.Util;
+package org.jfrd.webapp.util;
 
 import java.io.*;
 

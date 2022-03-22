@@ -24,9 +24,8 @@ package org.jfrd.webapp;
 
 import java.io.IOException;
 import javax.servlet.http.*;
+
 import org.jfrd.apputils.DateUtils;
-import org.jfrd.webapp.Util.Util;
-import org.jpos.ee.DB;
 
 public class DaysToGoServlet extends HttpServlet 
 {

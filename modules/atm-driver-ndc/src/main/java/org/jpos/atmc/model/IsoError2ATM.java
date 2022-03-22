@@ -6,34 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-/*
-DROP TABLE IF EXISTS isoerr2atms;
-CREATE TABLE isoerr2atms
-(
-  isoerr2atm_id                    INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  isoerr2atm_configid              VARCHAR(250) NOT NULL,
-  isoerr2atm_isoresp               SMALLINT     NOT NULL,
-  isoerr2atm_description           VARCHAR(250) NOT NULL,
-  isoerr2atm_language639           VARCHAR(250) NOT NULL,
-  isoerr2atm_language3166          VARCHAR(250) NOT NULL,
-  isoerr2atm_state                 VARCHAR(250) NOT NULL,
-  isoerr2atm_screen_receipt        VARCHAR(250) NOT NULL,
-  isoerr2atm_screen_no_receipt     VARCHAR(250) NOT NULL,
-  isoerr2atm_screen_card_retained  VARCHAR(250) NOT NULL,
-  isoerr2atm_screen_stmt_delivered VARCHAR(250) NOT NULL,
-  PRIMARY KEY (isoerr2atm_id),
-  UNIQUE KEY isoerr2atm_uniq (isoerr2atm_configid, isoerr2atm_isoresp, isoerr2atm_language639)
-);
-
-INSERT  INTO isoerr2atms VALUES
-(1, "0870",  6, "Sin Respuesta",  "eng", "840", "361", "361", "362", "363", "000"),  
-(2, "0870" ,17, "Pin Incorrecto", "eng", "840", "350", "350", "350", "351", "000"), 
-(3, "0870",  6, "Sin Respuesta",  "ind", "360", "361", "361", "362", "363", "000"), 
-(4, "0870", 17, "Pin Incorrecto", "ind", "360", "350", "350", "350", "351", "000"),
-(5, "0850",  6, "Sin Respuesta",  "eng", "840", "050", "017", "017", "054", "000"), 
-(6, "0850", 17, "Pin Incorrecto", "eng", "840", "235", "033", "033", "054", "000"); 
-
- */
 
 /**
  * @author User
@@ -44,7 +16,7 @@ INSERT  INTO isoerr2atms VALUES
 public class IsoError2ATM 
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "isoerr2atm_id", updatable = false, nullable = false)
     private Long id;    
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <logger name="atm-logger" class="org.jpos.q2.qbean.LoggerAdaptor">
-  <log-listener class="org.jfrd.webapp.Util.FlatLogListener">
+  <log-listener class="org.jfrd.webapp.util.FlatLogListener">
   </log-listener>
 
   <log-listener class="org.jpos.util.DailyLogListener">

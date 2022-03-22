@@ -15,7 +15,7 @@ public class Receipt implements Serializable
 	private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "rcp_id", updatable = false, nullable = false)
     private Long id;    
 

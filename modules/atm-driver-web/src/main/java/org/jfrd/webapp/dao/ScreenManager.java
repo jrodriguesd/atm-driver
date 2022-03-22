@@ -27,8 +27,8 @@ import java.util.List;
 
 import org.hibernate.query.Query;
 import org.jfrd.webapp.model.Screen;
-import org.jfrd.webapp.Util.Log;
-import org.jfrd.webapp.Util.Util;
+import org.jfrd.webapp.util.Log;
+import org.jfrd.webapp.util.Util;
 import org.jpos.ee.DB;
 import org.jpos.ee.DBManager;
 

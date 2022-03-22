@@ -34,11 +34,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.jpos.ee.DB;
-
 import org.jfrd.webapp.dao.ScreenManager;
+
 import org.jfrd.webapp.model.Screen;
-import org.jfrd.webapp.Util.Log;
-import org.jfrd.webapp.Util.Util;
+
+import org.jfrd.webapp.util.Log;
+import org.jfrd.webapp.util.Util;
 
 @Path("screen")
 public class ScreenWSEndpoint 
@@ -46,9 +47,9 @@ public class ScreenWSEndpoint
 	@GET
     @Path("/{scr_config_id}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public List<Screen> hello(@PathParam("scr_config_id") String scr_config_id) 
+    public List<Screen> getByConfigId(@PathParam("scr_config_id") String scr_config_id) 
 	{
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " config " + scr_config_id );
 		try 
 		{
 			List<Screen> screens = DB.exec(db -> new ScreenManager(db).getItemsByParam("scr_config_id", scr_config_id) );
@@ -69,11 +70,29 @@ public class ScreenWSEndpoint
     public Response create(Screen scr) 
     {
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
-	    String json = "{\"msg:\":\"Ok\"}";
-	    return Response.ok(json, MediaType.APPLICATION_JSON).build();
+    	try 
+    	{
+		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getScr_config_id(),
+                    scr.getScr_number() ) );
+
+		    if (screen == null)
+            {
+		        DB.execWithTransaction(db -> { 
+                    db.session().persist(scr);
+			      	return scr; 
+			    } );
+            }
+
+		} 
+    	catch (Exception e) 
+    	{
+			Log.printStackTrace(e);
+		}
+
+    	String json = "{\"msg:\":\"Ok\"}";
+    	return Response.ok(json, MediaType.APPLICATION_JSON).build();
     }
 
-	
     @POST
     @Path("/Update")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -92,10 +111,10 @@ public class ScreenWSEndpoint
 		    	screen.setScr_desc( scr.getScr_desc() );
 		    	screen.setScr_number( scr.getScr_number() );
 
-			    int rc = DB.execWithTransaction(db -> { 
-                             db.session().update(screen);
-			             	return 1; 
-			             } );
+			    DB.execWithTransaction(db -> { 
+                    db.session().update(screen);
+			    	return 1; 
+			    } );
 
 		    }
 		} 
@@ -115,8 +134,31 @@ public class ScreenWSEndpoint
     public Response delete(Screen scr) 
     {
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
-	    String json = "{\"msg:\":\"Ok\"}";
-	    return Response.ok(json, MediaType.APPLICATION_JSON).build();
+    	try 
+    	{
+		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getScr_config_id(),
+					                                                      scr.getScr_number() ) );
+		    if (screen != null)
+		    {
+		    	// Update Screen
+		    	screen.setScr_data( scr.getScr_data() );
+		    	screen.setScr_desc( scr.getScr_desc() );
+		    	screen.setScr_number( scr.getScr_number() );
+
+			    DB.execWithTransaction(db -> { 
+                    db.session().delete(screen);
+			    	return 1; 
+			    } );
+
+		    }
+		} 
+    	catch (Exception e) 
+    	{
+			Log.printStackTrace(e);
+		}
+
+    	String json = "{\"msg:\":\"Ok\"}";
+    	return Response.ok(json, MediaType.APPLICATION_JSON).build();
     }
     
     

@@ -7,33 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/*
-DROP TABLE IF EXISTS atmconfigs;
-CREATE TABLE atmconfigs
-(
-  atmcnf_id              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  atmcnf_configid        VARCHAR(250) NOT NULL,
-  atmcnf_description     VARCHAR(250) NOT NULL,
-  atmcnf_languageindex   TINYINT      NOT NULL,
-  atmcnf_languageatm     CHAR(1)      NOT NULL,
-  atmcnf_language639     VARCHAR(250) NOT NULL,
-  atmcnf_screengroupbase SMALLINT     NOT NULL,
-  PRIMARY KEY (atmcnf_id),
-  UNIQUE KEY atmcnf_uniq (atmcnf_configid, atmcnf_languageatm)
-);
-
-INSERT  INTO atmconfigs VALUES 
-(1,'0850','NDC Configuration with EMV English',      0,'A','eng',0),
-(2,'0870','NDC Configuration without EMV English',   1,'A','eng',0),
-(3,'0870','NDC Configuration without EMV Indonesian',1,'B','ind',400);
- */
-
 @Entity
 @Table(name="atmconfigs")
 public class ATMConfig 
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "atmcnf_id", updatable = false, nullable = false)
     private Long id;    
 

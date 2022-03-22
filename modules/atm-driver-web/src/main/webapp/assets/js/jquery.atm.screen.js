@@ -882,6 +882,7 @@ $(document).ready(function()
             success: function(data)
 	        {
                 screens = JSON.parse( JSON.stringify(data) );
+				$('#screenList').empty();
                 $.each(screens, function(i, val)
 	            {
 	    	        val['scr_data'] = val['scr_data'].replaceAll('\x0c', '\u240c');
@@ -945,6 +946,7 @@ $(document).ready(function()
             success : function(result) 
 			{
                 console.log("success :" + result);
+		        configIdChange();
             },
             error: function(xhr, resp, text) 
 			{
@@ -952,7 +954,6 @@ $(document).ready(function()
             }
         });
 
-		configIdChange();
 		// $('#cmdTxtArea').val('');
 		// $('#scr_number').val('');
 		// $('#scr_desc').val('');

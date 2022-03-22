@@ -13,7 +13,7 @@ public class ATM implements Serializable {
 	private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "atm_id", updatable = false, nullable = false)
     private Long id;    
 
