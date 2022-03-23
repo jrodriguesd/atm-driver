@@ -24,9 +24,6 @@ package org.jfrd.webapp;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -36,30 +33,26 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.jfrd.webapp.dao.ScreenManager;
-
-import org.jfrd.webapp.model.Screen;
+import org.jfrd.webapp.dao.AtmconfigManager;
+import org.jfrd.webapp.model.Atmconfig;
 
 import org.jfrd.webapp.util.Log;
 import org.jfrd.webapp.util.Util;
 import org.jpos.ee.DB;
 
-@Path("screen")
-public class ScreenWSEndpoint 
+@Path("atmconfig")
+public class AtmconfigWSEndpoint 
 {
 	@GET
-    @Path("/{scr_config_id}")
+    @Path("/{Unique}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public List<Screen> getByConfigId(@PathParam("scr_config_id") String scr_config_id) 
+    public List<Atmconfig> getUnique() 
 	{
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " config " + scr_config_id );
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
     	try 
 		{
-			List<Screen> screens = DB.exec(db -> new ScreenManager(db).getItemsByParam("scr_config_id", scr_config_id) );
-	        return screens;
+			List<Atmconfig> atmconfigs = DB.exec(db -> new AtmconfigManager(db).getAtmconfigUnique() );
+	        return atmconfigs;
 		} 
 		catch (Exception e) 
 		{
@@ -73,19 +66,18 @@ public class ScreenWSEndpoint
     @Path("/Create")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(Screen scr) 
+    public Response create(Atmconfig atmCnf) 
     {
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + atmCnf.toString() );
     	try 
     	{
-		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getScr_config_id(),
-                    scr.getScr_number() ) );
+    		Atmconfig atmconfig = DB.exec(db -> new AtmconfigManager(db).getAtmconfig(atmCnf.getAtmcnf_configid(), atmCnf.getAtmcnf_languageatm() ) );
 
-		    if (screen == null)
+		    if (atmconfig == null)
             {
 		        DB.execWithTransaction(db -> { 
-                    db.session().persist(scr);
-			      	return scr; 
+                    db.session().persist(atmCnf);
+			      	return atmCnf; 
 			    } );
             }
 
@@ -103,22 +95,23 @@ public class ScreenWSEndpoint
     @Path("/Update")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(Screen scr) 
+    public Response update(Atmconfig atmCnf) 
     {
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + atmCnf.toString() );
     	try 
     	{
-		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getScr_config_id(),
-					                                                      scr.getScr_number() ) );
-		    if (screen != null)
+    		Atmconfig atmconfig = DB.exec(db -> new AtmconfigManager(db).getAtmconfig(atmCnf.getAtmcnf_configid(), atmCnf.getAtmcnf_languageatm() ) );
+
+		    if (atmconfig != null)
 		    {
-		    	// Update Screen
-		    	screen.setScr_data( scr.getScr_data() );
-		    	screen.setScr_desc( scr.getScr_desc() );
-		    	screen.setScr_number( scr.getScr_number() );
+		    	// Update Atmconfig
+		    	atmconfig.setAtmcnf_description(atmCnf.getAtmcnf_description());
+		    	atmconfig.setAtmcnf_language639(atmCnf.getAtmcnf_language639());
+		    	atmconfig.setAtmcnf_languageindex(atmCnf.getAtmcnf_languageindex());
+		    	atmconfig.setAtmcnf_screengroupbase(atmCnf.getAtmcnf_screengroupbase());
 
 			    DB.execWithTransaction(db -> { 
-                    db.session().update(screen);
+                    db.session().update(atmconfig);
 			    	return 1; 
 			    } );
 
@@ -137,18 +130,18 @@ public class ScreenWSEndpoint
     @Path("/Delete")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(Screen scr) 
+    public Response delete(Atmconfig atmCnf) 
     {
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + atmCnf.toString() );
     	try 
     	{
-		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getScr_config_id(),
-					                                                      scr.getScr_number() ) );
-		    if (screen != null)
+    		Atmconfig atmconfig = DB.exec(db -> new AtmconfigManager(db).getAtmconfig(atmCnf.getAtmcnf_configid(), atmCnf.getAtmcnf_languageatm() ) );
+
+		    if (atmconfig != null)
 		    {
-		    	// Delete Screen
+		    	// Delete Atmconfig
 			    DB.execWithTransaction(db -> { 
-                    db.session().delete(screen);
+                    db.session().delete(atmconfig);
 			    	return 1; 
 			    } );
 
@@ -162,6 +155,5 @@ public class ScreenWSEndpoint
     	String json = "{\"msg:\":\"Ok\"}";
     	return Response.ok(json, MediaType.APPLICATION_JSON).build();
     }
-    
-    
+
 }

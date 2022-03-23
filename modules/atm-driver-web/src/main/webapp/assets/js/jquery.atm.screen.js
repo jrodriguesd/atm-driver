@@ -869,6 +869,27 @@ $(document).ready(function()
 		buildTable();
     });
 
+    function LoadConfigIdSelect() 
+	{
+        $.ajax(
+        {
+	    	url: 'api/atmconfig/Unique',
+            method: "GET",
+            success: function(data)
+	        {
+                atmconfigs = JSON.parse( JSON.stringify(data) );
+	            $('#config_id').empty();
+                $('#config_id').append('<option value=" "> </option>');
+                $.each(atmconfigs, function(i, val)
+	            {
+	            	let optionStr = '<option value="' + val['atmcnf_configid'] + '">' + val['atmcnf_configid'] + '</option>'
+                $('#config_id').append(optionStr);
+                });
+            }
+        });
+	}
+	LoadConfigIdSelect();
+
     var screens = [];
 	var configId = '0000';
 

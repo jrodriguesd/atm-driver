@@ -21,9 +21,6 @@
                                                     <input type="text" class="form-control" id="config_id" name="config_id" autocomplete="off" value="0850" placeholder="Configuration Id">
 								    				-->
                                                     <select class="form-control" id="config_id" name="scr_config_id">
-                                                        <option value=" "></option>
-                                                        <option value="0850">0850</option>
-                                                        <option value="0870">0870</option>
 								    				</select>
                                                 </div>
                                             </div>
