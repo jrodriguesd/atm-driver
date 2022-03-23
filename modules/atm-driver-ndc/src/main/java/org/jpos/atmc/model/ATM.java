@@ -98,6 +98,9 @@ public class ATM implements Serializable {
 	@Column(name="atm_terminal_id")
 	private String terminalId;
 
+	@Column(name="atm_trn_ser_num")
+	private short trnSerNum;
+
 	@Column(name="atm_zip")
 	private String zip;
 
@@ -494,6 +497,20 @@ public class ATM implements Serializable {
 	 */
 	public void setTerminalId(String terminalId) {
 		this.terminalId = terminalId;
+	}
+	
+	/**
+	 * @return the trnSerNum
+	 */
+	public short getTrnSerNum() {
+		return trnSerNum;
+	}
+
+	/**
+	 * @param trnSerNum the trnSerNum to set
+	 */
+	public void setTrnSerNum(short trnSerNum) {
+		this.trnSerNum = trnSerNum;
 	}
 
 	/**

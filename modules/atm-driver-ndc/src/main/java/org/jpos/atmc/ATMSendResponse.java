@@ -214,7 +214,7 @@ public class ATMSendResponse implements AbortParticipant, Configurable
 
 			    	    Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " td.getScreenUpdate() " + td.getScreenUpdate() );
 
-			    	    ATMVariables vars = new ATMVariables(td, resp, fsdMsgIn);
+			    	    ATMVariables vars = new ATMVariables(td, resp, fsdMsgIn, atm);
 		        	    Map<String, Object> rootObject = new HashMap<>();
 		        	    rootObject.put("vars", vars);
 

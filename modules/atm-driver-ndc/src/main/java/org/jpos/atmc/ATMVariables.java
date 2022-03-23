@@ -7,10 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.model.TrnDefinition;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
+import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
+import org.jpos.iso.ISOUtil;
 import org.jpos.transaction.Context;
 import org.jpos.util.FSDMsg;
 
@@ -19,12 +22,14 @@ public class ATMVariables
 	private TrnDefinition td;
 	private ISOMsg isoMsg;
 	private FSDMsg fsdMsgIn;
+	private ATM atm;
 
-    public ATMVariables(TrnDefinition td, ISOMsg isoMsg, FSDMsg fsdMsgIn)
+    public ATMVariables(TrnDefinition td, ISOMsg isoMsg, FSDMsg fsdMsgIn, ATM atm)
 	{
 		this.td = td;
 		this.isoMsg = isoMsg;
 		this.fsdMsgIn = fsdMsgIn;
+		this.atm = atm;
 	}
 
     /**
@@ -49,6 +54,30 @@ public class ATMVariables
 		return fsdMsgIn.get("luno");
 	}
 
+    /**
+	 * @return Transaction Serial Number
+	 */
+	public String getTrnSerialNumber() 
+	{
+		/*
+		 * Es un Campo de la Tabla ATMs atm_trn_ser_num secuencia de las Transacciones realizadas
+		 */
+        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+        String retStr = "    ";
+
+        try 
+        {
+            int trnSerNum = atm.getTrnSerNum() + 1;
+            retStr = ISOUtil.zeropad(Integer.toString( trnSerNum ), 4);
+		} 
+        catch (ISOException e) 
+        {
+			Log.printStackTrace(e);
+		}
+		return retStr;
+	}
+
+	
 	/**
 	 * @return the trace
 	 */
@@ -89,7 +118,7 @@ public class ATMVariables
 	}
 
 	/**
-	 * @return the Current Date
+	 * @return the Operation Description
 	 */
 	public String getOpDescription() 
 	{

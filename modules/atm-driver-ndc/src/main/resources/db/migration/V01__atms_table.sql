@@ -60,6 +60,7 @@ CREATE TABLE `atms` (
   `atm_aceptor_id` varchar(15) DEFAULT NULL,
   `atm_point_serv_data` varchar(40) DEFAULT NULL,
   `atm_network_data` varchar(40) DEFAULT NULL,
+  `atm_trn_ser_num` smallint(6) DEFAULT NULL,
   `atm_master_key` varchar(250) NOT NULL,
   `atm_communications_key` varchar(250) NOT NULL,
   `atm_config_id` varchar(250) NOT NULL,
@@ -69,9 +70,9 @@ CREATE TABLE `atms` (
 
 /*Data for the table `atms` */
 
-insert  into `atms`(`atm_id`,`atm_ip`,`atm_name`,`atm_luno`,`atm_active`,`atm_status`,`atm_protocol`,`atm_marca`,`atm_model`,`atm_address1`,`atm_address2`,`atm_city`,`atm_state`,`atm_province`,`atm_country`,`atm_zip`,`atm_contact`,`atm_phone`,`atm_currency_code`,`atm_merch_type`,`atm_pos_entry_mode`,`atm_institution_code`,`atm_terminal_id`,`atm_aceptor_id`,`atm_point_serv_data`,`atm_network_data`,`atm_master_key`,`atm_communications_key`,`atm_config_id`) values 
-(1,'127.0.0.1','R200','000',1,NULL,'NDC','NCR','SELFSERV 22','SUCURSAL CENTRAL',NULL,'CARACAS','DC',NULL,'VE','1060','Pedro Perez','+58 (414) 320-6238','937','6011','051','1111','29110001','1234567','91000000025008620000000000','CI2000000000','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0870'),
-(2,'192.168.1.60','R200','000',1,NULL,'NDC','NCR','SELFSERV 22','SUCURSAL CENTRAL',NULL,'CARACAS','DC',NULL,'VE','1060','Pedro Perez','+58 (414) 320-6238','937','6011','051','1111','29110001','1234567','91000000025008620000000000','CI2000000000','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0870');
+insert  into `atms`(`atm_id`,`atm_ip`,`atm_name`,`atm_luno`,`atm_active`,`atm_status`,`atm_protocol`,`atm_marca`,`atm_model`,`atm_address1`,`atm_address2`,`atm_city`,`atm_state`,`atm_province`,`atm_country`,`atm_zip`,`atm_contact`,`atm_phone`,`atm_currency_code`,`atm_merch_type`,`atm_pos_entry_mode`,`atm_institution_code`,`atm_terminal_id`,`atm_aceptor_id`,`atm_point_serv_data`,`atm_network_data`,`atm_trn_ser_num`,`atm_master_key`,`atm_communications_key`,`atm_config_id`) values 
+(1,'127.0.0.1','R200','000',1,NULL,'NDC','NCR','SELFSERV 22','SUCURSAL CENTRAL',NULL,'CARACAS','DC',NULL,'VE','1060','Pedro Perez','+58 (414) 320-6238','937','6011','051','1111','29110001','1234567','91000000025008620000000000','CI2000000000',0,'0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0870'),
+(2,'192.168.1.60','R200','000',1,NULL,'NDC','NCR','SELFSERV 22','SUCURSAL CENTRAL',NULL,'CARACAS','DC',NULL,'VE','1060','Pedro Perez','+58 (414) 320-6238','937','6011','051','1111','29110001','1234567','91000000025008620000000000','CI2000000000',0,'0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0870');
 
 /*Table structure for table `fits` */
 
@@ -198,7 +199,7 @@ CREATE TABLE `receipts` (
 /*Data for the table `receipts` */
 
 insert  into `receipts`(`rcp_id`,`rcp_config_id`,`rcp_code`,`rcp_description`,`rcp_template`,`rcp_date_created`,`rcp_date_updated`,`aud_usr_id`,`aud_created_log_entry_id`,`aud_last_update_log_entry_id`) values 
-(1,'0870','00000001','Recibo de Transacciones','BANCO DE PRUEBA\r\nCAJERO: ${vars.luno}\r\nTRACE: ${vars.trace}\r\n\r\nCOMPROBANTE DE OPERACION\r\n\r\nNUMERO DE TARJETA   ---FECHA-- --HORA--\r\n${vars.cardNumber}      ${vars.currentDate}\r\n\r\nSEQ. ----TRANSACCION----- AUTORIZACION\r\n0204 ${vars.opDescription}\r\n\r\nMONTO OPERACION :\r\nSALDO DISPONIBLE: ${vars.balance}\r\nCOM BANCO EMISOR:\r\n\r\nOPERACION EXITOSA\r\n\r\nCONSERVE PARA SU CONTROL\r\n','2022-03-09 16:36:09',NULL,NULL,NULL,NULL);
+(1,'0870','00000001','Recibo de Transacciones','BANCO DE PRUEBA\r\nCAJERO: ${vars.luno}\r\nTRACE: ${vars.trace}\r\n\r\nCOMPROBANTE DE OPERACION\r\n\r\nNUMERO DE TARJETA   ---FECHA-- --HORA--\r\n${vars.cardNumber}      ${vars.currentDate}\r\n\r\nSEQ. ----TRANSACCION----- AUTORIZACION\r\n${vars.trnSerialNumber} ${vars.opDescription}\r\n\r\nMONTO OPERACION :\r\nSALDO DISPONIBLE: ${vars.balance}\r\nCOM BANCO EMISOR:\r\n\r\nOPERACION EXITOSA\r\n\r\nCONSERVE PARA SU CONTROL\r\n','2022-03-09 16:36:09','2022-03-23 16:17:25',NULL,NULL,NULL);
 
 /*Table structure for table `screens` */
 
@@ -209,10 +210,10 @@ CREATE TABLE `screens` (
   `scr_config_id` varchar(4) NOT NULL,
   `scr_number` varchar(3) NOT NULL,
   `scr_desc` varchar(250) DEFAULT NULL,
-  `scr_data` varchar(250) DEFAULT NULL,
+  `scr_data` text DEFAULT NULL,
   PRIMARY KEY (`scr_id`),
   UNIQUE KEY `scr_config_id` (`scr_config_id`,`scr_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=251 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `screens` */
 
@@ -287,7 +288,7 @@ insert  into `screens`(`scr_id`,`scr_config_id`,`scr_number`,`scr_desc`,`scr_dat
 (68,'0870','014','Sin Descripcion','[77m␌␏AH␎L11␏NE␎L12'),
 (69,'0870','015','Sin Descripcion','[77m␌␏AD␎L13␏JF␎L04'),
 (70,'0870','016','Sin Descripcion','[77m␌␏CE␎L14␏JF␎L04'),
-(71,'0870','030','Sin Descripcion','␌␏@KCOPIN ATM␏BENO RECEIPT IS PROVIDED␏CBWOULD YOU  LIKE TO CONTINUE?␏D@--------------------------------␏E@NOTA TRANSAKSI  TIDAK DISEDIAKAN␏FAAPAKAH ANDA INGIN MELANJUTKAN?␏I5YES/YA -- >␏L3NO/TIDAK -- >'),
+(71,'0870','030','Sin Descripcion','␌␏@KCOPIN ATM␏BENO RECEIPT IS PROVIDED␏CBWOULD YOU  LIKE TO CONTINUE?␏DA-------------------------------␏EAOTA TRANSAKSI  TIDAK DISEDIAKAN␏FAAPAKAH ANDA INGIN MELANJUTKAN?␏I5YES/YA -- >␏L3NO/TIDAK -- >'),
 (72,'0870','040','Sin Descripcion','␌␏@KCOPIN ATM␏BBPLEASE SELECT  YOUR LANGUAGE␏C@--------------------------------␏DCSILAHKAN PILIH BAHASA ANDA␏FLENGLISH/INGGRIS -- >␏IGINDONESIAN/INDONESIA -- >␏LBTO OBTAIN  CARD PRESS CANCEL␏M@--------------------------------␏N@UNTUK MENDAPATKAN  KAR'),
 (73,'0870','050','Sin Descripcion','␌PEG00.jpg\\␏@1COPIN ATM␏BNENTER YOUR PIN␏DNAFTER PIN ENTERED␏F6PRESS -- >␏MNTO OBTAIN CARD␏ONPRESS CANCEL␏I0'),
 (74,'0870','051','Sin Descripcion','␌␏@KCOPIN ATM␏BCYOU ENTERED AN INVALID PIN␏CIRE-ENTER  YOUR␏DAPERSONAL IDENTIFICATION NUMBER␏FAAFTER PIN RE-ENTERED PRESS -- >␏OBTO OBTAIN  CARD PRESS CANCEL␏I0'),
