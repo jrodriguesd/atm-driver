@@ -873,7 +873,7 @@ $(document).ready(function()
 	{
         $.ajax(
         {
-	    	url: 'api/atmconfig/Unique',
+	    	url: 'api/atmconfigs/unique',
             method: "GET",
             success: function(data)
 	        {
@@ -898,7 +898,7 @@ $(document).ready(function()
 	    console.log('configId: ' + configId);
         $.ajax(
         {
-	    	url: 'api/screen/' + configId,
+	    	url: 'api/screens/' + configId,
             method: "GET",
             success: function(data)
 	        {
@@ -960,7 +960,7 @@ $(document).ready(function()
 
         $.ajax({
             type : "POST",                                 // type of action POST || GET
-            url: 'api/screen/' + action,                   // url where to submit the request
+            url: 'api/screens/' + action,                  // url where to submit the request
 			contentType: 'application/json;charset=utf-8',
             dataType : 'json',                             // data type
             data : JSON.stringify( formData ),             // post data || get data

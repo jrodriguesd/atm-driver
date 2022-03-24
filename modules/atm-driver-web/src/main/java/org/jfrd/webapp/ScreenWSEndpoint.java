@@ -47,18 +47,18 @@ import org.jfrd.webapp.util.Log;
 import org.jfrd.webapp.util.Util;
 import org.jpos.ee.DB;
 
-@Path("screen")
+@Path("screens")
 public class ScreenWSEndpoint 
 {
 	@GET
-    @Path("/{scr_config_id}")
+    @Path("/{configId}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public List<Screen> getByConfigId(@PathParam("scr_config_id") String scr_config_id) 
+    public List<Screen> getByConfigId(@PathParam("configId") String configId) 
 	{
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " config " + scr_config_id );
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId " + configId );
     	try 
 		{
-			List<Screen> screens = DB.exec(db -> new ScreenManager(db).getItemsByParam("scr_config_id", scr_config_id) );
+			List<Screen> screens = DB.exec(db -> new ScreenManager(db).getItemsByParam("configId", configId) );
 	        return screens;
 		} 
 		catch (Exception e) 
@@ -70,7 +70,7 @@ public class ScreenWSEndpoint
     }
 
     @POST
-    @Path("/Create")
+    @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(Screen scr) 
@@ -78,8 +78,7 @@ public class ScreenWSEndpoint
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
     	try 
     	{
-		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getScr_config_id(),
-                    scr.getScr_number() ) );
+		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getConfigId(), scr.getNumber() ) );
 
 		    if (screen == null)
             {
@@ -100,7 +99,7 @@ public class ScreenWSEndpoint
     }
 
     @POST
-    @Path("/Update")
+    @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(Screen scr) 
@@ -108,14 +107,14 @@ public class ScreenWSEndpoint
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
     	try 
     	{
-		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getScr_config_id(),
-					                                                      scr.getScr_number() ) );
+		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getConfigId(), scr.getNumber() ) );
+
 		    if (screen != null)
 		    {
 		    	// Update Screen
-		    	screen.setScr_data( scr.getScr_data() );
-		    	screen.setScr_desc( scr.getScr_desc() );
-		    	screen.setScr_number( scr.getScr_number() );
+		    	screen.setData(scr.getData());
+		    	screen.setDesc(scr.getDesc());
+		    	screen.setNumber(scr.getNumber());
 
 			    DB.execWithTransaction(db -> { 
                     db.session().update(screen);
@@ -134,7 +133,7 @@ public class ScreenWSEndpoint
     }
 
     @POST
-    @Path("/Delete")
+    @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(Screen scr) 
@@ -142,8 +141,8 @@ public class ScreenWSEndpoint
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + scr.toString() );
     	try 
     	{
-		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getScr_config_id(),
-					                                                      scr.getScr_number() ) );
+		    Screen screen = DB.exec(db -> new ScreenManager(db).getScreen(scr.getConfigId(), scr.getNumber() ) );
+
 		    if (screen != null)
 		    {
 		    	// Delete Screen

@@ -26,33 +26,33 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.query.Query;
-import org.jfrd.webapp.model.Atmconfig;
+import org.jfrd.webapp.model.ATMConfig;
 import org.jfrd.webapp.model.Screen;
 import org.jpos.ee.DB;
 import org.jpos.ee.DBManager;
 
-public class AtmconfigManager extends DBManager<Atmconfig> 
+public class ATMConfigManager extends DBManager<ATMConfig> 
 {
 
-	public AtmconfigManager(DB db) 
+	public ATMConfigManager(DB db) 
 	{
-		super(db, Atmconfig.class);
+		super(db, ATMConfig.class);
 	}
 
-	public Atmconfig getAtmconfig(String a, String b)
+	public ATMConfig getATMConfig(String a, char b)
 	{
 		return null;
 	}
 
 	
 	@SuppressWarnings("unchecked")
-	public  List<Atmconfig>  getAtmconfigUnique() 
+	public  List<ATMConfig>  getATMConfigUnique() 
 	{
-		Query<Atmconfig> query = db.session().createQuery
+		Query<ATMConfig> query = db.session().createQuery
 		(
-		    "from Atmconfig in class org.jfrd.webapp.model.Atmconfig WHERE atmcnf_screengroupbase = 0 ORDER BY atmcnf_configid"
+		    "from ATMConfig in class org.jfrd.webapp.model.ATMConfig WHERE screenGroupBase = 0 ORDER BY configId"
 		);
-		List<Atmconfig> l = query.list();
+		List<ATMConfig> l = query.list();
 		return l;
 	}
 	

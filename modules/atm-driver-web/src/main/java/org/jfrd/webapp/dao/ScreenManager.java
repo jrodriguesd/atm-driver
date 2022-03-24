@@ -43,14 +43,14 @@ public class ScreenManager extends DBManager<Screen> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Screen getScreen(String configID, String scrNumber) 
+	public Screen getScreen(String configId, String number) 
 	{
 		Query<Screen> query = db.session().createQuery
 		(
-		    "from Screen in class org.jfrd.webapp.model.Screen WHERE scr_config_id = :configID AND scr_number = :scrNumber"
+		    "from Screen in class org.jfrd.webapp.model.Screen WHERE configId = :configId AND number = :number"
 		);
-		query.setParameter("configID", configID);
-		query.setParameter("scrNumber", scrNumber);
+		query.setParameter("configId", configId);
+		query.setParameter("number", number);
 		List<Screen> l = query.list();
 		Iterator<Screen> iter = l.iterator();
 
@@ -61,15 +61,15 @@ public class ScreenManager extends DBManager<Screen> {
 		                      + Util.fileName() 
 			                  + " Line " + Util.lineNumber() 
 			                  + " " + Util.methodName()
-					          + " No se Encontro Screen configID " + configID 
-					          + " scrNumber " + scrNumber);
+					          + " No se Encontro Screen configID " + configId 
+					          + " scrNumber " + number);
 		else if (l.size() > 1)
 			Log.staticPrintln("JFRD " 
                               + Util.fileName() 
 	                          + " Line " + Util.lineNumber() 
 	                          + " " + Util.methodName()
-			                  + " Se Encontro mas de una Screen configID " + configID 
-					          + " scrNumber " + scrNumber);
+					          + " No se Encontro Screen configID " + configId 
+					          + " scrNumber " + number);
 		return null;
 	}
 

@@ -21,7 +21,7 @@
     <mappings>
         <!-- mapping resource="org/jpos/gl/jfrd-GLUser.hbm.xml"/ -->
 		<mapping class="org.jfrd.webapp.model.Screen"/>
-		<mapping class="org.jfrd.webapp.model.Atmconfig"/>
+		<mapping class="org.jfrd.webapp.model.ATMConfig"/>
     </mappings>
 
 </module>

@@ -33,25 +33,25 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jfrd.webapp.dao.AtmconfigManager;
-import org.jfrd.webapp.model.Atmconfig;
+import org.jfrd.webapp.dao.ATMConfigManager;
+import org.jfrd.webapp.model.ATMConfig;
 
 import org.jfrd.webapp.util.Log;
 import org.jfrd.webapp.util.Util;
 import org.jpos.ee.DB;
 
-@Path("atmconfig")
-public class AtmconfigWSEndpoint 
+@Path("atmconfigs")
+public class ATMConfigWSEndpoint 
 {
 	@GET
-    @Path("/{Unique}")
+    @Path("/{unique}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public List<Atmconfig> getUnique() 
+    public List<ATMConfig> getUnique() 
 	{
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
     	try 
 		{
-			List<Atmconfig> atmconfigs = DB.exec(db -> new AtmconfigManager(db).getAtmconfigUnique() );
+			List<ATMConfig> atmconfigs = DB.exec(db -> new ATMConfigManager(db).getATMConfigUnique() );
 	        return atmconfigs;
 		} 
 		catch (Exception e) 
@@ -63,15 +63,15 @@ public class AtmconfigWSEndpoint
     }
 
     @POST
-    @Path("/Create")
+    @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(Atmconfig atmCnf) 
+    public Response create(ATMConfig atmCnf) 
     {
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + atmCnf.toString() );
     	try 
     	{
-    		Atmconfig atmconfig = DB.exec(db -> new AtmconfigManager(db).getAtmconfig(atmCnf.getAtmcnf_configid(), atmCnf.getAtmcnf_languageatm() ) );
+    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigID(), atmCnf.getLanguageATM() ) );
 
 		    if (atmconfig == null)
             {
@@ -92,23 +92,23 @@ public class AtmconfigWSEndpoint
     }
 
     @POST
-    @Path("/Update")
+    @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(Atmconfig atmCnf) 
+    public Response update(ATMConfig atmCnf) 
     {
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + atmCnf.toString() );
     	try 
     	{
-    		Atmconfig atmconfig = DB.exec(db -> new AtmconfigManager(db).getAtmconfig(atmCnf.getAtmcnf_configid(), atmCnf.getAtmcnf_languageatm() ) );
+    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigID(), atmCnf.getLanguageATM() ) );
 
 		    if (atmconfig != null)
 		    {
 		    	// Update Atmconfig
-		    	atmconfig.setAtmcnf_description(atmCnf.getAtmcnf_description());
-		    	atmconfig.setAtmcnf_language639(atmCnf.getAtmcnf_language639());
-		    	atmconfig.setAtmcnf_languageindex(atmCnf.getAtmcnf_languageindex());
-		    	atmconfig.setAtmcnf_screengroupbase(atmCnf.getAtmcnf_screengroupbase());
+		    	atmconfig.setDescription(atmCnf.getDescription());
+		    	atmconfig.setLanguage639(atmCnf.getLanguage639());
+		    	atmconfig.setLanguageIndex(atmCnf.getLanguageIndex());
+		    	atmconfig.setScreenGroupBase(atmCnf.getScreenGroupBase());
 
 			    DB.execWithTransaction(db -> { 
                     db.session().update(atmconfig);
@@ -127,15 +127,15 @@ public class AtmconfigWSEndpoint
     }
 
     @POST
-    @Path("/Delete")
+    @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(Atmconfig atmCnf) 
+    public Response delete(ATMConfig atmCnf) 
     {
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + atmCnf.toString() );
     	try 
     	{
-    		Atmconfig atmconfig = DB.exec(db -> new AtmconfigManager(db).getAtmconfig(atmCnf.getAtmcnf_configid(), atmCnf.getAtmcnf_languageatm() ) );
+    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigID(), atmCnf.getLanguageATM() ) );
 
 		    if (atmconfig != null)
 		    {

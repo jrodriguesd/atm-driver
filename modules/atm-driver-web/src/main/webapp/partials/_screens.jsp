@@ -56,13 +56,13 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-2">
-                                            <button type="submit" class="btn btn-success" value="Create" id="Create">Create</button>
+                                            <button type="submit" class="btn btn-success" value="create">Create</button>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button type="submit" class="btn btn-success" value="Update" id="Update">Update</button>
+                                            <button type="submit" class="btn btn-success" value="update">Update</button>
                                         </div>
                                         <div class="col-sm-2">
-                                            <button type="submit" class="btn btn-danger"  value="Delete" id="Delete">Delete</button>
+                                            <button type="submit" class="btn btn-danger"  value="delete">Delete</button>
                                         </div>
                                         <div class="col-sm-2">
                                             <button type="button" class="btn btn-primary" id="Capturar">Capture</button>

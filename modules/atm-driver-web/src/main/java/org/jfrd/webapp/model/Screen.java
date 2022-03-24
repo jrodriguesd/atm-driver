@@ -25,6 +25,8 @@ package org.jfrd.webapp.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * The persistent class for the screens database table.
  * 
@@ -38,86 +40,104 @@ public class Screen implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "scr_id", updatable = false, nullable = false)
+    @JsonProperty("scr_id")
     private Long id;    
 
 	@Column(name="scr_config_id")
-	private String scr_config_id;
+    @JsonProperty("scr_config_id")
+    private String  configId;
 
 	@Lob
 	@Column(name="scr_data")
-	private String scr_data;
+    @JsonProperty("scr_data")
+	private String data;
 
 	@Column(name="scr_desc")
-	private String scr_desc;
+    @JsonProperty("scr_desc")
+	private String desc;
 
 	@Column(name="scr_number")
-	private String scr_number;
+    @JsonProperty("scr_number")
+	private String number;
 
 	public Screen() 
 	{
 	}
 
 	/**
-	 * @return the scr_config_id
+	 * @return the id
 	 */
-	public String getScr_config_id() {
-		return scr_config_id;
+	public Long getId() {
+		return id;
 	}
 
 	/**
-	 * @param scr_config_id the scr_config_id to set
+	 * @param id the id to set
 	 */
-	public void setScr_config_id(String scr_config_id) {
-		this.scr_config_id = scr_config_id;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
-	 * @return the scr_data
+	 * @return the configId
 	 */
-	public String getScr_data() {
-		return scr_data;
+	public String getConfigId() {
+		return configId;
 	}
 
 	/**
-	 * @param scr_data the scr_data to set
+	 * @param configId the configId to set
 	 */
-	public void setScr_data(String scr_data) {
-		this.scr_data = scr_data;
+	public void setConfigId(String configId) {
+		this.configId = configId;
 	}
 
 	/**
-	 * @return the scr_desc
+	 * @return the data
 	 */
-	public String getScr_desc() {
-		return scr_desc;
+	public String getData() {
+		return data;
 	}
 
 	/**
-	 * @param scr_desc the scr_desc to set
+	 * @param data the data to set
 	 */
-	public void setScr_desc(String scr_desc) {
-		this.scr_desc = scr_desc;
+	public void setData(String data) {
+		this.data = data;
 	}
 
 	/**
-	 * @return the scr_number
+	 * @return the desc
 	 */
-	public String getScr_number() {
-		return scr_number;
+	public String getDesc() {
+		return desc;
 	}
 
 	/**
-	 * @param scr_number the scr_number to set
+	 * @param desc the desc to set
 	 */
-	public void setScr_number(String scr_number) {
-		this.scr_number = scr_number;
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	/**
+	 * @return the number
+	 */
+	public String getNumber() {
+		return number;
+	}
+
+	/**
+	 * @param number the number to set
+	 */
+	public void setNumber(String number) {
+		this.number = number;
 	}
 
 	@Override
-	public String toString() 
-	{
-		return "Screen [scr_config_id=" + scr_config_id + ", scr_data=" + scr_data + ", scr_desc=" + scr_desc
-				+ ", scr_number=" + scr_number + "]";
+	public String toString() {
+		return "Screen [id=" + id + ", configId=" + configId + ", data=" + data + ", desc=" + desc + ", number="
+				+ number + "]";
 	}
 
 }
