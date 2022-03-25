@@ -20,8 +20,8 @@
 
     <mappings>
         <!-- mapping resource="org/jpos/gl/jfrd-GLUser.hbm.xml"/ -->
-		<mapping class="org.jfrd.webapp.model.Screen"/>
-		<mapping class="org.jfrd.webapp.model.ATMConfig"/>
+		<mapping class="org.jpos.atmc.model.Screen"/>
+		<mapping class="org.jpos.atmc.model.ATMConfig"/>
     </mappings>
 
 </module>

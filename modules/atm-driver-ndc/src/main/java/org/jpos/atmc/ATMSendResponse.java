@@ -122,7 +122,7 @@ public class ATMSendResponse implements AbortParticipant, Configurable
                                                                                                         atm.getConfigId(),
                                                                                                         language639) );
 
-	        FSDMsg fsdMsgResp = createFSDMsg(m, fsdMsgIn, isoError2ATM.getState(), isoError2ATM.getScreen() );
+	        FSDMsg fsdMsgResp = createFSDMsg(m, fsdMsgIn, isoError2ATM.getState(), isoError2ATM.getScreenReceipt() );
 
 	    	return fsdMsgResp;
 		}

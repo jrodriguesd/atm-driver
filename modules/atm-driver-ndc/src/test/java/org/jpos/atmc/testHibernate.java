@@ -8,6 +8,8 @@ import org.jpos.ee.DB;
 
 import org.jpos.atmc.model.ATM;
 
+import org.jpos.atmc.util.Util;
+
 class testHibernate
 {
     public static void main(String[] args) 

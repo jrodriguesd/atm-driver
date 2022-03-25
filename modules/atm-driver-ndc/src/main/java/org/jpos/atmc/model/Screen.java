@@ -20,12 +20,15 @@
  * Returns days to New Year.
  * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
  */
-package org.jfrd.webapp.model;
+package org.jpos.atmc.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.openpojo.business.BusinessIdentity;
+import com.openpojo.business.annotation.BusinessKey ;
 
 /**
  * The persistent class for the screens database table.
@@ -43,6 +46,7 @@ public class Screen implements Serializable
     @JsonProperty("scr_id")
     private Long id;    
 
+	@BusinessKey(caseSensitive = false, required = true)
 	@Column(name="scr_config_id")
     @JsonProperty("scr_config_id")
     private String  configId;
@@ -56,6 +60,7 @@ public class Screen implements Serializable
     @JsonProperty("scr_desc")
 	private String desc;
 
+	@BusinessKey(caseSensitive = false, required = true)
 	@Column(name="scr_number")
     @JsonProperty("scr_number")
 	private String number;
@@ -135,9 +140,18 @@ public class Screen implements Serializable
 	}
 
 	@Override
-	public String toString() {
-		return "Screen [id=" + id + ", configId=" + configId + ", data=" + data + ", desc=" + desc + ", number="
-				+ number + "]";
+	public int hashCode() {
+	    return BusinessIdentity.getHashCode(this);
 	}
+
+	@Override
+	public boolean equals(final Object obj) {
+	    return BusinessIdentity.areEqual(this, obj);
+	}
+
+	@Override
+	public String toString() {
+	    return BusinessIdentity.toString(this);
+	}	
 
 }

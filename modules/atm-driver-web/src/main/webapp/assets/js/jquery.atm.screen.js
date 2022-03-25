@@ -968,6 +968,9 @@ $(document).ready(function()
 			{
                 console.log("success :" + result);
 		        configIdChange();
+		        $('#cmdTxtArea').val('');
+		        $('#scr_number').val('');
+		        $('#scr_desc').val('');
             },
             error: function(xhr, resp, text) 
 			{
@@ -975,9 +978,6 @@ $(document).ready(function()
             }
         });
 
-		// $('#cmdTxtArea').val('');
-		// $('#scr_number').val('');
-		// $('#scr_desc').val('');
     }
 
     $("#screensForm").submit(handleSubmit);

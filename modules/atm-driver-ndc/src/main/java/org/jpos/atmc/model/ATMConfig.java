@@ -31,6 +31,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.openpojo.business.BusinessIdentity;
+import com.openpojo.business.annotation.BusinessKey ;
+
 @Entity
 @Table(name="atmconfigs")
 public class ATMConfig implements Serializable 
@@ -40,220 +45,151 @@ public class ATMConfig implements Serializable
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "atmcnf_id", updatable = false, nullable = false)
+    @JsonProperty("atmcnf_id")
     private Long id;    
 
+	@BusinessKey(caseSensitive = false, required = true)
     @Column(name="atmcnf_configid")
-    private String  configID;
+    @JsonProperty("atmcnf_configid")
+    private String configId;
 
     @Column(name="atmcnf_description")
-    private String  description;
+    @JsonProperty("atmcnf_description")
+    private String description;
 
     @Column(name="atmcnf_languageindex")
-    private int     languageIndex;
+    @JsonProperty("atmcnf_languageindex")
+    private Integer languageIndex;
     
+	@BusinessKey(caseSensitive = false, required = true)
     @Column(name="atmcnf_languageatm")
-    private char    languageATM;
+    @JsonProperty("atmcnf_languageatm")
+    private Character languageATM;
     
     @Column(name="atmcnf_language639")
+    @JsonProperty("atmcnf_language639")
     private String  language639;
     
     @Column(name="atmcnf_screengroupbase")
-    private int     screenGroupBase;
+    @JsonProperty("atmcnf_screengroupbase")
+    private Integer screenGroupBase;
     
 	public ATMConfig() 
 	{
 		super();
 	}
-	
-	public ATMConfig(String configID,
-			         String description,
-			         int    languageIndex, 
-			         char   languageATM, 
-			         String language639,
-			         int    screenGroupBase) 
-	{
-		super();
-		this.configID = configID;
-		this.description = description;
-		this.languageIndex = languageIndex;
-		this.languageATM = languageATM;
-		this.language639 = language639;
-		this.screenGroupBase = screenGroupBase;
-	}
 
 	/**
 	 * @return the id
 	 */
-	public Long getId() 
-	{
+	public Long getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) 
-	{
+	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	/**
-	 * @return the configID
-	 */
-	public String getConfigID() 
-	{
-		return configID;
 	}
 
 	/**
-	 * @param configID the configID to set
+	 * @return the configId
 	 */
-	public void setConfigID(String configID) 
-	{
-		this.configID = configID;
+	public String getConfigId() {
+		return configId;
+	}
+
+	/**
+	 * @param configId the configId to set
+	 */
+	public void setConfigId(String configId) {
+		this.configId = configId;
 	}
 
 	/**
 	 * @return the description
 	 */
-	public String getDescription() 
-	{
+	public String getDescription() {
 		return description;
 	}
 
 	/**
 	 * @param description the description to set
 	 */
-	public void setDescription(String description) 
-	{
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
 	/**
 	 * @return the languageIndex
 	 */
-	public int getLanguageIndex() 
-	{
+	public Integer getLanguageIndex() {
 		return languageIndex;
 	}
 
 	/**
 	 * @param languageIndex the languageIndex to set
 	 */
-	public void setLanguageIndex(int languageIndex) 
-	{
+	public void setLanguageIndex(Integer languageIndex) {
 		this.languageIndex = languageIndex;
 	}
 
 	/**
 	 * @return the languageATM
 	 */
-	public char getLanguageATM() {
+	public Character getLanguageATM() {
 		return languageATM;
 	}
 
 	/**
 	 * @param languageATM the languageATM to set
 	 */
-	public void setLanguageATM(char languageATM) {
+	public void setLanguageATM(Character languageATM) {
 		this.languageATM = languageATM;
 	}
 
 	/**
 	 * @return the language639
 	 */
-	public String getLanguage639() 
-	{
+	public String getLanguage639() {
 		return language639;
 	}
 
 	/**
 	 * @param language639 the language639 to set
 	 */
-	public void setLanguage639(String language639) 
-	{
+	public void setLanguage639(String language639) {
 		this.language639 = language639;
 	}
-	
+
 	/**
 	 * @return the screenGroupBase
 	 */
-	public int getScreenGroupBase() 
-	{
+	public Integer getScreenGroupBase() {
 		return screenGroupBase;
 	}
 
 	/**
 	 * @param screenGroupBase the screenGroupBase to set
 	 */
-	public void setScreenGroupBase(int screenGroupBase) 
-	{
+	public void setScreenGroupBase(Integer screenGroupBase) {
 		this.screenGroupBase = screenGroupBase;
 	}
 
-	/**
-	 * @return the atmConfigs
-	 */
-	public static ATMConfig[] getAtmConfigs() 
-	{
-		return atmConfigs;
-	}
-
-	/**
-	 * @param atmConfigs the atmConfigs to set
-	 */
-	public static void setAtmConfigs(ATMConfig[] atmConfigs) 
-	{
-		ATMConfig.atmConfigs = atmConfigs;
-	}
-	
 	@Override
-	public String toString() 
-	{
-		return "ATMConfig [configID=" + configID + ", languageIndex=" + languageIndex + ", languageATM="
-				+ languageATM + ", language639=" + language639 + ", screenGroupBase=" + screenGroupBase + "]";
+	public int hashCode() {
+	    return BusinessIdentity.getHashCode(this);
 	}
 
-    /*
-     * SELECT atmcnf_language639 FROM atmconfigs WHERE (atmcnf_configid = '0870')
-     * if solo hay un Registro (MonoLenguage) 
-     *     Devolver Ese Registro
-     * else
-     *     Hay Varios Risregistros (MultiLenguage)
-     * SELECT atmcnf_language639 FROM atmconfigs 
-     *     WHERE (atmcnf_configid = '0870' AND 
-     *     SUBSTRING("AIA     ", atmcnf_languageindex, 1) = atmcnf_languageatm)	
-     */
-	public static ATMConfig getATMConfig(String configID, String atmOperationCode) 
-	{
-        for (int i = 0; i < atmConfigs.length; i++) 
-		{
-			if ( atmConfigs[i].getConfigID().equals(configID) )
-			{
-				if (atmConfigs[i].getLanguageIndex() < 0 )
-				{
-		        	/* MonoLanguage Configuration */
-					return atmConfigs[i];
-				}
-				else
-				{
-		        	/* MultiLanguage Configuration */
-				    char languageATM = atmOperationCode.charAt(atmConfigs[i].getLanguageIndex());
-					if (atmConfigs[i].getLanguageATM() == languageATM )
-					{
-					    return atmConfigs[i];
-					}
-				}
-			}
-        }		
-		return null;
+	@Override
+	public boolean equals(final Object obj) {
+	    return BusinessIdentity.areEqual(this, obj);
 	}
 
-	private static ATMConfig[] atmConfigs = 
-	{
-	    new ATMConfig("0850", "NDC Configuration with EMV English",       -1, 'A', "eng",   0),
-	    new ATMConfig("0870", "NDC Configuration without EMV English",     0, 'A', "eng",   0),
-		new ATMConfig("0870", "NDC Configuration without EMV Indonesian",  0, 'B', "ind", 400),
-	};
+	@Override
+	public String toString() {
+	    return BusinessIdentity.toString(this);
+	}	
 
 }

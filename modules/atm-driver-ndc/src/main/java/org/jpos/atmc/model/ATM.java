@@ -1,7 +1,33 @@
+/*
+ * This file is part of atm-driver.
+ * Copyright (C) 2021-2022
+ *
+ * atm-driver is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * Bisq is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with atm-driver. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * Returns days to New Year.
+ * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
+ */
 package org.jpos.atmc.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.openpojo.business.BusinessIdentity;
+import com.openpojo.business.annotation.BusinessKey ;
 
 /**
  * The persistent class for the atms database table.
@@ -21,7 +47,7 @@ public class ATM implements Serializable {
 	private String aceptorId;
 
 	@Column(name="atm_active")
-	private byte active;
+	private Byte active;
 
 	@Column(name="atm_address1")
 	private String address1;
@@ -50,6 +76,7 @@ public class ATM implements Serializable {
 	@Column(name="atm_institution_code")
 	private String institutionCode;
 
+	@BusinessKey(caseSensitive = false, required = true)
 	@Column(name="atm_ip")
 	private String ip;
 
@@ -99,7 +126,7 @@ public class ATM implements Serializable {
 	private String terminalId;
 
 	@Column(name="atm_trn_ser_num")
-	private short trnSerNum;
+	private Short trnSerNum;
 
 	@Column(name="atm_zip")
 	private String zip;
@@ -138,14 +165,14 @@ public class ATM implements Serializable {
 	/**
 	 * @return the active
 	 */
-	public byte getActive() {
+	public Byte getActive() {
 		return active;
 	}
 
 	/**
 	 * @param active the active to set
 	 */
-	public void setActive(byte active) {
+	public void setActive(Byte active) {
 		this.active = active;
 	}
 
@@ -246,7 +273,7 @@ public class ATM implements Serializable {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
+
 	/**
 	 * @return the currencyCode
 	 */
@@ -498,18 +525,18 @@ public class ATM implements Serializable {
 	public void setTerminalId(String terminalId) {
 		this.terminalId = terminalId;
 	}
-	
+
 	/**
 	 * @return the trnSerNum
 	 */
-	public short getTrnSerNum() {
+	public Short getTrnSerNum() {
 		return trnSerNum;
 	}
 
 	/**
 	 * @param trnSerNum the trnSerNum to set
 	 */
-	public void setTrnSerNum(short trnSerNum) {
+	public void setTrnSerNum(Short trnSerNum) {
 		this.trnSerNum = trnSerNum;
 	}
 
@@ -527,12 +554,20 @@ public class ATM implements Serializable {
 		this.zip = zip;
 	}
 
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	@Override
+	public int hashCode() {
+	    return BusinessIdentity.getHashCode(this);
 	}
+
+	@Override
+	public boolean equals(final Object obj) {
+	    return BusinessIdentity.areEqual(this, obj);
+	}
+
+	@Override
+	public String toString() {
+	    return BusinessIdentity.toString(this);
+	}	
 
 	public String getAddress()
 	{
@@ -569,5 +604,5 @@ public class ATM implements Serializable {
 
 		return sb.toString();
 	}
-	
+
 }

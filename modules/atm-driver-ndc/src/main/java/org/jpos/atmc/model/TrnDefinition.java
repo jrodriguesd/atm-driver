@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.openpojo.business.BusinessIdentity;
+import com.openpojo.business.annotation.BusinessKey ;
+
 @Entity
 @Table(name="trndefs")
 public class TrnDefinition 
@@ -16,11 +19,13 @@ public class TrnDefinition
 	@Column(name = "trndef_id", updatable = false, nullable = false)
     private Long id;    
 
+	@BusinessKey(caseSensitive = false, required = true)
 	@Column(name = "trndef_configid", updatable = true, nullable = false)
-	private String  configID;
+    private String configId;
 
-	@Column(name = "trndef_atmcode", updatable = true, nullable = false)
-	private String atmCode;
+	@BusinessKey(caseSensitive = false, required = true)
+	@Column(name = "trndef_atm_trn_code", updatable = true, nullable = false)
+	private String atmTrnCode;
 
 	@Column(name = "trndef_description", updatable = true, nullable = false)
 	private String  description;
@@ -75,37 +80,33 @@ public class TrnDefinition
 	{
 		this.id = id;
 	}
-
+	
 	/**
-	 * @return the configID
+	 * @return the configId
 	 */
-	public String getConfigID() 
-	{
-		return configID;
+	public String getConfigId() {
+		return configId;
 	}
 
 	/**
-	 * @param configID the configID to set
+	 * @param configId the configId to set
 	 */
-	public void setConfigID(String configID) 
-	{
-		this.configID = configID;
+	public void setConfigId(String configId) {
+		this.configId = configId;
 	}
 
 	/**
-	 * @return the atmCode
+	 * @return the atmTrnCode
 	 */
-	public String getAtmCode() 
-	{
-		return atmCode;
+	public String getAtmTrnCode() {
+		return atmTrnCode;
 	}
 
 	/**
-	 * @param atmCode the atmCode to set
+	 * @param atmTrnCode the atmTrnCode to set
 	 */
-	public void setAtmCode(String atmCode) 
-	{
-		this.atmCode = atmCode;
+	public void setAtmTrnCode(String atmTrnCode) {
+		this.atmTrnCode = atmTrnCode;
 	}
 
 	/**
@@ -264,4 +265,19 @@ public class TrnDefinition
 		this.receiptCode = receiptCode;
 	}
 
+	@Override
+	public int hashCode() {
+	    return BusinessIdentity.getHashCode(this);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+	    return BusinessIdentity.areEqual(this, obj);
+	}
+
+	@Override
+	public String toString() {
+	    return BusinessIdentity.toString(this);
+	}	
+	
 }

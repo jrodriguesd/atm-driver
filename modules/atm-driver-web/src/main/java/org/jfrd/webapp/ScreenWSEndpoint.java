@@ -24,9 +24,6 @@ package org.jfrd.webapp;
 
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -36,12 +33,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.jfrd.webapp.dao.ScreenManager;
-
-import org.jfrd.webapp.model.Screen;
+import org.jpos.atmc.dao.ScreenManager;
+import org.jpos.atmc.model.Screen;
 
 import org.jfrd.webapp.util.Log;
 import org.jfrd.webapp.util.Util;

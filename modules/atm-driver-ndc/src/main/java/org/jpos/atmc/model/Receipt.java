@@ -3,6 +3,9 @@ package org.jpos.atmc.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import com.openpojo.business.BusinessIdentity;
+import com.openpojo.business.annotation.BusinessKey ;
+
 
 /**
  * The persistent class for the receipts database table.
@@ -19,9 +22,11 @@ public class Receipt implements Serializable
 	@Column(name = "rcp_id", updatable = false, nullable = false)
     private Long id;    
 
+	@BusinessKey(caseSensitive = false, required = true)
 	@Column(name="rcp_code")
 	private String code;
 
+	@BusinessKey(caseSensitive = false, required = true)
 	@Column(name="rcp_config_id")
 	private String configId;
 
@@ -105,11 +110,19 @@ public class Receipt implements Serializable
 		this.template = template;
 	}
 
-	/**
-	 * @return the serialversionuid
-	 */
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	@Override
+	public int hashCode() {
+	    return BusinessIdentity.getHashCode(this);
 	}
+
+	@Override
+	public boolean equals(final Object obj) {
+	    return BusinessIdentity.areEqual(this, obj);
+	}
+
+	@Override
+	public String toString() {
+	    return BusinessIdentity.toString(this);
+	}	
 
 }

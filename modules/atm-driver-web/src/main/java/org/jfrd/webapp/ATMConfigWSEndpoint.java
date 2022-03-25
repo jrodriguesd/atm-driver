@@ -28,13 +28,12 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.jfrd.webapp.dao.ATMConfigManager;
-import org.jfrd.webapp.model.ATMConfig;
+import org.jpos.atmc.dao.ATMConfigManager;
+import org.jpos.atmc.model.ATMConfig;
 
 import org.jfrd.webapp.util.Log;
 import org.jfrd.webapp.util.Util;
@@ -71,7 +70,7 @@ public class ATMConfigWSEndpoint
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + atmCnf.toString() );
     	try 
     	{
-    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigID(), atmCnf.getLanguageATM() ) );
+    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigId(), atmCnf.getLanguageATM() ) );
 
 		    if (atmconfig == null)
             {
@@ -100,7 +99,7 @@ public class ATMConfigWSEndpoint
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + atmCnf.toString() );
     	try 
     	{
-    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigID(), atmCnf.getLanguageATM() ) );
+    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigId(), atmCnf.getLanguageATM() ) );
 
 		    if (atmconfig != null)
 		    {
@@ -135,7 +134,7 @@ public class ATMConfigWSEndpoint
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + atmCnf.toString() );
     	try 
     	{
-    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigID(), atmCnf.getLanguageATM() ) );
+    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigId(), atmCnf.getLanguageATM() ) );
 
 		    if (atmconfig != null)
 		    {

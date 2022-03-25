@@ -26,6 +26,8 @@ repositories
 
 dependencies 
 {
+    implementation  project(':modules:atm-driver-ndc')
+
     implementation  'joda-time:joda-time:2.10.12'
 
     providedRuntime 'org.slf4j:slf4j-simple:1.7.32'
@@ -46,7 +48,7 @@ dependencies
     implementation 'org.glassfish.jersey.core:jersey-common:2.26-b09'
     implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:2.26-b09'
 
-    providedRuntime 'org.mariadb.jdbc:mariadb-java-client:3.0.3'
+    providedRuntime    'org.mariadb.jdbc:mariadb-java-client:3.0.3'
 }
 
 war 

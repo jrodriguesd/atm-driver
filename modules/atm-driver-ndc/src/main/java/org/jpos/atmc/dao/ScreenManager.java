@@ -20,15 +20,15 @@
  * Returns days to New Year.
  * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
  */
-package org.jfrd.webapp.dao;
+package org.jpos.atmc.dao;
 
 import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.query.Query;
-import org.jfrd.webapp.model.Screen;
-import org.jfrd.webapp.util.Log;
-import org.jfrd.webapp.util.Util;
+import org.jpos.atmc.model.Screen;
+import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.Util;
 import org.jpos.ee.DB;
 import org.jpos.ee.DBManager;
 
@@ -47,7 +47,7 @@ public class ScreenManager extends DBManager<Screen> {
 	{
 		Query<Screen> query = db.session().createQuery
 		(
-		    "from Screen in class org.jfrd.webapp.model.Screen WHERE configId = :configId AND number = :number"
+		    "from Screen in class org.jpos.atmc.model.Screen WHERE configId = :configId AND number = :number"
 		);
 		query.setParameter("configId", configId);
 		query.setParameter("number", number);
