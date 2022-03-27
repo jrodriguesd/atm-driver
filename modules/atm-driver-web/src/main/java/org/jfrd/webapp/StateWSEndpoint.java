@@ -22,59 +22,70 @@
  */
 package org.jfrd.webapp;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.jpos.atmc.dao.ATMConfigManager;
-import org.jpos.atmc.model.ATMConfig;
-
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
+import org.jpos.atmc.dao.StateManager;
+import org.jpos.atmc.model.State;
 import org.jpos.ee.DB;
 
-@Path("atmconfigs")
-public class ATMConfigWSEndpoint 
+@Path("states")
+public class StateWSEndpoint 
 {
-	private static final String OBJECT_TYPE = "ATMConfig";
+	private static final String OBJECT_TYPE = "State";
 
 	@GET
-    @Path("/{unique}")
+    @Path("/definition")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public List<ATMConfig> getUnique() 
+    public String getDefinition() 
 	{
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-    	try 
-		{
-			List<ATMConfig> atmconfigs = DB.exec(db -> new ATMConfigManager(db).getATMConfigUnique() );
-	        return atmconfigs;
+
+    	String filePath = "states.json";
+    	StringBuilder builder = new StringBuilder();
+        
+        try (BufferedReader buffer = new BufferedReader( new FileReader(filePath) ) ) 
+        {
+            String str;
+
+            while ((str = buffer.readLine()) != null) 
+            {
+ 
+                builder.append(str).append("\n");
+            }    	
+    	
 		} 
-		catch (Exception e) 
-		{
+	    catch (IOException e) 
+	    {
 			Log.printStackTrace(e);
 		}
-
-        return null;
-    }
+	    return builder.toString();
+	}
 
 	@GET
-    @Path("/getall")
+    @Path("/{configId}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
-    public List<ATMConfig> getAll() 
+    public List<State> getByConfigId(@PathParam("configId") String configId) 
 	{
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId " + configId );
     	try 
 		{
-    		//arreglar el order by
-			List<ATMConfig> atmconfigs = DB.exec(db -> new ATMConfigManager(db).getAll() );
-	        return atmconfigs;
+			List<State> states = DB.exec(db -> new StateManager(db).getByConfigId(configId) );
+	        return states;
 		} 
 		catch (Exception e) 
 		{
@@ -88,18 +99,18 @@ public class ATMConfigWSEndpoint
     @Path("/create")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create(ATMConfig atmCnf) 
+    public Response create(State std) 
     {
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atmCnf.toString() );
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " std " + std.toString()  );
     	try 
     	{
-    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigId(), atmCnf.getLanguageATM() ) );
+		    State state = DB.exec(db -> new StateManager(db).getState(std.getConfigId(), std.getNumber() ) );
 
-		    if (atmconfig == null)
+		    if (state == null)
             {
 		        DB.execWithTransaction(db -> { 
-                    db.session().persist(atmCnf);
-			      	return atmCnf; 
+                    db.session().persist(std);
+			      	return std; 
 			    } );
             }
 			else
@@ -117,30 +128,37 @@ public class ATMConfigWSEndpoint
 		}
 
 		String json = "{\"msg\":\"" + OBJECT_TYPE + " Created\"}";
-    	return Response.ok(json, MediaType.APPLICATION_JSON).build();
+    	return Response.status(Status.CREATED).type(MediaType.APPLICATION_JSON).entity(json).build();
     }
-
+	
     @POST
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update(ATMConfig atmCnf) 
+    public Response update(State std) 
     {
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atmCnf.toString() );
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " std " + std.toString()  );
     	try 
     	{
-    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigId(), atmCnf.getLanguageATM() ) );
+		    State state = DB.exec(db -> new StateManager(db).getState(std.getConfigId(), std.getNumber() ) );
 
-		    if (atmconfig != null)
+		    if (state != null)
 		    {
-		    	// Update Atmconfig
-		    	atmconfig.setDesc(atmCnf.getDesc());
-		    	atmconfig.setLanguage639(atmCnf.getLanguage639());
-		    	atmconfig.setLanguageIndex(atmCnf.getLanguageIndex());
-		    	// atmconfig.setScreenGroupBase(atmCnf.getScreenGroupBase());
+		    	// Update State
+		    	state.setDesc( std.getDesc() );
+		    	state.setType( std.getType() );
+
+		    	state.setS1( std.getS1() );
+		    	state.setS2( std.getS2() );
+		    	state.setS3( std.getS3() );
+		    	state.setS4( std.getS4() );
+		    	state.setS5( std.getS5() );
+		    	state.setS6( std.getS6() );
+		    	state.setS7( std.getS7() );
+		    	state.setS8( std.getS8() );
 
 			    DB.execWithTransaction(db -> { 
-                    db.session().update(atmconfig);
+                    db.session().update(state);
 			    	return 1; 
 			    } );
 
@@ -159,26 +177,25 @@ public class ATMConfigWSEndpoint
 		}
 
 		String json = "{\"msg\":\"" + OBJECT_TYPE + " Updated\"}";
-    	return Response.ok(json, MediaType.APPLICATION_JSON).build();
+    	return Response.status(Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
     }
-
+	
     @POST
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete(ATMConfig atmCnf) 
+    public Response delete(State std) 
     {
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atmCnf.toString() );
-
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " std " + std.toString()  );
     	try 
     	{
-    		ATMConfig atmconfig = DB.exec(db -> new ATMConfigManager(db).getATMConfig(atmCnf.getConfigId(), atmCnf.getLanguageATM() ) );
+		    State state = DB.exec(db -> new StateManager(db).getState(std.getConfigId(), std.getNumber() ) );
 
-		    if (atmconfig != null)
+		    if (state != null)
 		    {
-		    	// Delete Atmconfig
+		    	// Delete State
 			    DB.execWithTransaction(db -> { 
-                    db.session().delete(atmconfig);
+                    db.session().delete(state);
 			    	return 1; 
 			    } );
 
@@ -197,7 +214,8 @@ public class ATMConfigWSEndpoint
 		}
 
 		String json = "{\"msg\":\"" + OBJECT_TYPE + " Deleted\"}";
-    	return Response.ok(json, MediaType.APPLICATION_JSON).build();
+    	return Response.status(Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
     }
-
+	
+	
 }

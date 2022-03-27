@@ -941,9 +941,21 @@ $(document).ready(function()
 		$("#screenList").focus();
     });	
 
+    function createDismissableMsg(msg, level)
+	{
+		str  = "";
+		str += "<div class=\"alert alert-" + level + " alert-dismissible fade show\" role=\"alert\">";
+		str += msg;
+		str += "    <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">";
+		str += "        <span aria-hidden=\"true\">&times;</span>";
+		str += "    </button>";
+		str += "</div>";
+		return str;
+	}
+
     function handleSubmit(event) 
 	{
-		let action = document.activeElement['value'];      // Value of the submut button clicked
+		let action = document.activeElement['value'];      // Value of the submit button clicked
 		formData = $(this).formToJson();
 
 		formData['scr_data'] = getScreen();                // Actualizar scr_data a partir del dibujo que esta en la Pantalla
@@ -964,9 +976,13 @@ $(document).ready(function()
 			contentType: 'application/json;charset=utf-8',
             dataType : 'json',                             // data type
             data : JSON.stringify( formData ),             // post data || get data
-            success : function(result) 
+            success : function(resultObj) 
 			{
-                console.log("success :" + result);
+                console.log("success :" + resultObj);
+                console.log( resultObj );
+				$('#ResponseMsg').empty();
+				let msg = "Success : " + resultObj["msg"];
+				$('#ResponseMsg').append( createDismissableMsg(msg, "success") );
 		        configIdChange();
 		        $('#cmdTxtArea').val('');
 		        $('#scr_number').val('');
@@ -975,6 +991,10 @@ $(document).ready(function()
             error: function(xhr, resp, text) 
 			{
                 console.log("error :" + xhr.responseText);
+				let resultObj = JSON.parse(xhr.responseText);
+				$('#ResponseMsg').empty();
+				let msg = "Error : " + resultObj["msg"];
+				$('#ResponseMsg').append( createDismissableMsg(msg, "danger") );
             }
         });
 

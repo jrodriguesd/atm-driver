@@ -1,0 +1,2571 @@
+{
+  "A": {
+    "sta_name": {
+      "title": "A - Card Read State"
+    },
+    "sta_desc": {
+      "title": "A - Card Read State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Good Read Next State"
+    },
+    "sta_3": {
+      "title": "Error Screen Number"
+    },
+    "sta_4": {
+      "title": "Read Condition 1",
+      "values": {
+        "001": "Read Track 3",
+        "002": "Read Track 2",
+        "003": "Read Track 2 and 3",
+        "004": "Read Track 1",
+        "005": "Read Track 1 and 3",
+        "006": "Read Track 1 and 2",
+        "007": "All Tracks",
+        "008": "Read Smart Card"
+      }
+    },
+    "sta_5": {
+      "title": "Read Condition 2",
+      "values": {
+        "001": "Read Track 3",
+        "002": "Read Track 2",
+        "003": "Read Track 2 and 3",
+        "004": "Read Track 1",
+        "005": "Read Track 1 and 3",
+        "006": "Read Track 1 and 2",
+        "007": "All Tracks",
+        "008": "Read Smart Card"
+      }
+    },
+    "sta_6": {
+      "title": "Read Condition 3",
+      "values": {
+        "001": "Read Track 3",
+        "002": "Read Track 2",
+        "003": "Read Track 2 and 3",
+        "004": "Read Track 1",
+        "005": "Read Track 1 and 3",
+        "006": "Read Track 1 and 2",
+        "007": "All Tracks",
+        "008": "Read Smart Card"
+      }
+    },
+    "sta_7": {
+      "title": "Card Return Falg",
+      "values": {
+        "000": "Eject the card immediately",
+        "001": "Return the card as specified by a Transaction Reply command message."
+      }
+    },
+    "sta_8": {
+      "title": "No FIT Match Next State"
+    }
+  },
+  "B": {
+    "sta_name": {
+      "title": "B - PIN Entry State"
+    },
+    "sta_desc": {
+      "title": "B - PIN Entry State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Time-Out Next State"
+    },
+    "sta_3": {
+      "title": "Cancel Next State"
+    },
+    "sta_4": {
+      "title": "Local PIN Check Good PIN Next State"
+    },
+    "sta_5": {
+      "title": "Local PIN Check Maximum Bad PINs Next State"
+    },
+    "sta_6": {
+      "title": "Local PIN Check Error Screen"
+    },
+    "sta_7": {
+      "title": "Remote PIN Check Next State"
+    },
+    "sta_8": {
+      "title": "Local PIN Check Maximum PIN retries"
+    }
+  },
+  "C": {
+    "sta_name": {
+      "title": "C - Envelope Dispenser State"
+    },
+    "sta_desc": {
+      "title": "C - Envelope Dispenser State"
+    },
+    "sta_1": {
+      "title": "State number after an envelope is presented"
+    },
+    "sta_2": {
+      "title": "Must be 000"
+    },
+    "sta_3": {
+      "title": "Must be 000"
+    },
+    "sta_4": {
+      "title": "Must be 000"
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "D": {
+    "sta_name": {
+      "title": "D - Pre-Set Operation Code Buffer State"
+    },
+    "sta_desc": {
+      "title": "D - Pre-Set Operation Code Buffer State"
+    },
+    "sta_1": {
+      "title": "Next State"
+    },
+    "sta_2": {
+      "title": "Clear Mask",
+      "type": "bit_stream_neg",
+      "values": {
+        "128": "Clear Byte 8",
+        "001": "Clear Byte 1",
+        "002": "Clear Byte 2",
+        "004": "Clear Byte 3",
+        "008": "Clear Byte 4",
+        "016": "Clear Byte 5",
+        "032": "Clear Byte 6",
+        "064": "Clear Byte 7"
+      }
+    },
+    "sta_3": {
+      "title": "A Pre-Set Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Set Byte 8",
+        "001": "Set Byte 1",
+        "002": "Set Byte 2",
+        "004": "Set Byte 3",
+        "008": "Set Byte 4",
+        "016": "Set Byte 5",
+        "032": "Set Byte 6",
+        "064": "Set Byte 7"
+      }
+    },
+    "sta_4": {
+      "title": "B Pre-Set Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Set Byte 8",
+        "001": "Set Byte 1",
+        "002": "Set Byte 2",
+        "004": "Set Byte 3",
+        "008": "Set Byte 4",
+        "016": "Set Byte 5",
+        "032": "Set Byte 6",
+        "064": "Set Byte 7"
+      }
+    },
+    "sta_5": {
+      "title": "C Pre-Set Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Set Byte 8",
+        "001": "Set Byte 1",
+        "002": "Set Byte 2",
+        "004": "Set Byte 3",
+        "008": "Set Byte 4",
+        "016": "Set Byte 5",
+        "032": "Set Byte 6",
+        "064": "Set Byte 7"
+      }
+    },
+    "sta_6": {
+      "title": "D Pre-Set Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Set Byte 8",
+        "001": "Set Byte 1",
+        "002": "Set Byte 2",
+        "004": "Set Byte 3",
+        "008": "Set Byte 4",
+        "016": "Set Byte 5",
+        "032": "Set Byte 6",
+        "064": "Set Byte 7"
+      }
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    }
+  },
+  "E": {
+    "sta_name": {
+      "title": "E - Four FDK Selection Function State"
+    },
+    "sta_desc": {
+      "title": "E - Four FDK Selection Function State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Time-Out Next State"
+    },
+    "sta_3": {
+      "title": "Cancel Next State"
+    },
+    "sta_4": {
+      "title": "FDK A Next State"
+    },
+    "sta_5": {
+      "title": "FDK B Next State"
+    },
+    "sta_6": {
+      "title": "FDK C Next State"
+    },
+    "sta_7": {
+      "title": "FDK D Next State"
+    },
+    "sta_8": {
+      "title": "Buffer Location",
+      "values": {
+        "000": "Byte 1",
+        "001": "Byte 2",
+        "002": "Byte 3",
+        "003": "Byte 4",
+        "004": "Byte 5",
+        "005": "Byte 6",
+        "006": "Byte 7",
+        "007": "Byte 8"
+      }
+    }
+  },
+  "F": {
+    "sta_name": {
+      "title": "F - Amount Entry State"
+    },
+    "sta_desc": {
+      "title": "F - Amount Entry State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Time-Out Next State"
+    },
+    "sta_3": {
+      "title": "Cancel Next State"
+    },
+    "sta_4": {
+      "title": "FDK A Next State"
+    },
+    "sta_5": {
+      "title": "FDK B Next State"
+    },
+    "sta_6": {
+      "title": "FDK C Next State"
+    },
+    "sta_7": {
+      "title": "FDK D Next State"
+    },
+    "sta_8": {
+      "title": "Amount Display Screen"
+    }
+  },
+  "G": {
+    "sta_name": {
+      "title": "G - Amount Check State"
+    },
+    "sta_desc": {
+      "title": "G - Amount Check State"
+    },
+    "sta_1": {
+      "title": "Check Condition True Next State"
+    },
+    "sta_2": {
+      "title": "Check Condition False Next State"
+    },
+    "sta_3": {
+      "title": "Buffer to be checked",
+      "values": {
+        "000": "Amount buffer",
+        "001": "Buffer B",
+        "002": "Buffer C"
+      }
+    },
+    "sta_4": {
+      "title": "Integer Multiple Value"
+    },
+    "sta_5": {
+      "title": "Number of Decimal Places"
+    },
+    "sta_6": {
+      "title": "Currency Type"
+    },
+    "sta_7": {
+      "title": "Amount Check Condition",
+      "values": {
+        "000": "value to the right of the decimal point position is zero",
+        "001": "value is zero, or if Buffer B or C contains more than 12 digits",
+        "002": "Integer Multiple Value",
+        "003": "whether the value is dispensable"
+      }
+    },
+    "sta_8": {
+      "title": "Must be 000."
+    }
+  },
+  "H": {
+    "sta_name": {
+      "title": "H - Information Entry State"
+    },
+    "sta_desc": {
+      "title": "H - Information Entry State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Time-Out Next State"
+    },
+    "sta_3": {
+      "title": "Cancel Next State"
+    },
+    "sta_4": {
+      "title": "FDK A Or I Next State"
+    },
+    "sta_5": {
+      "title": "FDK B Or H Next State"
+    },
+    "sta_6": {
+      "title": "FDK C Or G Next State"
+    },
+    "sta_7": {
+      "title": "FDK D Or F Next State"
+    },
+    "sta_8": {
+      "title": "Entry Mode",
+      "values": {
+        "000": "Key Entry Display X",
+        "001": "Key Entry Diasplay Data",
+        "002": "Key Entry Display X Stote Buffer B",
+        "003": "Key Entry Diasplay Data Store Buffer B"
+      }
+    }
+  },
+  "I": {
+    "sta_name": {
+      "title": "I - Transaction Request State"
+    },
+    "sta_desc": {
+      "title": "I - Transaction Request State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Timeout Next State"
+    },
+    "sta_3": {
+      "title": "Send Track 2 Data",
+      "values": {
+        "000": "No",
+        "001": "Yes"
+      }
+    },
+    "sta_4": {
+      "title": "Send Track 1 and/or Track 3",
+      "values": {
+        "000": "No Track 1 No Track3",
+        "001": "No Track 1 Yes Track3",
+        "002": "Yes Track 1 No Track3",
+        "003": "Yes Track 1 Yes Track3",
+        "004": "No Track 1 No Track3",
+        "005": "No Track 1 Yes Track3",
+        "006": "Yes Track 1 No Track3",
+        "007": "Yes Track 1 Yes Track3"
+      }
+    },
+    "sta_5": {
+      "title": "Send Operation Code Data",
+      "values": {
+        "000": "No",
+        "001": "Yes"
+      }
+    },
+    "sta_6": {
+      "title": "Send Amount Data",
+      "values": {
+        "000": "No",
+        "001": "Yes"
+      }
+    },
+    "sta_7": {
+      "title": "Send PIN Buffer",
+      "values": {
+        "128": "No",
+        "129": "Yes",
+        "000": "No",
+        "001": "Yes"
+      }
+    },
+    "sta_8": {
+      "title": "Send Buffers",
+      "extension_state": {
+        "num": "1",
+        "min_val": "008",
+        "max_val": "254"
+      }
+    }
+  },
+  "J": {
+    "sta_name": {
+      "title": "J - Close State"
+    },
+    "sta_desc": {
+      "title": "J - Close State"
+    },
+    "sta_1": {
+      "title": "Receipt Delivered Screen"
+    },
+    "sta_2": {
+      "title": "Next State"
+    },
+    "sta_3": {
+      "title": "No Receipt Delivered Screen"
+    },
+    "sta_4": {
+      "title": "Card Retained Screen Number"
+    },
+    "sta_5": {
+      "title": "Statement Delivered Screen"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "BNA Notes Returned Screen"
+    },
+    "sta_8": {
+      "title": "Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    }
+  },
+  "K": {
+    "sta_name": {
+      "title": "K - FIT Switch State"
+    },
+    "sta_desc": {
+      "title": "K - FIT Switch State"
+    },
+    "sta_1": {
+      "title": "Next State"
+    },
+    "sta_2": {
+      "title": "Next State"
+    },
+    "sta_3": {
+      "title": "Next State"
+    },
+    "sta_4": {
+      "title": "Next State"
+    },
+    "sta_5": {
+      "title": "Next State"
+    },
+    "sta_6": {
+      "title": "Next State"
+    },
+    "sta_7": {
+      "title": "Next State"
+    },
+    "sta_8": {
+      "title": "Next State"
+    }
+  },
+  "_": {
+    "sta_name": {
+      "title": "_ - Expanded FIT Switch State"
+    },
+    "sta_desc": {
+      "title": "_ - Expanded FIT Switch State"
+    },
+    "sta_1": {
+      "title": "Next State"
+    },
+    "sta_2": {
+      "title": "Next State"
+    },
+    "sta_3": {
+      "title": "Next State"
+    },
+    "sta_4": {
+      "title": "Next State"
+    },
+    "sta_5": {
+      "title": "Next State"
+    },
+    "sta_6": {
+      "title": "Next State"
+    },
+    "sta_7": {
+      "title": "Next State"
+    },
+    "sta_8": {
+      "title": "Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    }
+  },
+  "L": {
+    "sta_name": {
+      "title": "L - Card Write State"
+    },
+    "sta_desc": {
+      "title": "L - Card Write State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Good Write Next State"
+    },
+    "sta_3": {
+      "title": "Bad Write Next State"
+    },
+    "sta_4": {
+      "title": "No Write Attempted State"
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "M": {
+    "sta_name": {
+      "title": "M - Enhanced PIN Entry State"
+    },
+    "sta_desc": {
+      "title": "M - Enhanced PIN Entry State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Time-Out State"
+    },
+    "sta_3": {
+      "title": "Cancel State Number"
+    },
+    "sta_4": {
+      "title": "Local PIN Check Good PIN State"
+    },
+    "sta_5": {
+      "title": "Local PIN Check Maximum Bad PINs State"
+    },
+    "sta_6": {
+      "title": "Local PIN Check Error Screen Number"
+    },
+    "sta_7": {
+      "title": "Remote PIN Check State"
+    },
+    "sta_8": {
+      "title": "Local PIN Check Maximum PIN Check Retries"
+    }
+  },
+  "N": {
+    "sta_name": {
+      "title": "N - Camera Control State"
+    },
+    "sta_desc": {
+      "title": "N - Camera Control State"
+    },
+    "sta_1": {
+      "title": "Picture Type"
+    },
+    "sta_2": {
+      "title": "Next State"
+    },
+    "sta_3": {
+      "title": "Must be 000"
+    },
+    "sta_4": {
+      "title": "Must be 000"
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "R": {
+    "sta_name": {
+      "title": "R - Enhanced Amount Entry State"
+    },
+    "sta_desc": {
+      "title": "R - Enhanced Amount Entry State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Time-Out Next State"
+    },
+    "sta_3": {
+      "title": "Cancel Next State"
+    },
+    "sta_4": {
+      "title": "FDK A or I Next State"
+    },
+    "sta_5": {
+      "title": "FDK B or H Next State"
+    },
+    "sta_6": {
+      "title": "FDK C or G Next State"
+    },
+    "sta_7": {
+      "title": "FDK D or F Next State"
+    },
+    "sta_8": {
+      "title": "Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    }
+  },
+  "S": {
+    "sta_name": {
+      "title": "S - Language Code Switch State"
+    },
+    "sta_desc": {
+      "title": "S - Language Code Switch State"
+    },
+    "sta_1": {
+      "title": "No Language Code State"
+    },
+    "sta_2": {
+      "title": "Language Code 0 Next State"
+    },
+    "sta_3": {
+      "title": "Language Code 1 Next State"
+    },
+    "sta_4": {
+      "title": "Language Code 2 Next State"
+    },
+    "sta_5": {
+      "title": "Language Code 3 Next State"
+    },
+    "sta_6": {
+      "title": "Language Code 4 Next State"
+    },
+    "sta_7": {
+      "title": "Language Code 5 Next State"
+    },
+    "sta_8": {
+      "title": "Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    }
+  },
+  "T": {
+    "sta_name": {
+      "title": "T - Card Read - PIN Entry Initiation State"
+    },
+    "sta_desc": {
+      "title": "T - Card Read - PIN Entry Initiation State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Good Read Next State"
+    },
+    "sta_3": {
+      "title": "Error Screen Number"
+    },
+    "sta_4": {
+      "title": "Read Condition 1"
+    },
+    "sta_5": {
+      "title": "Read Condition 2"
+    },
+    "sta_6": {
+      "title": "Read Condition 3"
+    },
+    "sta_7": {
+      "title": "Reserved"
+    },
+    "sta_8": {
+      "title": "Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    }
+  },
+  "U": {
+    "sta_name": {
+      "title": "U - Device Fitness Flow Select State"
+    },
+    "sta_desc": {
+      "title": "U - Device Fitness Flow Select State"
+    },
+    "sta_1": {
+      "title": "Device Number",
+      "values": {
+        "003": "Card Reader/Writer",
+        "004": "Cash Handler",
+        "005": "Envelope Depository",
+        "006": "Receipt Printer",
+        "007": "Journal Printer",
+        "010": "Night Safe",
+        "015": "Cassette Type 1",
+        "016": "Cassette Type 2",
+        "017": "Cassette Type 3",
+        "018": "Cassette Type 4",
+        "095": "Cassette Type 5",
+        "096": "Cassette Type 6",
+        "097": "Cassette Type 7",
+        "021": "Statement Printer",
+        "027": "Envelope Dispenser",
+        "024": "Coin Dispenser",
+        "034": "Bunch Note Acceptor",
+        "035": "Cheque Processing Module",
+        "094": "Barcode Reader",
+        "098": "Primary Cash Handler",
+        "099": "Secondary Cash Handler"
+      }
+    },
+    "sta_2": {
+      "title": "Device Available State"
+    },
+    "sta_3": {
+      "title": "Device Identifier Graphic"
+    },
+    "sta_4": {
+      "title": "Device Unavailable Next State"
+    },
+    "sta_5": {
+      "title": "Device Sub-Component Identifier"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "V": {
+    "sta_name": {
+      "title": "V - Language Select From Card State"
+    },
+    "sta_desc": {
+      "title": "V - Language Select From Card State"
+    },
+    "sta_1": {
+      "title": "Next State"
+    },
+    "sta_2": {
+      "title": "Language Code 1"
+    },
+    "sta_3": {
+      "title": "Language Code 2"
+    },
+    "sta_4": {
+      "title": "Language Code 3"
+    },
+    "sta_5": {
+      "title": "Language Code 4"
+    },
+    "sta_6": {
+      "title": "Language Code 5"
+    },
+    "sta_7": {
+      "title": "Language Code 6"
+    },
+    "sta_8": {
+      "title": "Screen Group Size"
+    }
+  },
+  "W": {
+    "sta_name": {
+      "title": "W - FDK Switch State"
+    },
+    "sta_desc": {
+      "title": "W - FDK Switch State"
+    },
+    "sta_1": {
+      "title": "FDK A Next State"
+    },
+    "sta_2": {
+      "title": "FDK B Next State"
+    },
+    "sta_3": {
+      "title": "FDK C Next State"
+    },
+    "sta_4": {
+      "title": "FDK D Next State"
+    },
+    "sta_5": {
+      "title": "FDK F Next State"
+    },
+    "sta_6": {
+      "title": "FDK G Next State"
+    },
+    "sta_7": {
+      "title": "FDK H Next State"
+    },
+    "sta_8": {
+      "title": "FDK I Next State"
+    }
+  },
+  "X": {
+    "sta_name": {
+      "title": "X - FDK Information Entry State"
+    },
+    "sta_desc": {
+      "title": "X - FDK Information Entry State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Time-Out Next State"
+    },
+    "sta_3": {
+      "title": "Cancel Next State"
+    },
+    "sta_4": {
+      "title": "FDK Next State"
+    },
+    "sta_5": {
+      "title": "Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_6": {
+      "title": "Buffer ID",
+      "values": {
+        "010": "Buffer B 0 Decimals",
+        "011": "Buffer B 1 Decimals",
+        "012": "Buffer B 2 Decimals",
+        "020": "Buffer C 0 Decimals",
+        "021": "Buffer C 1 Decimals",
+        "022": "Buffer C 2 Decimals",
+        "030": "Amount buffer 0 Decimals",
+        "031": "Amount buffer 1 Decimals",
+        "032": "Amount buffer 2 Decimals"
+      }
+    },
+    "sta_7": {
+      "title": "FDKs Active Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "Y": {
+    "sta_name": {
+      "title": "Y - Eight FDK Selection Function State"
+    },
+    "sta_desc": {
+      "title": "Y - Eight FDK Selection Function State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Time-Out Next State"
+    },
+    "sta_3": {
+      "title": "Cancel Next State"
+    },
+    "sta_4": {
+      "title": "FDK Next State"
+    },
+    "sta_5": {
+      "title": "FDK Selection Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_6": {
+      "title": "Buffer positions"
+    },
+    "sta_7": {
+      "title": "FDKs Active Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_8": {
+      "title": "Multi‐Language Screens Extension State",
+      "extension_state": {
+        "num": "2",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    }
+  },
+  "Z": {
+    "sta_name": {
+      "title": "Z - Extension State"
+    },
+    "sta_desc": {
+      "title": "Z - Extension State"
+    },
+    "sta_1": {
+      "title": "Value 1"
+    },
+    "sta_2": {
+      "title": "Value 2"
+    },
+    "sta_3": {
+      "title": "Value 3"
+    },
+    "sta_4": {
+      "title": "Value 4"
+    },
+    "sta_5": {
+      "title": "Value 5"
+    },
+    "sta_6": {
+      "title": "Value 6"
+    },
+    "sta_7": {
+      "title": "Value 7"
+    },
+    "sta_8": {
+      "title": "Value 8"
+    }
+  },
+  "ZD1": {
+    "sta_name": {
+      "title": "ZD1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "ZD1 - Extension State"
+    },
+    "sta_1": {
+      "title": "F Pre-Set Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Set Byte 8",
+        "001": "Set Byte 1",
+        "002": "Set Byte 2",
+        "004": "Set Byte 3",
+        "008": "Set Byte 4",
+        "016": "Set Byte 5",
+        "032": "Set Byte 6",
+        "064": "Set Byte 7"
+      }
+    },
+    "sta_2": {
+      "title": "G Pre-Set Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Set Byte 8",
+        "001": "Set Byte 1",
+        "002": "Set Byte 2",
+        "004": "Set Byte 3",
+        "008": "Set Byte 4",
+        "016": "Set Byte 5",
+        "032": "Set Byte 6",
+        "064": "Set Byte 7"
+      }
+    },
+    "sta_3": {
+      "title": "H Pre-Set Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Set Byte 8",
+        "001": "Set Byte 1",
+        "002": "Set Byte 2",
+        "004": "Set Byte 3",
+        "008": "Set Byte 4",
+        "016": "Set Byte 5",
+        "032": "Set Byte 6",
+        "064": "Set Byte 7"
+      }
+    },
+    "sta_4": {
+      "title": "I Pre-Set Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Set Byte 8",
+        "001": "Set Byte 1",
+        "002": "Set Byte 2",
+        "004": "Set Byte 3",
+        "008": "Set Byte 4",
+        "016": "Set Byte 5",
+        "032": "Set Byte 6",
+        "064": "Set Byte 7"
+      }
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "ZI1": {
+    "sta_name": {
+      "title": "ZI1 - Extension State of I State"
+    },
+    "sta_desc": {
+      "title": "ZI1 - Extension State of I State"
+    },
+    "sta_1": {
+      "title": "Send Buffer B and C",
+      "values": {
+        "000": "Send no buffers",
+        "001": "Send Buffer B",
+        "002": "Send Buffer C",
+        "003": "Send Buffer B and C"
+      }
+    },
+    "sta_2": {
+      "title": "Send Optional Data Fields A - H"
+    },
+    "sta_3": {
+      "title": "Send Optional Data Fields I - L"
+    },
+    "sta_4": {
+      "title": "Send Optional Data Fields Q - a"
+    },
+    "sta_5": {
+      "title": "Send Optional Data"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "EMV/CAM2 Processing Flag",
+      "values": {
+        "000": "Do not perform EMV/CAM2 processing",
+        "001": "Perform full EMV/CAM2 processing",
+        "002": "Do not perform EMV/CAM2 processing",
+        "003": "Perform partial EMV Processing"
+      }
+    },
+    "sta_8": {
+      "title": "Extension State"
+    }
+  },
+  "ZJ1": {
+    "sta_name": {
+      "title": "ZJ1 - Extension State of J State"
+    },
+    "sta_desc": {
+      "title": "ZJ1 - Extension State of J State"
+    },
+    "sta_1": {
+      "title": "Send Buffer B and C",
+      "values": {
+        "000": "Send no buffers",
+        "001": "Send Buffer B",
+        "002": "Send Buffer C",
+        "003": "Send Buffer B and C"
+      }
+    },
+    "sta_2": {
+      "title": "Send Optional Data Fields A - H"
+    },
+    "sta_3": {
+      "title": "Send Optional Data Fields I - L"
+    },
+    "sta_4": {
+      "title": "Send Optional Data Fields Q - a"
+    },
+    "sta_5": {
+      "title": "Send Optional Data"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "EMV/CAM2 Processing Flag",
+      "values": {
+        "000": "Do not perform EMV/CAM2 processing",
+        "001": "Perform full EMV/CAM2 processing",
+        "002": "Do not perform EMV/CAM2 processing",
+        "003": "Perform partial EMV Processing"
+      }
+    },
+    "sta_8": {
+      "title": "Extension State"
+    }
+  },
+  "Z_1": {
+    "sta_name": {
+      "title": "Z_1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Z_1 - Extension State"
+    },
+    "sta_1": {
+      "title": "Next State"
+    },
+    "sta_2": {
+      "title": "Next State"
+    },
+    "sta_3": {
+      "title": "Next State"
+    },
+    "sta_4": {
+      "title": "Next State"
+    },
+    "sta_5": {
+      "title": "Next State"
+    },
+    "sta_6": {
+      "title": "Next State"
+    },
+    "sta_7": {
+      "title": "Next State"
+    },
+    "sta_8": {
+      "title": "Next State"
+    }
+  },
+  "ZR1": {
+    "sta_name": {
+      "title": "ZR1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "ZR1 - Extension State"
+    },
+    "sta_1": {
+      "title": "Document Amount Buffer",
+      "values": {
+        "000": "Amount buffer",
+        "001": "Buffer B",
+        "002": "Buffer C"
+      }
+    },
+    "sta_2": {
+      "title": "Amount Display Screen Number"
+    },
+    "sta_3": {
+      "title": "Start CAV command"
+    },
+    "sta_4": {
+      "title": "Language Dependent Screen Flag"
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "ZS1": {
+    "sta_name": {
+      "title": "ZS1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "ZS1 - Extension State"
+    },
+    "sta_1": {
+      "title": "Language Code 6 Next State"
+    },
+    "sta_2": {
+      "title": "Language Code 7 Next State"
+    },
+    "sta_3": {
+      "title": "Language Code 8 Next State"
+    },
+    "sta_4": {
+      "title": "Language Code 8 Next State"
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "ZT1": {
+    "sta_name": {
+      "title": "ZT1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "ZT1 - Extension State"
+    },
+    "sta_1": {
+      "title": "Screen Number Enter PIN"
+    },
+    "sta_2": {
+      "title": "No FIT Match State"
+    },
+    "sta_3": {
+      "title": "Clear Key Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_4": {
+      "title": "Accept Key Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_5": {
+      "title": "Screen Number Remove Card"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "ZX1": {
+    "sta_name": {
+      "title": "ZX1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "ZX1 - Extension State"
+    },
+    "sta_1": {
+      "title": "Value stored if FDK A"
+    },
+    "sta_2": {
+      "title": "Value stored if FDK B"
+    },
+    "sta_3": {
+      "title": "Value stored if FDK C"
+    },
+    "sta_4": {
+      "title": "Value stored if FDK D"
+    },
+    "sta_5": {
+      "title": "Value stored if FDK F"
+    },
+    "sta_6": {
+      "title": "Value stored if FDK G"
+    },
+    "sta_7": {
+      "title": "Value stored if FDK H"
+    },
+    "sta_8": {
+      "title": "Value stored if FDK I"
+    }
+  },
+  "ZY1": {
+    "sta_name": {
+      "title": "ZY1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "ZY1 - Extension State"
+    },
+    "sta_1": {
+      "title": "Operation Code stored if FDK A"
+    },
+    "sta_2": {
+      "title": "Operation Code stored if FDK B"
+    },
+    "sta_3": {
+      "title": "Operation Code stored if FDK C"
+    },
+    "sta_4": {
+      "title": "Operation Code stored if FDK D"
+    },
+    "sta_5": {
+      "title": "Operation Code stored if FDK F"
+    },
+    "sta_6": {
+      "title": "Operation Code stored if FDK G"
+    },
+    "sta_7": {
+      "title": "Operation Code stored if FDK H"
+    },
+    "sta_8": {
+      "title": "Operation Code stored if FDK I"
+    }
+  },
+  "ZY2": {
+    "sta_name": {
+      "title": "ZY2 - Extension State"
+    },
+    "sta_desc": {
+      "title": "ZY2 - Extension State"
+    },
+    "sta_1": {
+      "title": "Screen Base if FDK A"
+    },
+    "sta_2": {
+      "title": "Screen Base if FDK B"
+    },
+    "sta_3": {
+      "title": "Screen Base if FDK C"
+    },
+    "sta_4": {
+      "title": "Screen Base if FDK D"
+    },
+    "sta_5": {
+      "title": "Screen Base if FDK F"
+    },
+    "sta_6": {
+      "title": "Screen Base if FDK G"
+    },
+    "sta_7": {
+      "title": "Screen Base if FDK H"
+    },
+    "sta_8": {
+      "title": "Screen Base if FDK I"
+    }
+  },
+  "Zb1": {
+    "sta_name": {
+      "title": "Zb1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Zb1 - Extension State"
+    },
+    "sta_1": {
+      "title": "Number of attempts allowed"
+    },
+    "sta_2": {
+      "title": "Use local verification"
+    },
+    "sta_3": {
+      "title": "Must be 000"
+    },
+    "sta_4": {
+      "title": "Must be 000"
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "Zm1": {
+    "sta_name": {
+      "title": "Zm1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Zm1 - Extension State"
+    },
+    "sta_1": {
+      "title": "Operation Code stored if FDK A"
+    },
+    "sta_2": {
+      "title": "Operation Code stored if FDK B"
+    },
+    "sta_3": {
+      "title": "Operation Code stored if FDK C"
+    },
+    "sta_4": {
+      "title": "Operation Code stored if FDK D"
+    },
+    "sta_5": {
+      "title": "Operation Code stored if FDK F"
+    },
+    "sta_6": {
+      "title": "Operation Code stored if FDK G"
+    },
+    "sta_7": {
+      "title": "Operation Code stored if FDK H"
+    },
+    "sta_8": {
+      "title": "Operation Code stored if FDK I"
+    }
+  },
+  "Zm2": {
+    "sta_name": {
+      "title": "Zm2 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Zm2 - Extension State"
+    },
+    "sta_1": {
+      "title": "Screen Base if FDK A"
+    },
+    "sta_2": {
+      "title": "Screen Base if FDK B"
+    },
+    "sta_3": {
+      "title": "Screen Base if FDK C"
+    },
+    "sta_4": {
+      "title": "Screen Base if FDK D"
+    },
+    "sta_5": {
+      "title": "Screen Base if FDK F"
+    },
+    "sta_6": {
+      "title": "Screen Base if FDK G"
+    },
+    "sta_7": {
+      "title": "Screen Base if FDK H"
+    },
+    "sta_8": {
+      "title": "Screen Base if FDK I"
+    }
+  },
+  "Z>1": {
+    "sta_name": {
+      "title": "Z>1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Z>1 - Extension State"
+    },
+    "sta_1": {
+      "title": "Please Enter Notes Screen"
+    },
+    "sta_2": {
+      "title": "Please Remove Notes Screen"
+    },
+    "sta_3": {
+      "title": "Confirmation Screen"
+    },
+    "sta_4": {
+      "title": "Hardware Error Screen"
+    },
+    "sta_5": {
+      "title": "Escrow Full Screen"
+    },
+    "sta_6": {
+      "title": "Processing Notes Screen"
+    },
+    "sta_7": {
+      "title": "Please Remove More than 90 Notes Screen"
+    },
+    "sta_8": {
+      "title": "Please Wait Screen"
+    }
+  },
+  "Z>2": {
+    "sta_name": {
+      "title": "Z>2 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Z>2 - Extension State"
+    },
+    "sta_1": {
+      "title": "Good Next State"
+    },
+    "sta_2": {
+      "title": "Cancel Next State"
+    },
+    "sta_3": {
+      "title": "Device Error Next State"
+    },
+    "sta_4": {
+      "title": "Timeout Next State"
+    },
+    "sta_5": {
+      "title": "Notes at Refund Slot Next State"
+    },
+    "sta_6": {
+      "title": "Reserved (000)"
+    },
+    "sta_7": {
+      "title": "Reserved (000)"
+    },
+    "sta_8": {
+      "title": "Reserved (000)"
+    }
+  },
+  "Z>3": {
+    "sta_name": {
+      "title": "Z>3 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Z>3 - Extension State"
+    },
+    "sta_1": {
+      "title": "Set NDC note type 1 - 12"
+    },
+    "sta_2": {
+      "title": "Set NDC note type 13 - 24"
+    },
+    "sta_3": {
+      "title": "Set NDC note type 25 - 36"
+    },
+    "sta_4": {
+      "title": "Set NDC note type 37 - 48"
+    },
+    "sta_5": {
+      "title": "Set NDC note type 49 - 50"
+    },
+    "sta_6": {
+      "title": "Reserved (000)"
+    },
+    "sta_7": {
+      "title": "Remove Refused Notes Screen"
+    },
+    "sta_8": {
+      "title": "Counterfeit Notes Retained Screen"
+    }
+  },
+  "Z>4": {
+    "sta_name": {
+      "title": "Z>4 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Z>4 - Extension State"
+    },
+    "sta_1": {
+      "title": "Reserved (000)"
+    },
+    "sta_2": {
+      "title": "Reserved (000)"
+    },
+    "sta_3": {
+      "title": "Reserved (000)"
+    },
+    "sta_4": {
+      "title": "Direct Deposit Control",
+      "values": {
+        "000": "Refundable Deposit",
+        "001": "Direct Deposit"
+      }
+    },
+    "sta_5": {
+      "title": "Direct Deposit Limit"
+    },
+    "sta_6": {
+      "title": "Reserved (000)"
+    },
+    "sta_7": {
+      "title": "Reserved (000)"
+    },
+    "sta_8": {
+      "title": "Reserved (000)"
+    }
+  },
+  "Zw1": {
+    "sta_name": {
+      "title": "Zw1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Zw1 - Extension State"
+    },
+    "sta_1": {
+      "title": "Please Insert Cheque Screen"
+    },
+    "sta_2": {
+      "title": "Processing Cheque Screen"
+    },
+    "sta_3": {
+      "title": "Unacceptable Cheque Screen"
+    },
+    "sta_4": {
+      "title": "Incorrect Orientation Screen"
+    },
+    "sta_5": {
+      "title": "Further Processing Screen"
+    },
+    "sta_6": {
+      "title": "Cheque Captured Screen"
+    },
+    "sta_7": {
+      "title": "Device Error Screen"
+    },
+    "sta_8": {
+      "title": "Please Remove Cheque Screen"
+    }
+  },
+  "Zw2": {
+    "sta_name": {
+      "title": "Zw2 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Zw2 - Extension State"
+    },
+    "sta_1": {
+      "title": "Cheque Already Present State"
+    },
+    "sta_2": {
+      "title": "Cheque Accepted and Processed"
+    },
+    "sta_3": {
+      "title": "Exception State"
+    },
+    "sta_4": {
+      "title": "Customer Cancel Timeout State"
+    },
+    "sta_5": {
+      "title": "Cheque Captured Exit"
+    },
+    "sta_6": {
+      "title": "Reserved (000)"
+    },
+    "sta_7": {
+      "title": "Reserved (000)"
+    },
+    "sta_8": {
+      "title": "Reserved (000)"
+    }
+  },
+  "Z.1": {
+    "sta_name": {
+      "title": "Z.1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Z.1 - Extension State"
+    },
+    "sta_1": {
+      "title": "FDK A ICC Application Name Template Screen Number"
+    },
+    "sta_2": {
+      "title": "FDK B ICC Application Name Template Screen Number"
+    },
+    "sta_3": {
+      "title": "FDK C ICC Application Name Template Screen Number"
+    },
+    "sta_4": {
+      "title": "FDK D ICC Application Name Template Screen Number"
+    },
+    "sta_5": {
+      "title": "FDK F ICC Application Name Template Screen Number"
+    },
+    "sta_6": {
+      "title": "FDK G ICC Application Name Template Screen Number"
+    },
+    "sta_7": {
+      "title": "FDK H ICC Application Name Template Screen Number"
+    },
+    "sta_8": {
+      "title": "FDK I ICC Application Name Template Screen Number"
+    }
+  },
+  "Z.2": {
+    "sta_name": {
+      "title": "Z.2 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Z.2 - Extension State"
+    },
+    "sta_1": {
+      "title": "More Applications Screen Number"
+    },
+    "sta_2": {
+      "title": "FDK For More Applications",
+      "values": {
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "003": "Activate FDK C",
+        "004": "Activate FDK D",
+        "005": "Activate FDK F",
+        "006": "Activate FDK G",
+        "007": "Activate FDK H",
+        "008": "Activate FDK I"
+      }
+    },
+    "sta_3": {
+      "title": "Back To Start of List Screen Number"
+    },
+    "sta_4": {
+      "title": "FDK For Back To Start of List",
+      "values": {
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "003": "Activate FDK C",
+        "004": "Activate FDK D",
+        "005": "Activate FDK F",
+        "006": "Activate FDK G",
+        "007": "Activate FDK H",
+        "008": "Activate FDK I"
+      }
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "Z.3": {
+    "sta_name": {
+      "title": "Z.3 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Z.3 - Extension State"
+    },
+    "sta_1": {
+      "title": "Timeout Next State"
+    },
+    "sta_2": {
+      "title": "Cancel Next State"
+    },
+    "sta_3": {
+      "title": "Cardholder Selected Application Next State"
+    },
+    "sta_4": {
+      "title": "Application Selected Automatically Next State"
+    },
+    "sta_5": {
+      "title": "No Usable Applications Next State"
+    },
+    "sta_6": {
+      "title": "No Usable Applications (Fallback Forbidden) Next State"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "Z/1": {
+    "sta_name": {
+      "title": "Z/1 - Extension State"
+    },
+    "sta_desc": {
+      "title": "Z/1 - Extension State"
+    },
+    "sta_1": {
+      "title": "ICC Application Select & Initialisation Successful State"
+    },
+    "sta_2": {
+      "title": "Card Not Smart Next State"
+    },
+    "sta_3": {
+      "title": "ICC Application Not Usable State"
+    },
+    "sta_4": {
+      "title": "No Suitable ICC Applications State"
+    },
+    "sta_5": {
+      "title": "ICC Application Level Error State"
+    },
+    "sta_6": {
+      "title": "ICC Hardware Level Error State"
+    },
+    "sta_7": {
+      "title": "Processing Not Performed State"
+    },
+    "sta_8": {
+      "title": "No Usable Applications (Fallback Forbidden) State"
+    }
+  },
+  "b": {
+    "sta_name": {
+      "title": "b - Customer-Selectable PIN State"
+    },
+    "sta_desc": {
+      "title": "b - Customer-Selectable PIN State"
+    },
+    "sta_1": {
+      "title": "First Entry Screen Number"
+    },
+    "sta_2": {
+      "title": "Time-Out Next State"
+    },
+    "sta_3": {
+      "title": "Cancel Next State"
+    },
+    "sta_4": {
+      "title": "Good Next State"
+    },
+    "sta_5": {
+      "title": "CSP Fail Next State"
+    },
+    "sta_6": {
+      "title": "Second Entry Screen Number"
+    },
+    "sta_7": {
+      "title": "Mis‐Match First Entry Screen Number"
+    },
+    "sta_8": {
+      "title": "Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    }
+  },
+  "k": {
+    "sta_name": {
+      "title": "k - Smart FIT Check State"
+    },
+    "sta_desc": {
+      "title": "k - Smart FIT Check State"
+    },
+    "sta_1": {
+      "title": "Must be 000"
+    },
+    "sta_2": {
+      "title": "Good Read Next State"
+    },
+    "sta_3": {
+      "title": "Must be 000"
+    },
+    "sta_4": {
+      "title": "Must be 000"
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Card Return Falg",
+      "values": {
+        "000": "Eject the card immediately",
+        "001": "Return the card as specified by a Transaction Reply command message."
+      }
+    },
+    "sta_8": {
+      "title": "No FIT Match Next State"
+    }
+  },
+  "m": {
+    "sta_name": {
+      "title": "m - PIN & Language Select State"
+    },
+    "sta_desc": {
+      "title": "m - PIN & Language Select State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Time-Out Next State"
+    },
+    "sta_3": {
+      "title": "Cancel Next State"
+    },
+    "sta_4": {
+      "title": "Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_5": {
+      "title": "FDK Selection Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_6": {
+      "title": "Buffer positions",
+      "extension_state": {
+        "num": "2",
+        "min_val": "008",
+        "max_val": "254"
+      }
+    },
+    "sta_7": {
+      "title": "FDKs Active Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_8": {
+      "title": "Multi‐Language Screens Extension State"
+    }
+  },
+  ">": {
+    "sta_name": {
+      "title": "> - Cash Accept State"
+    },
+    "sta_desc": {
+      "title": "> - Cash Accept State"
+    },
+    "sta_1": {
+      "title": "Cancel Key Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_2": {
+      "title": "Deposit Key Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_3": {
+      "title": "Add More Key Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_4": {
+      "title": "Refund Key Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_5": {
+      "title": "Screen Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_6": {
+      "title": "States Extension State",
+      "extension_state": {
+        "num": "2",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_7": {
+      "title": "Extension State 3",
+      "extension_state": {
+        "num": "3",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_8": {
+      "title": "Extension State 4",
+      "extension_state": {
+        "num": "4",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    }
+  },
+  "w": {
+    "sta_name": {
+      "title": "w - Cheque Accept State"
+    },
+    "sta_desc": {
+      "title": "w - Cheque Accept State"
+    },
+    "sta_1": {
+      "title": "Reserved (000)"
+    },
+    "sta_2": {
+      "title": "Leave Capture Option",
+      "values": {
+        "000": "Leave at throat",
+        "001": "Capture to bin 1"
+      }
+    },
+    "sta_3": {
+      "title": "Cheque Entry Retries",
+      "values": {
+        "101": "Allow one further retry. After all the permissible retries goes to Cancel Time Out State",
+        "102": "Allow two further retries. After all the permissible retries goes to Cancel Time Out State",
+        "103": "Allow three further retries. After all the permissible retries goes to Cancel Time Out State",
+        "000": "Do not allow consumer retries",
+        "001": "Allow one further retry. After all the permissible retries accepts a physically acceptable cheque",
+        "002": "Allow two further retries. After all the permissible retries accepts a physically acceptable cheque",
+        "003": "Allow three further retries. After all the permissible retries accepts a physically acceptable cheque"
+      }
+    },
+    "sta_4": {
+      "title": "Image Lift",
+      "values": {
+        "000": "No Cheque Image are lifted",
+        "001": "Front Cheque Image is lifted",
+        "002": "Back Cheque Image is lifted",
+        "003": "Front and Back Cheque Image is lifted"
+      }
+    },
+    "sta_5": {
+      "title": "Screens Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_6": {
+      "title": "States Extension State",
+      "extension_state": {
+        "num": "2",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_7": {
+      "title": "Cancel Key Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_8": {
+      "title": "Deposit Key Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    }
+  },
+  "z": {
+    "sta_name": {
+      "title": "z - Master Expansion State"
+    },
+    "sta_desc": {
+      "title": "z - Master Expansion State"
+    },
+    "sta_1": {
+      "title": "State subtype"
+    },
+    "sta_2": {
+      "title": "Defined by state subtype"
+    },
+    "sta_3": {
+      "title": "Defined by state subtype"
+    },
+    "sta_4": {
+      "title": "Defined by state subtype"
+    },
+    "sta_5": {
+      "title": "Defined by state subtype"
+    },
+    "sta_6": {
+      "title": "Defined by state subtype"
+    },
+    "sta_7": {
+      "title": "Defined by state subtype"
+    },
+    "sta_8": {
+      "title": "Defined by state subtype"
+    }
+  },
+  "&": {
+    "sta_name": {
+      "title": "& - Barcode Read State"
+    },
+    "sta_desc": {
+      "title": "& - Barcode Read State"
+    },
+    "sta_1": {
+      "title": "Screen Number"
+    },
+    "sta_2": {
+      "title": "Good Read Next State"
+    },
+    "sta_3": {
+      "title": "Cancel Next State"
+    },
+    "sta_4": {
+      "title": "Error Next State"
+    },
+    "sta_5": {
+      "title": "Timeout Next State"
+    },
+    "sta_6": {
+      "title": "Barcode Data Destination",
+      "values": {
+        "001": "Track3 buffer",
+        "002": "Track1 buffer",
+        "003": "Track2 buffer",
+        "004": "Buffers A and B",
+        "015": "Buffers B and C",
+        "006": "Buffers C and A",
+        "007": "Barcode Buffers e",
+        "008": "Amount buffer"
+      }
+    },
+    "sta_7": {
+      "title": "Cancel Key Mask",
+      "type": "bit_stream",
+      "values": {
+        "128": "Activate FDK I",
+        "001": "Activate FDK A",
+        "002": "Activate FDK B",
+        "004": "Activate FDK C",
+        "008": "Activate FDK D",
+        "016": "Activate FDK F",
+        "032": "Activate FDK G",
+        "064": "Activate FDK H"
+      }
+    },
+    "sta_8": {
+      "title": "Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    }
+  },
+  "+": {
+    "sta_name": {
+      "title": "+ - Begin ICC Initialisation State"
+    },
+    "sta_desc": {
+      "title": "+ - Begin ICC Initialisation State"
+    },
+    "sta_1": {
+      "title": "ICC Initialisation Started Next State"
+    },
+    "sta_2": {
+      "title": "ICC Initialisation Not Started Next State"
+    },
+    "sta_3": {
+      "title": "ICC Initialisation Requirement",
+      "values": {
+        "000": "Always begin ICC initialisation",
+        "001": "Only begin ICC initialisation if the magnetic stripe track 2 data has been read",
+        "002": "Don't begin ICC initialisation. If the card has a chip execute the state specified"
+      }
+    },
+    "sta_4": {
+      "title": "Automatic ICC Application Selection Flag",
+      "values": {
+        "000": "Don't Perform Automatic ICC application selection",
+        "001": "Perform Automatic ICC application selection"
+      }
+    },
+    "sta_5": {
+      "title": "Default Application Label Usage Flag",
+      "values": {
+        "000": "If an ICC application name is not provided, the corresponding default 'Application Label' is used as the name",
+        "001": "If an ICC application name is not provided, the corresponding default 'Application Label' is not used as the name",
+        "002": "No longer supported"
+      }
+    },
+    "sta_6": {
+      "title": "Cardholder Confirmation Flag",
+      "values": {
+        "000": "Do not check if the ICC application requires cardholder confirmation",
+        "001": "Check if the ICC application requires cardholder confirmation"
+      }
+    },
+    "sta_7": {
+      "title": "Screen To Clear Screen Number"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  ",": {
+    "sta_name": {
+      "title": ", - Complete ICC Initialisation State"
+    },
+    "sta_desc": {
+      "title": ", - Complete ICC Initialisation State"
+    },
+    "sta_1": {
+      "title": "Please Wait Screen Number"
+    },
+    "sta_2": {
+      "title": "Good Initialisation Next State"
+    },
+    "sta_3": {
+      "title": "Card Not Smart Next State"
+    },
+    "sta_4": {
+      "title": "No Usable Applications Next State"
+    },
+    "sta_5": {
+      "title": "ICC Application Level Error Next State"
+    },
+    "sta_6": {
+      "title": "ICC Hardware Level Error Next State"
+    },
+    "sta_7": {
+      "title": "No Usable Applications"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "-": {
+    "sta_name": {
+      "title": "- - Automatic Language Selection State"
+    },
+    "sta_desc": {
+      "title": "- - Automatic Language Selection State"
+    },
+    "sta_1": {
+      "title": "Language Match Next State"
+    },
+    "sta_2": {
+      "title": "No Language Match Next State"
+    },
+    "sta_3": {
+      "title": "Must be 000"
+    },
+    "sta_4": {
+      "title": "Must be 000"
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  ".": {
+    "sta_name": {
+      "title": ". - Begin ICC Application Selection and Initialisation State"
+    },
+    "sta_desc": {
+      "title": ". - Begin ICC Application Selection and Initialisation State"
+    },
+    "sta_1": {
+      "title": "Cardholder Selection Screen"
+    },
+    "sta_2": {
+      "title": "FDK Template Screen Numbers Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_3": {
+      "title": "Action Keys Extension State",
+      "extension_state": {
+        "num": "2",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_4": {
+      "title": "Exit Paths Extension State",
+      "extension_state": {
+        "num": "3",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_5": {
+      "title": "Single Application Cardholder Selection Screen"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "/": {
+    "sta_name": {
+      "title": "/ - Complete ICC Application Selection and Initialisation State"
+    },
+    "sta_desc": {
+      "title": "/ - Complete ICC Application Selection and Initialisation State"
+    },
+    "sta_1": {
+      "title": "Please Wait Screen Number"
+    },
+    "sta_2": {
+      "title": "ICC Application Name Template Screen Number"
+    },
+    "sta_3": {
+      "title": "ICC Application Name Screen Number"
+    },
+    "sta_4": {
+      "title": "Exit Paths Extension State",
+      "extension_state": {
+        "num": "1",
+        "min_val": "001",
+        "max_val": "254"
+      }
+    },
+    "sta_5": {
+      "title": "Must be 000"
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  "?": {
+    "sta_name": {
+      "title": "? - Set ICC Transaction Data State"
+    },
+    "sta_desc": {
+      "title": "? - Set ICC Transaction Data State"
+    },
+    "sta_1": {
+      "title": "Next State"
+    },
+    "sta_2": {
+      "title": "Currency Type"
+    },
+    "sta_3": {
+      "title": "Transaction Type"
+    },
+    "sta_4": {
+      "title": "Amount Authorised Source",
+      "values": {
+        "000": "Do nothing (no source buffer)",
+        "010": "Buffer B No conversion Req",
+        "011": "Buffer B Conversion Req",
+        "020": "Buffer C No conversion Req",
+        "021": "Buffer C Conversion Req",
+        "030": "Buffer Amount No conversion Req",
+        "031": "Buffer Amount Conversion Req",
+        "040": "Set Amount Authorised to 0"
+      }
+    },
+    "sta_5": {
+      "title": "Amount Other Source",
+      "values": {
+        "000": "Do nothing (no source buffer)",
+        "010": "Buffer B No conversion Req",
+        "011": "Buffer B Conversion Req",
+        "020": "Buffer C No conversion Req",
+        "021": "Buffer C Conversion Req",
+        "030": "Buffer Amount No conversion Req",
+        "031": "Buffer Amount Conversion Req",
+        "040": "Set Amount Authorised to 0"
+      }
+    },
+    "sta_6": {
+      "title": "Amount Too Large State"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  },
+  ";": {
+    "sta_name": {
+      "title": "; - ICC Re-initialise State"
+    },
+    "sta_desc": {
+      "title": "; - ICC Re-initialise State"
+    },
+    "sta_1": {
+      "title": "Good Re-initialise State"
+    },
+    "sta_2": {
+      "title": "Processing Not Performed State"
+    },
+    "sta_3": {
+      "title": "Re‐initialisation method",
+      "values": {
+        "000": "Restart the transaction at the candidate list",
+        "001": "Restart the transaction at the final SELECT Cmd"
+      }
+    },
+    "sta_4": {
+      "title": "Chip Power control",
+      "values": {
+        "000": "Default behaviour",
+        "001": "Forces a cold reset",
+        "002": "Forces a warm reset",
+        "003": "Do not interrupt power to the chip"
+      }
+    },
+    "sta_5": {
+      "title": "Reset or Retain Terminal Objects",
+      "values": {
+        "000": "Resets all EMV objects for the re‐initialised transaction",
+        "001": "Resets all EMV objects except supplied by the terminal"
+      }
+    },
+    "sta_6": {
+      "title": "Must be 000"
+    },
+    "sta_7": {
+      "title": "Must be 000"
+    },
+    "sta_8": {
+      "title": "Must be 000"
+    }
+  }
+}

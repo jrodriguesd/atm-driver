@@ -23,6 +23,7 @@
 package org.jpos.atmc.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -53,9 +54,9 @@ public class ATMConfig implements Serializable
     @JsonProperty("atmcnf_configid")
     private String configId;
 
-    @Column(name="atmcnf_description")
-    @JsonProperty("atmcnf_description")
-    private String description;
+    @Column(name="atmcnf_desc")
+    @JsonProperty("atmcnf_desc")
+    private String desc;
 
     @Column(name="atmcnf_languageindex")
     @JsonProperty("atmcnf_languageindex")
@@ -108,17 +109,17 @@ public class ATMConfig implements Serializable
 	}
 
 	/**
-	 * @return the description
+	 * @return the desc
 	 */
-	public String getDescription() {
-		return description;
+	public String getDesc() {
+		return desc;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param desc the desc to set
 	 */
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDesc(String desc) {
+		this.desc = desc;
 	}
 
 	/**

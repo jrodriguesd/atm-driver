@@ -7,6 +7,10 @@
                             </div>
                             <div class="col-7" style="border: 0px solid black;">
                                 <!-- *************************************************************************************************************************** -->
+								<!-- Mensaje de Respuesta - Inicio -->
+                                <div id="ResponseMsg">
+                                </div>
+            					<!-- Mensaje de Respuesta - Fin -->
 								<form id='screensForm' action="javascript:alert( 'success!' );">
                                     <div class="row">
                                         <div class="col-sm-6">
@@ -71,7 +75,7 @@
                                             <button type="button" class="btn btn-primary" id="Mostrar">Show</button>
                                         </div>
                                         <div class="col-sm-2">
-                                            <input type="checkbox" id="showImg" name="showImg" value=" " checked> Mostrar Imagenes <br>
+                                            <input type="checkbox" id="showImg" name="showImg" value=" " checked> Show Images <br>
                                         </div>
                                     </div>
                                     <br />

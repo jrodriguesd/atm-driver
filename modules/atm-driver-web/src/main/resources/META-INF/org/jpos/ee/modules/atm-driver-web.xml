@@ -21,6 +21,8 @@
     <mappings>
         <!-- mapping resource="org/jpos/gl/jfrd-GLUser.hbm.xml"/ -->
 		<mapping class="org.jpos.atmc.model.Screen"/>
+		<mapping class="org.jpos.atmc.model.State"/>
+		<mapping class="org.jpos.atmc.model.Fit"/>
 		<mapping class="org.jpos.atmc.model.ATMConfig"/>
     </mappings>
 

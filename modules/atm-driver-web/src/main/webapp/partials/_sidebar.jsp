@@ -3,6 +3,13 @@
                     <ul class="nav">
                         <li class="nav-item nav-category">Main Menu</li>
                         <li class="nav-item">
+                            <a class="nav-link" href="./atmconfigs.jsp">
+                                <i class="menu-icon typcn typcn-coffee"></i>
+                                <span class="menu-title">ATM Configs</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="./sreens.jsp">
                                 <i class="menu-icon typcn typcn-coffee"></i>
                                 <span class="menu-title">Screens</span>

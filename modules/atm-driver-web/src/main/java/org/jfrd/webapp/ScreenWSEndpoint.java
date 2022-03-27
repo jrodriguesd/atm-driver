@@ -32,17 +32,20 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.jpos.atmc.dao.ScreenManager;
 import org.jpos.atmc.model.Screen;
 
-import org.jfrd.webapp.util.Log;
-import org.jfrd.webapp.util.Util;
+import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.Util;
 import org.jpos.ee.DB;
 
 @Path("screens")
 public class ScreenWSEndpoint 
 {
+	private static final String OBJECT_TYPE = "Screen";
+
 	@GET
     @Path("/{configId}")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
@@ -51,7 +54,7 @@ public class ScreenWSEndpoint
     	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId " + configId );
     	try 
 		{
-			List<Screen> screens = DB.exec(db -> new ScreenManager(db).getItemsByParam("configId", configId) );
+			List<Screen> screens = DB.exec(db -> new ScreenManager(db).getByConfigId(configId) );
 	        return screens;
 		} 
 		catch (Exception e) 
@@ -80,15 +83,22 @@ public class ScreenWSEndpoint
 			      	return scr; 
 			    } );
             }
+			else
+			{
+				String json = "{\"msg\":\"" + OBJECT_TYPE + " Already Exist\"}";
+				return Response.status(Status.METHOD_NOT_ALLOWED).type(MediaType.APPLICATION_JSON).entity(json).build();
+			}
 
 		} 
     	catch (Exception e) 
     	{
 			Log.printStackTrace(e);
+			String json = "{\"msg\":\"General Error\"}";
+			return Response.status(Status.METHOD_NOT_ALLOWED).type(MediaType.APPLICATION_JSON).entity(json).build();
 		}
 
-    	String json = "{\"msg:\":\"Ok\"}";
-    	return Response.ok(json, MediaType.APPLICATION_JSON).build();
+		String json = "{\"msg\":\"" + OBJECT_TYPE + " Created\"}";
+    	return Response.status(Status.CREATED).type(MediaType.APPLICATION_JSON).entity(json).build();
     }
 
     @POST
@@ -115,14 +125,21 @@ public class ScreenWSEndpoint
 			    } );
 
 		    }
+		    else
+		    {
+				String json = "{\"msg\":\"" + OBJECT_TYPE + " Not Found\"}";
+		    	return Response.status(Status.NOT_FOUND).type(MediaType.APPLICATION_JSON).entity(json).build();
+		    }
 		} 
     	catch (Exception e) 
     	{
 			Log.printStackTrace(e);
+			String json = "{\"msg\":\"General Error\"}";
+			return Response.status(Status.METHOD_NOT_ALLOWED).type(MediaType.APPLICATION_JSON).entity(json).build();
 		}
 
-    	String json = "{\"msg:\":\"Ok\"}";
-    	return Response.ok(json, MediaType.APPLICATION_JSON).build();
+		String json = "{\"msg\":\"" + OBJECT_TYPE + " Updated\"}";
+    	return Response.status(Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
     }
 
     @POST
@@ -145,15 +162,21 @@ public class ScreenWSEndpoint
 			    } );
 
 		    }
+		    else
+		    {
+				String json = "{\"msg\":\"" + OBJECT_TYPE + " Not Found\"}";
+		    	return Response.status(Status.NOT_FOUND).type(MediaType.APPLICATION_JSON).entity(json).build();
+		    }
 		} 
     	catch (Exception e) 
     	{
 			Log.printStackTrace(e);
+			String json = "{\"msg\":\"General Error\"}";
+			return Response.status(Status.METHOD_NOT_ALLOWED).type(MediaType.APPLICATION_JSON).entity(json).build();
 		}
 
-    	String json = "{\"msg:\":\"Ok\"}";
-    	return Response.ok(json, MediaType.APPLICATION_JSON).build();
+		String json = "{\"msg\":\"" + OBJECT_TYPE + " Deleted\"}";
+    	return Response.status(Status.OK).type(MediaType.APPLICATION_JSON).entity(json).build();
     }
-    
-    
+
 }

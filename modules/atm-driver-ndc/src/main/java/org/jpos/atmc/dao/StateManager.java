@@ -27,61 +27,65 @@ import java.util.List;
 
 import org.hibernate.query.Query;
 import org.jpos.atmc.model.Screen;
+import org.jpos.atmc.model.State;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 import org.jpos.ee.DB;
 import org.jpos.ee.DBManager;
 
-public class ScreenManager extends DBManager<Screen> {
+public class StateManager extends DBManager<State> {
 
-	public ScreenManager(DB db) {
-		super(db, Screen.class);
+	public StateManager(DB db) {
+		super(db, State.class);
 	}
 
-	public Screen findById(Long id) {
+	public State findById(Long id) {
 		return getItemByParam("id", id);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Screen> getByConfigId(String configId) 
+	public List<State> getByConfigId(String configId) 
 	{
-		Query<Screen> query = db.session().createQuery
+		Query<State> query = db.session().createQuery
 		(
-		    "from Screen in class org.jpos.atmc.model.Screen where configId = :configId order by number"
+		    "from State in class org.jpos.atmc.model.State where configId = :configId order by number"
 		);
 		query.setParameter("configId", configId);
-		List<Screen> l = query.list();
+		List<State> l = query.list();
+		Iterator<State> iter = l.iterator();
 		return l;
 	}
 	
 	
 	@SuppressWarnings("unchecked")
-	public Screen getScreen(String configId, String number) 
+	public State getState(String configId, String number) 
 	{
-		Query<Screen> query = db.session().createQuery
+		Query<State> query = db.session().createQuery
 		(
-		    "from Screen in class org.jpos.atmc.model.Screen WHERE configId = :configId AND number = :number"
+		    "from State in class org.jpos.atmc.model.State WHERE configId = :configId AND number = :number"
 		);
 		query.setParameter("configId", configId);
 		query.setParameter("number", number);
-		List<Screen> l = query.list();
-		Iterator<Screen> iter = l.iterator();
+		List<State> l = query.list();
+		Iterator<State> iter = l.iterator();
 
 		if (l.size() == 1)
-			return (Screen) iter.next();
+			return (State) iter.next();
 		else if (l.size() < 1)
 			Log.staticPrintln("JFRD " 
 		                      + Util.fileName() 
 			                  + " Line " + Util.lineNumber() 
 			                  + " " + Util.methodName()
-					          + " No se Encontro Ninguna Screen configID " + configId 
+					          + " No se Encontro Ningun State"
+					          + " configID " + configId 
 					          + " scrNumber " + number);
 		else if (l.size() > 1)
 			Log.staticPrintln("JFRD " 
                               + Util.fileName() 
 	                          + " Line " + Util.lineNumber() 
 	                          + " " + Util.methodName()
-					          + " Se Encontro mas de una Screen configID " + configId 
+					          + " Se Encontro mas de un State" 
+					          + "configID " + configId 
 					          + " scrNumber " + number);
 		return null;
 	}
