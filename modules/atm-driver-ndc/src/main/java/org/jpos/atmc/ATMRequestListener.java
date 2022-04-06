@@ -234,9 +234,8 @@ public class ATMRequestListener extends org.jpos.util.Log implements ISORequestL
 				}
 				else
 				{
-		            String schema = "file:cfg/ndc-";
-		            FSDMsg msgOut = new FSDMsg(schema);
-		            
+		            FSDMsg msgOut = new FSDMsg( msgIn.getBasePath() );
+
 		            msgOut.set("message-class", "1");
 		            msgOut.set("command-code",  GO_IN_SERVICE);
 		            msgOut.dump(Log.out, "");
@@ -335,8 +334,8 @@ public class ATMRequestListener extends org.jpos.util.Log implements ISORequestL
 			    if ( atmRunState.atmState == ATMRunState.ATMState.GOING_INTO_SERVICE )
 				{
                     atmRunState.atmState = ATMRunState.ATMState.IN_SERVICE;
-		            String schema = "file:cfg/ndc-";
-		            FSDMsg msgOut = new FSDMsg(schema);
+
+		            FSDMsg msgOut = new FSDMsg( msgIn.getBasePath() );
 		            
 		            msgOut.set("message-class", "1");
 		            msgOut.set("command-code",  SEND_CONFIGURATION_INFORMATION);

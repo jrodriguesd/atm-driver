@@ -83,8 +83,7 @@ public class ATMSendResponse implements AbortParticipant, Configurable
 
     public FSDMsg createFSDMsg(ISOMsg isoMsgIn, FSDMsg fsdMsgIn, String state, String screen)
 	{
-	    String schema = "file:cfg/ndc-";
-		FSDMsg msgOut = new FSDMsg(schema);
+        FSDMsg msgOut = new FSDMsg( fsdMsgIn.getBasePath() );
 
 		msgOut.set("message-class",               "4");
 		msgOut.set("luno",                        fsdMsgIn.get("luno") );

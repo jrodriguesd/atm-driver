@@ -2,11 +2,11 @@
   name="xml-server-8000" realm="xml-server-8000">
   <attr name="port" type="java.lang.Integer">8000</attr>
   <channel class="org.jpos.iso.channel.FSDChannel"
-      packager="org.jpos.iso.packager.FSDPackager"
+      c="org.jpos.iso.packager.FSDPackager"
       type="server"
       logger="Q2"
       realm="xml-server-8000">
-	  <property name="schema" value="file:cfg/ndc-" />
+	  <property name="schema" value="file:cfg/ndc/ndc-" />
       <property name="connection-timeout" value="15000" /> <!-- 15 seconds -->
       <property name="timeout" value="0" />
       <property name="keep-alive" value="true" />
