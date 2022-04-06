@@ -8,6 +8,7 @@ buildscript
 	{
 	  mavenCentral()
       url 'https://plugins.gradle.org/m2/'
+      mavenLocal()
     }
   }
 }
@@ -21,42 +22,46 @@ repositories
 {
     mavenCentral()
     maven { url 'https://jpos.org/maven' }
+    maven { url 'http://maven.vaadin.com/vaadin-addons'; allowInsecureProtocol = true }
+    maven { url 'https://maven.vaadin.com/vaadin-prereleases' }
     mavenLocal()
 }
 
 dependencies 
 {
-    implementation  project(':modules:atm-driver-ndc')
+    providedCompile  project(':modules:atm-driver-ndc')
 
-    implementation  'joda-time:joda-time:2.10.12'
+    providedCompile  'joda-time:joda-time:2.10.12'
 
-    providedRuntime 'org.slf4j:slf4j-simple:1.7.32'
+    providedCompile 'org.slf4j:slf4j-simple:1.7.32'
 
-	providedRuntime 'org.jpos.ee:jposee-jetty:2.2.9-SNAPSHOT'
-    implementation  'org.jpos.ee:jposee-dbsupport:2.2.9-SNAPSHOT'
+	providedCompile 'org.jpos.ee:jposee-jetty:2.2.9-SNAPSHOT'
+    providedCompile 'org.jpos.ee:jposee-dbsupport:2.2.9-SNAPSHOT'
+    providedCompile 'org.jpos.ee:jposee-qi-core:2.2.9-SNAPSHOT'
+    providedCompile 'org.jpos.ee:jposee-qi-eeuser:2.2.9-SNAPSHOT'
 
-    providedRuntime 'org.eclipse.jetty:apache-jsp:9.4.45+'
+    providedCompile 'org.eclipse.jetty:apache-jsp:9.4.45+'
 
-    providedRuntime 'javax.ws.rs:javax.ws.rs-api:2.1'
-	providedRuntime 'javax.persistence:javax.persistence-api:2.2'
+    providedCompile 'javax.ws.rs:javax.ws.rs-api:2.1'
+	providedCompile 'javax.persistence:javax.persistence-api:2.2'
 
-    implementation 'org.glassfish.jersey.containers:jersey-container-jetty-servlet:2.26-b09'
-    implementation 'org.glassfish.jersey.containers:jersey-container-jetty-http:2.26-b09'
-    implementation 'org.glassfish.jersey.containers:jersey-container-servlet:2.26-b09'
-    implementation 'org.glassfish.jersey.inject:jersey-hk2:2.26-b09'
-    implementation 'org.glassfish.jersey.core:jersey-server:2.26-b09'
-    implementation 'org.glassfish.jersey.core:jersey-common:2.26-b09'
-    implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:2.26-b09'
+    providedCompile 'org.glassfish.jersey.containers:jersey-container-jetty-servlet:2.26-b09'
+    providedCompile 'org.glassfish.jersey.containers:jersey-container-jetty-http:2.26-b09'
+    providedCompile 'org.glassfish.jersey.containers:jersey-container-servlet:2.26-b09'
+    providedCompile 'org.glassfish.jersey.inject:jersey-hk2:2.26-b09'
+    providedCompile 'org.glassfish.jersey.core:jersey-server:2.26-b09'
+    providedCompile 'org.glassfish.jersey.core:jersey-common:2.26-b09'
+    providedCompile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.26-b09'
 
-    // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.2'
+    providedCompile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.2'
 
-    providedRuntime    'org.mariadb.jdbc:mariadb-java-client:3.0.3'
+    providedCompile    'org.mariadb.jdbc:mariadb-java-client:3.0.3'
 }
 
 war 
 {
     rootSpec.exclude("**/hibernate-comm*.jar") // Asi Corre Pero Da La Exception q2.log
+	classpath = fileTree('*').exclude('**/classes')
 }
 
 configurations.all

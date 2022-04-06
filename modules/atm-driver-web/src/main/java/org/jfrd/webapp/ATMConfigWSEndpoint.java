@@ -46,7 +46,7 @@ public class ATMConfigWSEndpoint
 	private static final String OBJECT_TYPE = "ATMConfig";
 
 	@GET
-    @Path("/{unique}")
+    @Path("/unique")
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public List<ATMConfig> getUnique() 
 	{

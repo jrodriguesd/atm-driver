@@ -24,7 +24,7 @@ public class IsoError2ATM
     private Long id;    
 
 	@BusinessKey(caseSensitive = false, required = true)
-	@Column(name = "isoerr2atm_configid", updatable = true, nullable = false)
+	@Column(name = "isoerr2atm_config_id", updatable = true, nullable = false)
     private String configId;
 
 	@BusinessKey(caseSensitive = false, required = true)

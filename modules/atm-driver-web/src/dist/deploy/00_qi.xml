@@ -1,0 +1,210 @@
+<!DOCTYPE xml-config [
+        <!ENTITY AMOUNT_PATTERN  "[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?">
+        <!ENTITY CURRENCY_PATTERN "^\d{1,5}">
+        <!ENTITY TEXT_PATTERN "^[\w\s.,\-\']*$">
+        <!ENTITY TEXT_EXTENDED_PATTERN "^[\w\s.,\-\'():]*$">
+        <!ENTITY WORD_PATTERN "^[\w.\-]*$">
+        <!ENTITY ACCT_CODE_PATTERN "^[\w.]*$">
+        <!ENTITY SYSCONFIG_ID_PATTERN "^[\w\s.\-\/\?\=\:]{0,255}$">
+        ]>
+
+<xml-config name="QI" logger="Q2">
+  <title>jPOS QI</title>
+  <!--first one is default locale-->
+  <locale>en-US</locale>
+  <!--additional locales-->
+  <!--<locale>es-ES</locale>-->
+
+  <messages>qi-core-messages</messages>
+
+  <menubar>
+    <menu name="system" icon="COG" style="icon-cog" action="system" />
+  </menubar>
+
+  <!-- sidebar view definition -->
+
+  <sidebar id="info">
+    <section name="Info"/>
+    <option name="Info" action="info"/>
+  </sidebar>
+
+  <sidebar id="system">
+    <section name="system"/>
+    <option name="Info" action="info"/>
+    <option name="Log" action="log"/>
+    <option name="revision.history" action="revision_history"/>
+    <option name="ATM Configs" action="atmconfigs"/>
+    <option name="Screens" action="screens"/>
+    <option name="States" action="states"/>
+    <option name="Fits" action="fits"/>
+  </sidebar>
+
+  <!--VIEWS-->
+  <view route="atmconfigs" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+    <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
+    <property name="id" value="atmconfigs_wrap"/>
+    <!-- this file was taken from the `dist` directory of the source, and copied into
+    the build -->
+    <property name="baseURL" value="http://localhost:8080/atm-driver-web-assets/partials" />
+    <property name="src"     value="atmconfig.jsp" />
+
+    <property name="css"     value="/atm-driver-web-assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/shared/style.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/demo_1/style.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/css/bootstrap.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/multiselect/css/bootstrap-multiselect.css" />
+
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/jquery-2.2.4.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/multiselect/js/bootstrap-multiselect.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/jquery-ui.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/formToJson.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.atmconfig.js" />
+  </view>
+
+  <view route="screens" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+    <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
+    <property name="id" value="atmconfigs_wrap"/>
+    <!-- this file was taken from the `dist` directory of the source, and copied into
+    the build -->
+    <property name="baseURL" value="http://localhost:8080/atm-driver-web-assets/partials" />
+    <property name="src"     value="screen.jsp" />
+
+    <property name="css"     value="/atm-driver-web-assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/shared/style.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/demo_1/style.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/css/bootstrap.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/multiselect/css/bootstrap-multiselect.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/screen.css" />
+
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/jquery-2.2.4.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/multiselect/js/bootstrap-multiselect.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/jquery-ui.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/formToJson.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/js.cookie.js" />
+    <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.screen.js" />
+  </view>
+
+  <view route="states" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+    <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
+    <property name="id" value="atmconfigs_wrap"/>
+    <!-- this file was taken from the `dist` directory of the source, and copied into
+    the build -->
+    <property name="baseURL" value="http://localhost:8080/atm-driver-web-assets/partials" />
+    <property name="src"     value="state.jsp" />
+
+    <property name="css"     value="/atm-driver-web-assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/shared/style.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/demo_1/style.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/css/bootstrap.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/multiselect/css/bootstrap-multiselect.css" />
+
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/jquery-2.2.4.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/multiselect/js/bootstrap-multiselect.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/jquery-ui.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/formToJson.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/js.cookie.js" />
+    <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.state.js" />
+  </view>
+
+  <view route="fits" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+    <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
+    <property name="id" value="atmconfigs_wrap"/>
+    <!-- this file was taken from the `dist` directory of the source, and copied into
+    the build -->
+    <property name="baseURL" value="http://localhost:8080/atm-driver-web-assets/partials" />
+    <property name="src"     value="fit.jsp" />
+
+    <property name="css"     value="/atm-driver-web-assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/shared/style.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/demo_1/style.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/css/bootstrap.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/multiselect/css/bootstrap-multiselect.css" />
+
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/jquery-2.2.4.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/multiselect/js/bootstrap-multiselect.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/jquery-ui.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/formToJson.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/js.cookie.js" />
+    <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.fit.js" />
+  </view>
+
+
+
+  <view route="home" class="org.jpos.qi.views.DefaultView" perm="*" sidebar = "system"/>
+  <view route="system" class="org.jpos.qi.views.DefaultView" perm="*"  sidebar="system"/>
+  <view route="empty" class="org.jpos.qi.system.EmptyView" perm="*" sidebar="system"/>
+
+  <view route="about" class="org.jpos.qi.system.AboutView" perm="login" sidebar="system"/>
+  <view route="log" class="org.jpos.qi.system.LogListenerView" perm="sysadmin" sidebar="system" >
+    <property name="name" value="logger.Q2.buffered"/>
+    <property name="entityName" value="log"/>
+  </view>
+  <view route="exceptions" class="org.jpos.qi.system.LogListenerView" perm="sysadmin" sidebar="system">
+    <property name="name" value="logger.Q2.exceptions"/>
+    <property name="entityName" value="exception"/>
+  </view>
+  <view route="exceptions" class="org.jpos.qi.system.LogListenerView" perm="sysadmin" sidebar="system">
+    <property name="entityName" value="exception"/>
+    <property name="name" value="logger.Q2.exceptions"/>
+  </view>
+  <view route="info" class="org.jpos.qi.views.TabView" perm="login" sidebar="system">
+    <view caption="About" class="org.jpos.qi.system.AboutView" perm="login"/>
+    <view caption="Memory" route="memory" class="org.jpos.qi.system.MemoryUsageView" perm="login"/>
+    <view caption="Sysmon" route="sysmon" class="org.jpos.qi.system.ObjectView" perm="sysadmin" repeat="1000"
+          clearScreen="true">
+      <object class="org.jpos.util.SystemMonitor"/>
+    </view>
+    <view caption="Uptime" route="uptime" class="org.jpos.qi.system.ProcessView" perm="sysadmin" repeat="1000"
+          clearScreen="true">
+      <script>uptime</script>
+    </view>
+    <view caption="Date" route="date" class="org.jpos.qi.system.ObjectView" perm="login" repeat="1000"
+          viewStyle="marginView" clearScreen="true">
+      <object class="java.util.Date"/>
+    </view>
+    <view caption="PS" route="ps" class="org.jpos.qi.system.CommandRunner" perm="login" repeat="1000"
+          viewStyle="marginView" clearScreen="true">
+      <command>deploy:ps</command>
+    </view>
+    <view caption="Deploy" route="deploy" class="org.jpos.qi.system.CommandRunner" perm="sysadmin"
+          viewStyle="marginView" clearScreen="true">
+      <command>deploy:list</command>
+    </view>
+  </view>
+  <view route="profile" class="org.jpos.qi.eeuser.ProfilesView" perm="login" sidebar="system">
+    <property name="entityName" value="user"/>
+    <attribute name="id" field="false" required="true"/>
+    <attribute name="nick" length="64" regex="&WORD_PATTERN;" required="true"/>
+    <attribute name="name" length="128" regex="&TEXT_PATTERN;" />
+    <attribute name="email" length="128" />
+    <attribute name="active"/>
+    <attribute name="roles" column="false" perm="sysadmin"/>
+  </view>
+  <view route="revision_history" class="org.jpos.qi.system.RevisionsView" perm="login" sidebar="system">
+    <property name="entityName" value="revision"/>
+    <attribute name="id" field="false" column="false"/>
+    <attribute name="date" read-only="true" expand-ratio="1"/>
+    <attribute name="info" read-only="true" expand-ratio="3"/>
+    <attribute name="ref" read-only="true"/>
+    <attribute name="author" read-only="true"/>
+  </view>
+  <view route="syslog" class="org.jpos.qi.system.AuditLogView" perm="sysconfig" sidebar="system">
+    <property name="entityName" value="syslog"/>
+    <attribute name="date" expand-ratio="1"/>
+    <attribute name="source" expand-ratio="1"/>
+    <attribute name="type" expand-ratio="1"/>
+    <attribute name="severity" expand-ratio="1"/>
+    <attribute name="summary" expand-ratio="2"/>
+    <attribute name="detail" column="false"/>
+    <attribute name="trace" column="false"/>
+  </view>
+</xml-config>
+

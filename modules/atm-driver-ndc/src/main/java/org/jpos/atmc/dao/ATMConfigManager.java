@@ -30,7 +30,6 @@ import org.hibernate.query.Query;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 import org.jpos.atmc.model.ATMConfig;
-import org.jpos.atmc.model.IsoError2ATM;
 import org.jpos.ee.DB;
 import org.jpos.ee.DBManager;
 

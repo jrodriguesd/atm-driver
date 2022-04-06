@@ -23,7 +23,6 @@
 package org.jpos.atmc.model;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,10 +49,15 @@ public class ATMConfig implements Serializable
     private Long id;    
 
 	@BusinessKey(caseSensitive = false, required = true)
-    @Column(name="atmcnf_configid")
-    @JsonProperty("atmcnf_configid")
+    @Column(name="atmcnf_config_id")
+    @JsonProperty("atmcnf_config_id")
     private String configId;
 
+	@BusinessKey(caseSensitive = false, required = true)
+    @Column(name="atmcnf_protocol")
+    @JsonProperty("atmcnf_protocol")
+    private String protocol;
+	
     @Column(name="atmcnf_desc")
     @JsonProperty("atmcnf_desc")
     private String desc;
@@ -106,6 +110,20 @@ public class ATMConfig implements Serializable
 	 */
 	public void setConfigId(String configId) {
 		this.configId = configId;
+	}
+	
+	/**
+	 * @return the protocol
+	 */
+	public String getProtocol() {
+		return protocol;
+	}
+
+	/**
+	 * @param protocol the protocol to set
+	 */
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
 	}
 
 	/**

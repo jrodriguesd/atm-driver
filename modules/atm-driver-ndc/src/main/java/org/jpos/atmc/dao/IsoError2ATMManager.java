@@ -46,7 +46,7 @@ public class IsoError2ATMManager  extends DBManager<IsoError2ATM>
 	{
         Query<IsoError2ATM> query = db.session().createQuery 
         (
-            "from isoerr2atm in class org.jpos.atmc.model.IsoError2ATM WHERE isoerr2atm_isoresp = :error AND isoerr2atm_configid = :configID AND isoerr2atm_language639 = :language639 order by isoerr2atm_id"
+            "from isoerr2atm in class org.jpos.atmc.model.IsoError2ATM WHERE isoerr2atm_isoresp = :error AND isoerr2atm_config_id = :configID AND isoerr2atm_language639 = :language639 order by isoerr2atm_id"
         );
         query.setParameter ("error", error);
         query.setParameter ("configID", configID);

@@ -657,9 +657,9 @@ $(document).ready(function()
         var cmds = '␌';
 		for (var y = 0; y < rows; y++)
 		{
-			var str  = '';
-			var beginX = 0;
-			var beginY = 0;
+			let str  = '';
+			let beginX = -1;
+			let beginY = 0;
 		    for (var x = 0; x < cols; x++) 
 			{
 				var i = (y * cols) + x;
@@ -712,8 +712,8 @@ $(document).ready(function()
 					}
 					break;
 				}
-				// console.log("JFRD Line 460 currVal >" + currVal + "< beginX >" + beginX + "<");
-				if ( (currVal != ' ') && (beginX == 0) )
+				// console.log("Line 717 currVal >" + currVal + "< beginX >" + beginX + "<");
+				if ( (currVal != ' ') && (beginX == -1) )
 				{
 					beginX = x;
 					beginY = y;
@@ -725,6 +725,7 @@ $(document).ready(function()
 		        //  content += currVal;
 			
 			}
+			console.log("str " + str);
 			// break;
 		}
 		if (typeof(activePosition) != "undefined")

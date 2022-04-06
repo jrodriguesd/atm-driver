@@ -45,7 +45,7 @@ public class TrnDefinitionManager extends DBManager<TrnDefinition>
 	{
 		Query<TrnDefinition> query = db.session().createQuery 
 		(
-		    "from trndefs in class org.jpos.atmc.model.TrnDefinition WHERE trndef_configid = :configId AND trndef_atm_trn_code = :atmTrnCode order by trndef_id"
+		    "from trndefs in class org.jpos.atmc.model.TrnDefinition WHERE trndef_config_id = :configId AND trndef_atm_trn_code = :atmTrnCode order by trndef_id"
 		);
 		query.setParameter ("configId", configId);
 		query.setParameter ("atmTrnCode", atmTrnCode);

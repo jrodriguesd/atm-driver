@@ -5,6 +5,63 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
+    <servlet>
+        <servlet-name>QI</servlet-name>
+        <servlet-class>org.jpos.qi.QIServlet</servlet-class>
+        <init-param>
+            <param-name>UI</param-name>
+            <param-value>org.jpos.qi.QI</param-value>
+        </init-param>
+        <init-param>
+            <param-name>closeIdleSessions</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>widgetset</param-name>
+            <param-value>org.jpos.AppWidgetset</param-value>
+        </init-param>
+        <init-param>
+            <param-name>heartbeatInterval</param-name>
+            <param-value>180</param-value>
+        </init-param>
+        <init-param>
+            <description>Vaadin production mode</description>
+            <param-name>productionMode</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>pushmode</param-name>
+            <param-value>manual</param-value>
+        </init-param>
+        <!--
+        Enabling this feature causes "SessionExpired" in Jetty newer than 9.3.19.v20170502
+        <init-param>
+          <param-name>org.atmosphere.websocket.suppressJSR356</param-name>
+          <param-value>true</param-value>
+        </init-param>
+        -->
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>QI</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+    </session-config>
+    <session-config>
+        <session-timeout>1800</session-timeout>
+    </session-config>
+    <listener>
+        <listener-class>org.atmosphere.cpr.SessionSupport</listener-class>
+    </listener>
+    <context-param>
+        <param-name>org.atmosphere.cpr.sessionSupport</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
 	<servlet>
 		<servlet-name>jersey-servlet</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>

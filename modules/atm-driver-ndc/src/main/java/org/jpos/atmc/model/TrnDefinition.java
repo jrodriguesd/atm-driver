@@ -42,7 +42,7 @@ public class TrnDefinition
     private Long id;    
 
 	@BusinessKey(caseSensitive = false, required = true)
-	@Column(name = "trndef_configid", updatable = true, nullable = false)
+	@Column(name = "trndef_config_id", updatable = true, nullable = false)
     private String configId;
 
 	@BusinessKey(caseSensitive = false, required = true)
