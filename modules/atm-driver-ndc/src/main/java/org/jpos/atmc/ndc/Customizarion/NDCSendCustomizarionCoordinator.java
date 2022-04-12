@@ -1,4 +1,4 @@
-package org.jpos.atmc.ATMCustomizarion;
+package org.jpos.atmc.ndc.Customizarion;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,28 +10,28 @@ import org.jpos.iso.BaseChannel;
 import org.jpos.iso.ISOSource;
 import org.jpos.util.FSDMsg;
 
-public class ATMSendCustomizarionCoordinator 
+public class NDCSendCustomizarionCoordinator 
 {
 	private ISOSource source;
 	private FSDMsg msgIn;
 	private ATM atm;
 	private String lastKey;
 	private String lastKeySend; 
-	private ATMCustomizarionSections customizarionSection;
+	private NDCCustomizarionSections customizarionSection;
 	
-    private static final HashMap<String, ATMSendCustomizarionCoordinator> atmsCustomizarioState = new HashMap<String, ATMSendCustomizarionCoordinator>();
+    private static final HashMap<String, NDCSendCustomizarionCoordinator> atmsCustomizarioState = new HashMap<String, NDCSendCustomizarionCoordinator>();
 
     public static void init(ISOSource source, FSDMsg msgIn, ATM atm)
     {
         // ATMCustomizarionState customizarionState = new ATMCustomizarionState();
 
-        ATMSendCustomizarionCoordinator customizarionCoordinator = new ATMSendCustomizarionCoordinator();
+        NDCSendCustomizarionCoordinator customizarionCoordinator = new NDCSendCustomizarionCoordinator();
         customizarionCoordinator.source = source;
         customizarionCoordinator.msgIn = msgIn;
         customizarionCoordinator.atm = atm;
-        customizarionCoordinator.customizarionSection = ATMCustomizarionSections.SCREENS;
+        customizarionCoordinator.customizarionSection = NDCCustomizarionSections.SCREENS;
 
-    	ATMSendCustomization customization = ATMSendCustomizationFactory.getInstance( customizarionCoordinator.customizarionSection );
+    	NDCSendCustomization customization = NDCSendCustomizationFactory.getInstance( customizarionCoordinator.customizarionSection );
     	String configId = atm.getConfigId();
         customizarionCoordinator.lastKey = customization.getLastKey(configId);
         customizarionCoordinator.lastKeySend = "";
@@ -41,7 +41,7 @@ public class ATMSendCustomizarionCoordinator
         atmsCustomizarioState.put( baseChannel.getName(), customizarionCoordinator );
     }
 
-    public static ATMSendCustomizarionCoordinator get(String atmName)
+    public static NDCSendCustomizarionCoordinator get(String atmName)
     {
     	return atmsCustomizarioState.get( atmName);
     }
@@ -111,7 +111,7 @@ public class ATMSendCustomizarionCoordinator
     {
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.customizarionSection " + this.customizarionSection);
         
-    	ATMSendCustomization customization = ATMSendCustomizationFactory.getInstance( this.customizarionSection );
+    	NDCSendCustomization customization = NDCSendCustomizationFactory.getInstance( this.customizarionSection );
     	String configId = this.atm.getConfigId();
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId >" + configId + "<");
     	String custMsg = customization.getNextCustomizationMsg(atm, configId, this.lastKeySend);
@@ -119,8 +119,8 @@ public class ATMSendCustomizarionCoordinator
 
     	if ( this.lastKey.equals(this.lastKeySend) )
     	{
-    		this.customizarionSection = ATMCustomizarionSections.next(this.customizarionSection);
-    		customization = ATMSendCustomizationFactory.getInstance( this.customizarionSection );
+    		this.customizarionSection = NDCCustomizarionSections.next(this.customizarionSection);
+    		customization = NDCSendCustomizationFactory.getInstance( this.customizarionSection );
     		if (customization != null)
     		{
         		this.lastKey = customization.getLastKey(configId); 

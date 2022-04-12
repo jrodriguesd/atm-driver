@@ -1,8 +1,8 @@
-package org.jpos.atmc.ATMCustomizarion;
+package org.jpos.atmc.ndc.Customizarion;
 
 import org.jpos.atmc.model.ATM;
 
-public class ATMSendCustomizationConfigId implements ATMSendCustomization 
+public class NDCSendCustomizationConfigId implements NDCSendCustomization 
 {
 	private String lastConfigIdSend = "0000";
 

@@ -4,24 +4,24 @@
   <property name="max-sessions" value="128"/>
   <property name="debug" value="true"/>
   <participant class="org.jpos.atmc.SwichByMSgClass">
-    <property name="11" value="TransactionRequest" />
-    <property name="12" value="UnsolicitedStatus" />
-    <property name="22" value="SolicitedStatus" />
+    <property name="ndc.11" value="NDCTransactionRequest" />
+    <property name="ndc.12" value="NDCUnsolicitedStatus" />
+    <property name="ndc.22" value="NDCSolicitedStatus" />
   </participant>
 
-  <group name="TransactionRequest">
-      <participant class="org.jpos.atmc.CheckTransactionRequestFields"/>
+  <group name="NDCTransactionRequest">
+      <participant class="org.jpos.atmc.ndc.CheckTransactionRequestFields"/>
       <participant class="org.jpos.atmc.createISOMsg"/>
       <participant class="org.jpos.transaction.participant.QueryHost"/>
-      <participant class="org.jpos.atmc.ATMSendResponse"/>
+      <participant class="org.jpos.atmc.ndc.ATMSendResponse"/>
   </group>
 
-  <group name="UnsolicitedStatus">
-      <participant class="org.jpos.atmc.ProcessUnsolicitedStatus"/>
+  <group name="NDCUnsolicitedStatus">
+      <participant class="org.jpos.atmc.ndc.ProcessUnsolicitedStatus"/>
   </group>
 
-  <group name="SolicitedStatus">
-      <participant class="org.jpos.atmc.ProcessSolicitedStatus"/>
+  <group name="NDCSolicitedStatus">
+      <participant class="org.jpos.atmc.ndc.ProcessSolicitedStatus"/>
   </group>
 
 </txnmgr>

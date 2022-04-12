@@ -1,4 +1,4 @@
-package org.jpos.atmc.ATMCustomizarion;
+package org.jpos.atmc.ndc.Customizarion;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.jpos.atmc.model.State;
 import org.jpos.atmc.util.Log;
 import org.jpos.ee.DB;
 
-public class ATMSendCustomizationStates implements ATMSendCustomization 
+public class NDCSendCustomizationStates implements NDCSendCustomization 
 {
 	private String lastNumberSend;
 

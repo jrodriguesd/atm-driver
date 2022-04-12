@@ -1,4 +1,4 @@
-package org.jpos.atmc;
+package org.jpos.atmc.ndc;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -9,9 +9,9 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 
-import org.jpos.atmc.ATMCustomizarion.ATMSendCustomizarionCoordinator;
 import org.jpos.atmc.dao.ATMManager;
 import org.jpos.atmc.model.ATM;
+import org.jpos.atmc.ndc.Customizarion.NDCSendCustomizarionCoordinator;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
@@ -88,8 +88,8 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
 				if ( (atm != null) && ( ! atm.getConfigId().equals(configID) ) )
 				{
 			        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Iniciar Envio de Configuracion");
-			        ATMSendCustomizarionCoordinator.init( source, msgIn, atm);
-			        ATMSendCustomizarionCoordinator acc = ATMSendCustomizarionCoordinator.get(baseChannel.getName());
+			        NDCSendCustomizarionCoordinator.init( source, msgIn, atm);
+			        NDCSendCustomizarionCoordinator acc = NDCSendCustomizarionCoordinator.get(baseChannel.getName());
 
 					try
 					{

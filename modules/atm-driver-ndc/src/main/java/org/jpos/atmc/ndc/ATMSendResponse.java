@@ -1,4 +1,4 @@
-package org.jpos.atmc;
+package org.jpos.atmc.ndc;
 
 import java.io.File;
 import java.io.Serializable;
@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 
 import org.jpos.atmc.dao.IsoError2ATMManager;
 import org.jpos.atmc.dao.ReceiptManager;
+import org.jpos.atmc.ATMTransactionRequest;
+import org.jpos.atmc.ATMVariables;
 import org.jpos.atmc.dao.ATMConfigManager;
 import org.jpos.atmc.dao.ATMManager;
 
@@ -155,12 +157,7 @@ public class ATMSendResponse implements AbortParticipant, Configurable
                 ctx.log("*** PANIC - TX not null - RESPONSE OMITTED ***");
             } else if (resp == null) {
 	            Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " resp not present"  );
-			    // Pantalla de error (En Este Momento Estamos Inhabilitados para completar su Transaccion por Favor Intente Mas Tarde)
-				// Configuration_Orig.txt 361 361
-				// Configuration_NCR_EMV.txt 050 017
-	            // int ISO_RESP_99_ERROR = 99;  
-	            // IsoError2ATM iso2Atm =IsoError2ATM.getIsoError2ATM(ISO_RESP_99_ERROR, atm); 
-				// FSDMsg fsdMsgResp = createFSDMsg(m, fsdMsgIn, "361", "361");
+
 				FSDMsg fsdMsgResp = createErrorFSDMsg(ctx, ISO_RESP_99_ERROR);
 				fsdMsgResp.dump(Log.out, "");
 		        FSDISOMsg fsdISOMsgResp = new FSDISOMsg (fsdMsgResp);
@@ -184,36 +181,8 @@ public class ATMSendResponse implements AbortParticipant, Configurable
                 		ATM atm  = (ATM) ctx.get("atm"); 
                 		TrnDefinition td = (TrnDefinition) ctx.get ("transactiondefinition");
                 		Receipt rcp = DB.exec(db -> new ReceiptManager(db).getReceipt(atm.getConfigId(), td.getReceiptCode() ) );
-                    	/*
-                		try
-                		{
-                	        ATMConfig atmConfig = (ATMConfig) DB.exec(db -> new ATMConfigManager(db).getATMConfig( atm.getConfigID(), fsdMsgIn.get("operation-code-data") ) );
-                	        String language639 = atmConfig.getLanguage639();
-                	        
 
-                	        IsoError2ATM isoError2ATM = (IsoError2ATM) DB.exec(db -> new IsoError2ATMManager(db).getIsoError2ATM(atm.getConfigID(),
-                                                                                                                                 language639) );
-                	        IsoError2ATM isoError2ATM = IsoError2ATM.getIsoError2ATM(ISO_RESP_99_ERROR, 
-                	        		                                                atm.getConfigID(), 
-                	        		                                                 language639); 
-                			FSDMsg fsdMsgResp = createFSDMsg(m, fsdMsgIn, isoError2ATM.getState(), isoError2ATM.getScreen() );
-                	    	return fsdMsgResp;
-                		}
-                		catch (Exception e)
-                		{
-                			Log.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + e.getMessage());
-                            Log.printStackTrace(ex);
-                		}
-                		*/
-
-                    	// Configuration_Orig.txt 171 171
-				        // Configuration_NCR_EMV.txt 235 033
 					    FSDMsg fsdMsgResp = createFSDMsg(m, fsdMsgIn, td.getState(), td.getScreen());
-
-                        // String strBalance = resp.getString(54).substring(8, 20);
-			            // BigDecimal amt = new BigDecimal( strBalance );
-			            // amt = amt.divide( new BigDecimal("100") );
-			            // String formatedAmt = formatCurrency(amt, "en", "US");
 
 			    	    Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " td.getScreenUpdate() " + td.getScreenUpdate() );
 
@@ -260,10 +229,6 @@ public class ATMSendResponse implements AbortParticipant, Configurable
 		            }
                     else
                     {
-		            	// Pantalla de error (350 Pin Incorrecto)
-				        // Configuration_Orig.txt 350 350
-				        // Configuration_NCR_EMV.txt 235 033
-					    // FSDMsg fsdMsgResp = createFSDMsg(m, fsdMsgIn, "350", "350");
 						FSDMsg fsdMsgResp = createErrorFSDMsg(ctx, Integer.parseInt(resp.getString(39)));
 						fsdMsgResp.dump(Log.out, "");
 		                FSDISOMsg fsdISOMsgResp = new FSDISOMsg (fsdMsgResp);

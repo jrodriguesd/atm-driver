@@ -1,11 +1,11 @@
-package org.jpos.atmc.ATMCustomizarion;
+package org.jpos.atmc.ndc.Customizarion;
 
 import org.jpos.atmc.Crypto;
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 
-public class ATMSendCustomizationKeyChange implements ATMSendCustomization 
+public class NDCSendCustomizationKeyChange implements NDCSendCustomization 
 {
 	private String lastNumberSend = "000";
 

@@ -33,9 +33,9 @@ import java.net.Socket;
 import java.net.SocketAddress;
 
 import org.jdom2.JDOMException;
-import org.jpos.atmc.ProcessSolicitedStatus.HeaderStrategy;
 import org.jpos.atmc.dao.ATMManager;
 import org.jpos.atmc.model.ATM;
+import org.jpos.atmc.ndc.ProcessSolicitedStatus.HeaderStrategy;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
@@ -136,12 +136,14 @@ public class SwichByMSgClass implements GroupSelector, Configurable
 		}
 		ctx.put ("atm", atm, remote );
 
+		String atmProtocol = atm.getProtocol().toLowerCase();
+
 	    FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
 
 	    String strMessage = msgIn.get("message");
 		InputStream byteInputStream = new ByteArrayInputStream(strMessage.getBytes());
 
-		String protocolSchema = "file:cfg/" + atm.getProtocol() + "/" + atm.getProtocol() + "-";
+		String protocolSchema = "file:cfg/" + atmProtocol + "/" + atmProtocol + "-";
 		FSDMsg protocolFSDmsg = new FSDMsg(protocolSchema);
 
 		try 
@@ -157,7 +159,8 @@ public class SwichByMSgClass implements GroupSelector, Configurable
 		FSDISOMsg fsdIsoMsg = new FSDISOMsg(protocolFSDmsg);
         ctx.put (request, fsdIsoMsg, remote);
 
-	    String groups = cfg.get (protocolFSDmsg.get("message-class"), null);
+        String key = atmProtocol + "." + protocolFSDmsg.get("message-class"); 
+	    String groups = cfg.get (key, null);
 	    return groups;
 	}
 

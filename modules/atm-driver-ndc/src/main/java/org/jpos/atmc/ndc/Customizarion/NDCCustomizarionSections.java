@@ -1,6 +1,6 @@
-package org.jpos.atmc.ATMCustomizarion;
+package org.jpos.atmc.ndc.Customizarion;
 
-public enum ATMCustomizarionSections 
+public enum NDCCustomizarionSections 
 {
 	
 	SCREENS("SCREENS"), 
@@ -11,10 +11,10 @@ public enum ATMCustomizarionSections
 	LAST("LAST");
 
 	private final String description;
-	private static final ATMCustomizarionSections sections[] = ATMCustomizarionSections.values();
+	private static final NDCCustomizarionSections sections[] = NDCCustomizarionSections.values();
 
 	// private enum constructor
-	private ATMCustomizarionSections(String description) 
+	private NDCCustomizarionSections(String description) 
 	{
 		this.description = description;
 	}
@@ -24,7 +24,7 @@ public enum ATMCustomizarionSections
 		return description;
 	}
 
-    public static ATMCustomizarionSections next(ATMCustomizarionSections acs)
+    public static NDCCustomizarionSections next(NDCCustomizarionSections acs)
     {
     	return sections[ acs.ordinal() + 1 ];
     }
