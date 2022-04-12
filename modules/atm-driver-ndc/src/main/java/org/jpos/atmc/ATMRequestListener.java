@@ -1,3 +1,24 @@
+/*
+ * This file is part of atm-driver.
+ * Copyright (C) 2021-2022
+ *
+ * atm-driver is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * Bisq is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with atm-driver. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
+ */
 package org.jpos.atmc;
 
 import java.io.*;
@@ -347,12 +368,30 @@ public class ATMRequestListener extends org.jpos.util.Log implements ISORequestL
 		}
 	}
 
-    public boolean process(ISOSource source, ISOMsg m)
+    public boolean process(ISOSource src, ISOMsg m)
 	{
-		try
+        final Context ctx  = new Context ();
+        if (remote)
+            src = new SpaceSource((LocalSpace<String, Context>)sp, src, timeout);
+        ctx.put (timestamp, new Date(), remote);
+        ctx.put (source, src, remote);
+        ctx.put (request, m, remote);
+        if (additionalContextEntries != null) 
+		{
+            additionalContextEntries.entrySet().forEach
+			(
+                e -> ctx.put(e.getKey(), e.getValue(), remote)
+            );
+        }
+        sp.out(queue, ctx, timeout);
+
+        int a = 1;
+        if (a == 1)  return true;
+
+        try
 		{
 			debug("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " ID " + this );
-		    BaseChannel bc = (BaseChannel) source;
+		    BaseChannel bc = (BaseChannel) src;
 		    Socket socket = bc.getSocket();
 		    String ip = getIPAddr(socket);
 		    debug("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " bc.getName() " + bc.getName() );

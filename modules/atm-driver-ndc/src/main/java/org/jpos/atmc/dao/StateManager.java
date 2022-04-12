@@ -26,7 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.query.Query;
-import org.jpos.atmc.model.Screen;
 import org.jpos.atmc.model.State;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
@@ -56,7 +55,33 @@ public class StateManager extends DBManager<State> {
 		return l;
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	public List<State> getByConfigId(int limit, String configId, String startNumber) 
+	{
+		Query<State> query = db.session().createQuery
+		(
+		    "from State in class org.jpos.atmc.model.State where configId = :configId and number > :startNumber order by number"
+		);
+		query.setParameter("configId", configId);
+		query.setParameter("startNumber", startNumber);
+		query.setMaxResults(limit);
+		List<State> l = query.list();
+		return l;
+	}
+
+	@SuppressWarnings("unchecked")
+	public State getByConfigIdLast(String configId)
+	{
+		Query<State> query = db.session().createQuery
+		(
+		    "from State in class org.jpos.atmc.model.State where configId = :configId and number > '' order by number desc"
+		);
+		query.setParameter("configId", configId);
+		query.setMaxResults(1);
+		State state = query.getSingleResult();
+		return state;
+	}
+
 	@SuppressWarnings("unchecked")
 	public State getState(String configId, String number) 
 	{

@@ -2,8 +2,6 @@ package org.jpos.atmc.util;
 
 import java.io.*;
 
-import org.jpos.q2.Q2;
-
 public class Log extends PrintStream
 {
 	public static final String LOGGER   = "atm-logger"; // Debe Ser el Nombre de un Logger Real
@@ -64,6 +62,10 @@ public class Log extends PrintStream
 	{
         // outOld.println(str);
         // outOld.flush();
-		org.jpos.util.Log.getLog (LOGGER, FlatLogListener.REALM).debug(str);
+    	String[] parts = str.split("\n");
+    	for (String part : parts) 
+    	{
+    		org.jpos.util.Log.getLog (LOGGER, FlatLogListener.REALM).debug(part);
+    	}
 	}
 }

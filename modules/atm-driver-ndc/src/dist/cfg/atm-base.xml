@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema>
+  <field id="message" type="AEOF" length="8192" />
+</schema>

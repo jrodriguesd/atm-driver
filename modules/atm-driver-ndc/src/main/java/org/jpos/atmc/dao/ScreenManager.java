@@ -53,8 +53,34 @@ public class ScreenManager extends DBManager<Screen> {
 		List<Screen> l = query.list();
 		return l;
 	}
-	
-	
+
+	@SuppressWarnings("unchecked")
+	public List<Screen> getByConfigId(int limit, String configId, String startNumber) 
+	{
+		Query<Screen> query = db.session().createQuery
+		(
+		    "from Screen in class org.jpos.atmc.model.Screen where configId = :configId and number > :startNumber order by number"
+		);
+		query.setParameter("configId", configId);
+		query.setParameter("startNumber", startNumber);
+		query.setMaxResults(limit);
+		List<Screen> l = query.list();
+		return l;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Screen getByConfigIdLast(String configId)
+	{
+		Query<Screen> query = db.session().createQuery
+		(
+		    "from Screen in class org.jpos.atmc.model.Screen where configId = :configId and number > '' order by number desc"
+		);
+		query.setParameter("configId", configId);
+		query.setMaxResults(1);
+		Screen screen = query.getSingleResult();
+		return screen;
+	}
+
 	@SuppressWarnings("unchecked")
 	public Screen getScreen(String configId, String number) 
 	{

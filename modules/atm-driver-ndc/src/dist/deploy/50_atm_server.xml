@@ -6,7 +6,7 @@
       type="server"
       logger="Q2"
       realm="xml-server-8000">
-	  <property name="schema" value="file:cfg/ndc/ndc-" />
+	  <property name="schema" value="file:cfg/atm-" />
       <property name="connection-timeout" value="15000" /> <!-- 15 seconds -->
       <property name="timeout" value="0" />
       <property name="keep-alive" value="true" />

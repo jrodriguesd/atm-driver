@@ -14,7 +14,6 @@ import org.jpos.atmc.util.Util;
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOUtil;
-import org.jpos.transaction.Context;
 import org.jpos.util.FSDMsg;
 
 public class ATMVariables

@@ -109,6 +109,10 @@ public class ATMSendResponse implements AbortParticipant, Configurable
 		FSDMsg fsdMsgIn = (FSDMsg) ctx.get("fsdMsgIn");
 		ATM atm  = (ATM) ctx.get("atm"); 
 
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+		fsdMsgIn.dump(Log.out, "");
+		
+		
 		try
 		{
 	        ATMConfig atmConfig = (ATMConfig) DB.exec(db -> new ATMConfigManager(db).getATMConfig( atm.getConfigId(), fsdMsgIn.get("operation-code-data") ) );

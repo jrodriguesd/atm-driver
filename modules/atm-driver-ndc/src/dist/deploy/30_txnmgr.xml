@@ -3,6 +3,25 @@
   <property name="sessions" value="2"/>
   <property name="max-sessions" value="128"/>
   <property name="debug" value="true"/>
-  <participant class="org.jpos.transaction.participant.QueryHost"/>
-  <participant class="org.jpos.atmc.ATMSendResponse"/>
+  <participant class="org.jpos.atmc.SwichByMSgClass">
+    <property name="11" value="TransactionRequest" />
+    <property name="12" value="UnsolicitedStatus" />
+    <property name="22" value="SolicitedStatus" />
+  </participant>
+
+  <group name="TransactionRequest">
+      <participant class="org.jpos.atmc.CheckTransactionRequestFields"/>
+      <participant class="org.jpos.atmc.createISOMsg"/>
+      <participant class="org.jpos.transaction.participant.QueryHost"/>
+      <participant class="org.jpos.atmc.ATMSendResponse"/>
+  </group>
+
+  <group name="UnsolicitedStatus">
+      <participant class="org.jpos.atmc.ProcessUnsolicitedStatus"/>
+  </group>
+
+  <group name="SolicitedStatus">
+      <participant class="org.jpos.atmc.ProcessSolicitedStatus"/>
+  </group>
+
 </txnmgr>
