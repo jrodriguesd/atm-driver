@@ -155,30 +155,37 @@ public class NDCSendCustomisationCoordinator
     	GetSection customization = GetSectionFactory.getInstance( this.customizarionSection );
     	String configId = this.atm.getConfigId();
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId >" + configId + "<");
-    	String custMsg = customization.getNextCustomizationMsg(atm, configId, this.lastKeySend);
-    	this.lastKeySend = customization.getLastKeySend();
-    	
-        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.lastKeySend>" + this.lastKeySend + "<" );
-        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.lastKey>" + this.lastKey + "<" );
+        if (customization != null)
+        {
+        	String custMsg = customization.getNextCustomizationMsg(atm, configId, this.lastKeySend);
+        	this.lastKeySend = customization.getLastKeySend();
+        	
+            Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.lastKeySend>" + this.lastKeySend + "<" );
+            Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.lastKey>" + this.lastKey + "<" );
 
-    	if ( this.lastKey.equals(this.lastKeySend) )
-    	{
-    		this.customizarionSection = NDCCustomizarionSections.next(this.customizarionSection);
-    		customization = GetSectionFactory.getInstance( this.customizarionSection );
-    		if (customization != null)
-    		{
-        	    this.lastKey = customization.getLastKey(configId); 
-        	    this.lastKeySend = "";
-    		}
-    	}
-    	return custMsg;
+        	if ( this.lastKey.equals(this.lastKeySend) )
+        	{
+        		this.customizarionSection = NDCCustomizarionSections.next(this.customizarionSection);
+        		customization = GetSectionFactory.getInstance( this.customizarionSection );
+        		if (customization != null)
+        		{
+            	    this.lastKey = customization.getLastKey(configId); 
+            	    this.lastKeySend = "";
+        		}
+        	}
+        	return custMsg;
+        }
+        return null;
     }
 
     public void sendNextCustomizationMsg() throws IOException
     {
-    	String nextCustomizationMsg = getNextCustomizationMsg(); 
-        Log.staticPrintln( Util.formatHexDump(nextCustomizationMsg) );
-    	sendCustomizationMsg( nextCustomizationMsg );
+    	String nextCustomizationMsg = getNextCustomizationMsg();
+    	if (nextCustomizationMsg != null)
+    	{
+            Log.staticPrintln( Util.formatHexDump(nextCustomizationMsg) );
+        	sendCustomizationMsg( nextCustomizationMsg );
+    	}
     }
     
 }
