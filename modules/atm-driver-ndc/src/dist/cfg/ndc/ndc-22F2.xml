@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Terminal State -->
+<schema id="22F1">
+  <field id="tsn"                       type="N"  length="4"  />
+  <field id="transaction_count_acum"    type="N"  length="7"  />
+  <field id="notes_in_cassette-1"       type="N"  length="5" />
+  <field id="notes_in_cassette-2"       type="N"  length="5" />
+  <field id="notes_in_cassette-3"       type="N"  length="5" />
+  <field id="notes_in_cassette-4"       type="N"  length="5" />
+  <field id="notes_rejected"            type="N"  length="20" />
+  <field id="notes_dispensed"           type="N"  length="20" />
+  <field id="last_trxn_notes_dispensed" type="N"  length="20" />
+  <field id="card_captured"             type="N"  length="5"  />
+  <field id="envelopes_deposited"       type="N"  length="5"  />
+  <field id="camera_film_remaining"     type="N"  length="5"  />
+  <field id="last_envelope_serial"      type="N"  length="5"  />
+</schema>

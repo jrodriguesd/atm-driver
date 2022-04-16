@@ -19,39 +19,32 @@
 /**
  * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
  */
-package org.jpos.atmc.ndc.Customizarion;
+package org.jpos.atmc.dao;
 
-public enum NDCCustomizarionSections 
+import java.util.List;
+
+import org.hibernate.query.Query;
+import org.jpos.atmc.model.Cassette;
+import org.jpos.ee.DB;
+import org.jpos.ee.DBManager;
+
+public class CassetteManager extends DBManager<Cassette>
 {
-	
-	SCREENS("SCREENS"), 
-	STATES("STATES"), 
-	FITS("FITS"),
-	KEY_CHANGE("KEY_CHANGE"),
-	CONFIGID("CONFIGID"),
-    CURRENCY_CASSETTE_MAPPING("CURRENCY_CASSETTE_MAPPING"), 
-    GET_SUPPLY_COUNTERS("GET_SUPPLY_COUNTERS"), 
-	GO_IN_SERVICE("GO_IN_SERVICE"),
-	LAST("LAST");
-
-	private final String description;
-	private static final NDCCustomizarionSections sections[] = NDCCustomizarionSections.values();
-
-	// private enum constructor
-	private NDCCustomizarionSections(String description) 
+	public CassetteManager(DB db) 
 	{
-		this.description = description;
+		super(db, Cassette.class);
 	}
 
-	public String getDescription() 
+	@SuppressWarnings("unchecked")
+	public List<Cassette> getByLuno(String luno) 
 	{
-		return description;
+		Query<Cassette> query = db.session().createQuery
+		(
+		    "from Cassette in class org.jpos.atmc.model.Cassette where luno = :luno order by position"
+		);
+		query.setParameter("luno", luno);
+		List<Cassette> l = query.list();
+		return l;
 	}
-
-    public static NDCCustomizarionSections next(NDCCustomizarionSections acs)
-    {
-    	return sections[ acs.ordinal() + 1 ];
-    }
-	
 
 }

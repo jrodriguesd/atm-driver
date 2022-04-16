@@ -1,3 +1,24 @@
+/*
+ * This file is part of atm-driver.
+ * Copyright (C) 2021-2022
+ *
+ * atm-driver is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * atm-driver is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with atm-driver. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
+ */
 package org.jpos.atmc.ndc;
 
 import java.io.IOException;
@@ -11,7 +32,8 @@ import java.net.SocketAddress;
 
 import org.jpos.atmc.dao.ATMManager;
 import org.jpos.atmc.model.ATM;
-import org.jpos.atmc.ndc.Customizarion.NDCSendCustomizarionCoordinator;
+import org.jpos.atmc.ndc.Customizarion.NDCCustomizarionSections;
+import org.jpos.atmc.ndc.Customizarion.NDCSendCustomisationCoordinator;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
@@ -40,14 +62,6 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
     private freemarker.template.Configuration fmCfg; 
     private boolean remote = false;
 
-	public static final String GO_IN_SERVICE                  = "1";
-	public static final String GO_OUT_SERVICE                 = "2";
-	public static final String SEND_CONFIGURATION_ID          = "3";
-	public static final String SEND_SUPPLY_COUNTERS           = "4";
-	public static final String SEND_TALLY_INFORMATION         = "5";
-	public static final String SEND_CONFIGURATION_INFORMATION = "7";
-	public static final String SEND_DATE_AND_TIME_INFORMATION = "8";
-
 	@Override
 	public int prepare(long id, Serializable context) 
 	{
@@ -73,6 +87,7 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
         BaseChannel baseChannel = (BaseChannel) source;
 
 	    FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
+        FSDMsg msgOut = new FSDMsg( msgIn.getBasePath() );
 		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		msgIn.dump(Log.out, "");
 
@@ -85,33 +100,58 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
 			case 'B':  //* Power Failure
 		        String configID = msgIn.get("device-status");
 		        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configID >" + configID + "<");
-				if ( (atm != null) && ( ! atm.getConfigId().equals(configID) ) )
+		        NDCSendCustomisationCoordinator.init( source, msgIn, atm);
+		        NDCSendCustomisationCoordinator acc = NDCSendCustomisationCoordinator.get(baseChannel.getName());
+
+		        if ( (atm != null) && ( ! atm.getConfigId().equals(configID) ) )
+		        {
+			        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId !=");
+		        	acc.setCustomizarionSection(NDCCustomizarionSections.SCREENS);
+		        }
+		        else
+		        {
+			        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId ==");
+		        	acc.setCustomizarionSection(NDCCustomizarionSections.CURRENCY_CASSETTE_MAPPING);
+		        }
+
+				try
 				{
-			        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Iniciar Envio de Configuracion");
-			        NDCSendCustomizarionCoordinator.init( source, msgIn, atm);
-			        NDCSendCustomizarionCoordinator acc = NDCSendCustomizarionCoordinator.get(baseChannel.getName());
-
-					try
-					{
-						acc.sendNextCustomizationMsg();
-					}
-		            catch (IOException ex) 
-		            {
-		            	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
-		                Log.printStackTrace(ex);
-                    }
-
+					acc.sendNextCustomizationMsg();
 				}
-				else
-				{
-		            FSDMsg msgOut = new FSDMsg( msgIn.getBasePath() );
+	            catch (IOException ex) 
+	            {
+	            	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
+	                Log.printStackTrace(ex);
+                }
 
-		            msgOut.set("message-class", "1");
-		            msgOut.set("command-code",  GO_IN_SERVICE);
-		            msgOut.dump(Log.out, "");
-		            Util.send(source, msgOut);
-					// atmRunState.atmState = ATMRunState.ATMState.GOING_INTO_SERVICE;
-				}
+//		        if ( (atm != null) && ( ! atm.getConfigId().equals(configID) ) )
+//				{
+//			        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Iniciar Envio de Configuracion");
+//			        NDCSendCustomisationCoordinator.init( source, msgIn, atm);
+//			        NDCSendCustomisationCoordinator acc = NDCSendCustomisationCoordinator.get(baseChannel.getName());
+//
+//					try
+//					{
+//						acc.sendNextCustomizationMsg();
+//					}
+//		            catch (IOException ex) 
+//		            {
+//		            	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
+//		                Log.printStackTrace(ex);
+//                    }
+//
+//				}
+//				else
+//				{
+//		            msgOut.set("message-class", "1");
+//		            msgOut.set("command-code",  NDCCommand.SEND_SUPPLY_COUNTERS);
+//		            msgOut.dump(Log.out, "");
+//
+//		            Util.send(source, msgOut);
+//
+//		            ATMState atmState = ATMState.SENDING_SUPPLY_COUNTERS;
+//		        	ATMState.put(baseChannel.getName(), atmState);
+//				}
 			    break;
 			case 'D':  //* Card Reader/Writer Status
 			    break;

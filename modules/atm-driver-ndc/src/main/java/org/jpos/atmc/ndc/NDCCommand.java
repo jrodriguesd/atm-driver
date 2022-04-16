@@ -19,39 +19,15 @@
 /**
  * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
  */
-package org.jpos.atmc.ndc.Customizarion;
+package org.jpos.atmc.ndc;
 
-public enum NDCCustomizarionSections 
+public class NDCCommand 
 {
-	
-	SCREENS("SCREENS"), 
-	STATES("STATES"), 
-	FITS("FITS"),
-	KEY_CHANGE("KEY_CHANGE"),
-	CONFIGID("CONFIGID"),
-    CURRENCY_CASSETTE_MAPPING("CURRENCY_CASSETTE_MAPPING"), 
-    GET_SUPPLY_COUNTERS("GET_SUPPLY_COUNTERS"), 
-	GO_IN_SERVICE("GO_IN_SERVICE"),
-	LAST("LAST");
-
-	private final String description;
-	private static final NDCCustomizarionSections sections[] = NDCCustomizarionSections.values();
-
-	// private enum constructor
-	private NDCCustomizarionSections(String description) 
-	{
-		this.description = description;
-	}
-
-	public String getDescription() 
-	{
-		return description;
-	}
-
-    public static NDCCustomizarionSections next(NDCCustomizarionSections acs)
-    {
-    	return sections[ acs.ordinal() + 1 ];
-    }
-	
-
+	public static final String GO_IN_SERVICE                  = "1";
+	public static final String GO_OUT_SERVICE                 = "2";
+	public static final String SEND_CONFIGURATION_ID          = "3";
+	public static final String SEND_SUPPLY_COUNTERS           = "4";
+	public static final String SEND_TALLY_INFORMATION         = "5";
+	public static final String SEND_CONFIGURATION_INFORMATION = "7";
+	public static final String SEND_DATE_AND_TIME_INFORMATION = "8";
 }

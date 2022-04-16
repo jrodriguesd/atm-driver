@@ -21,37 +21,34 @@
  */
 package org.jpos.atmc.ndc.Customizarion;
 
-public enum NDCCustomizarionSections 
+import org.jpos.atmc.model.ATM;
+
+public class GetConfigId implements GetSection 
 {
-	
-	SCREENS("SCREENS"), 
-	STATES("STATES"), 
-	FITS("FITS"),
-	KEY_CHANGE("KEY_CHANGE"),
-	CONFIGID("CONFIGID"),
-    CURRENCY_CASSETTE_MAPPING("CURRENCY_CASSETTE_MAPPING"), 
-    GET_SUPPLY_COUNTERS("GET_SUPPLY_COUNTERS"), 
-	GO_IN_SERVICE("GO_IN_SERVICE"),
-	LAST("LAST");
+	private String lastConfigIdSend = "0000";
 
-	private final String description;
-	private static final NDCCustomizarionSections sections[] = NDCCustomizarionSections.values();
-
-	// private enum constructor
-	private NDCCustomizarionSections(String description) 
+	@Override
+	public String getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
 	{
-		this.description = description;
+		final String x1c = new String(new byte[] { 0x1c });
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("3 16");
+		sb.append(x1c + atm.getConfigId());
+		return sb.toString();
 	}
 
-	public String getDescription() 
+	@Override
+	public String getLastKeySend() 
 	{
-		return description;
+		return this.lastConfigIdSend;
 	}
 
-    public static NDCCustomizarionSections next(NDCCustomizarionSections acs)
-    {
-    	return sections[ acs.ordinal() + 1 ];
-    }
-	
+	@Override
+	public String getLastKey(String configId) 
+	{
+		return this.lastConfigIdSend;
+	}
+
 
 }

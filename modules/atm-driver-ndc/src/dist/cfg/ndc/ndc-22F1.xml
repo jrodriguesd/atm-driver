@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Terminal State -->
+<schema id="22F1">
+  <field id="configuration-id"                                            type="NFS"  length="4"  />
+  <!-- Hardware Fitness 38 bytes -->
+  <field id="hwf-00-time-of-day clock"                                    type="N"    length="1" />
+  <field id="hwf-01-high order communications"                            type="N"    length="1" />
+  <field id="hwf-02-system disk"                                          type="N"    length="1" />
+  <field id="hwf-03-magnetic card reader/writer"                          type="N"    length="1" />
+  <field id="hwf-04-cash handler"                                         type="N"    length="1" />
+  <field id="hwf-05-envelope-depository"                                  type="N"    length="1" />
+  <field id="hwf-06-receipt printer"                                      type="N"    length="1" />
+  <field id="hwf-07-journal printer"                                      type="N"    length="1" />
+  <field id="hwf-08-reserved"                                             type="N"    length="1" />
+  <field id="hwf-09-enhanced thermal statement printer (sdc+)"            type="N"    length="1" />
+  <field id="hwf-10-night safe depository"                                type="N"    length="1" />
+  <field id="hwf-11-encryptor"                                            type="N"    length="1" />
+  <field id="hwf-12-security camera"                                      type="N"    length="1" />
+  <field id="hwf-13-door-access"                                          type="N"    length="1" />
+  <field id="hwf-14-flex-disk"                                            type="N"    length="1" />
+  <field id="hwf-15-cassette-type-1"                                      type="N"    length="1" />
+  <field id="hwf-16-cassette-type-2"                                      type="N"    length="1" />
+  <field id="hwf-17-cassette-type-3"                                      type="N"    length="1" />
+  <field id="hwf-18-cassette-type-4"                                      type="N"    length="1" />
+  <field id="hwf-19-reserved"                                             type="N"    length="1" />
+  <field id="hwf-20-reserved"                                             type="N"    length="1" />
+  <field id="hwf-21-statement-printer"                                    type="N"    length="1" />
+  <field id="hwf-22-signage-display"                                      type="N"    length="1" />
+  <field id="hwf-23-reserved"                                             type="N"    length="1" />
+  <field id="hwf-24-reserved"                                             type="N"    length="1" />
+  <field id="hwf-25-system-display"                                       type="N"    length="1" />
+  <field id="hwf-26-media-entry-indicators"                               type="N"    length="1" />
+  <field id="hwf-27-envelope-dispenser"                                   type="N"    length="1" />
+  <field id="hwf-28-document-processing-module"                           type="N"    length="1" />
+  <field id="hwf-29-coin-dispensing-module-tamper-ind"                   type="N"    length="1" />
+  <field id="hwf-30-document-processing-module-module-tamper-ind"         type="N"    length="1" />
+  <field id="hwf-31-reserved"                                             type="N"    length="1" />
+  <field id="hwf-32-digital-audio-service"                                type="N"    length="1" />
+  <field id="hwf-33-reserved"                                             type="N"    length="1" />
+  <field id="hwf-34-bunch-note-acceptor"                                  type="N"    length="1" />
+  <field id="hwf-35-cheque-processing-module"                             type="N"    length="1" />
+  <field id="hwf-36-reserved"                                             type="N"    length="1" />
+  <field id="hwf-37-reserved"                                             type="NFS"  length="1" />
+  <!-- Hardware Configuration 38 bytes -->
+  <field id="hwc-00-product"                                              type="A"    length="1" />
+  <field id="hwc-01-filler-7f"                                            type="A"    length="1" />
+  <field id="hwc-02-system-disk"                                          type="A"    length="1" />
+  <field id="hwc-03-magnetic-card-reader-writer"                          type="A"    length="1" />
+  <field id="hwc-04-cash-handler"                                         type="A"    length="1" />
+  <field id="hwc-05-envelope-depository"                                  type="A"    length="1" />
+  <field id="hwc-06-receipt-printer"                                      type="A"    length="1" />
+  <field id="hwc-07-journal-printer"                                      type="A"    length="1" />
+  <field id="hwc-08-reserved"                                             type="A"    length="1" />
+  <field id="hwc-09-reserved"                                             type="A"    length="1" />
+  <field id="hwc-10-night-safe-depository"                                type="A"    length="1" />
+  <field id="hwc-11-encryptor"                                            type="A"    length="1" />
+  <field id="hwc-12-security-camera"                                      type="A"    length="1" />
+  <field id="hwc-13-door-access"                                          type="A"    length="1" />
+  <field id="hwc-14-flex-disk"                                            type="A"    length="1" />
+  <field id="hwc-15-tamper-ind"                                           type="A"    length="1" />
+  <field id="hwc-16-cardholder-keyboard"                                  type="A"    length="1" />
+  <field id="hwc-17-operator-keyboard"                                    type="A"    length="1" />
+  <field id="hwc-18-cardholder-display-voice"                             type="A"    length="1" />
+  <field id="hwc-19-filler-7f"                                            type="A"    length="1" />
+  <field id="hwc-20-filler-7f"                                            type="A"    length="1" />
+  <field id="hwc-21-statement printer"                                    type="A"    length="1" />
+  <field id="hwc-22-reserved"                                             type="A"    length="1" />
+  <field id="hwc-23-reserved"                                             type="A"    length="1" />
+  <field id="hwc-24-coin-dispenser"                                       type="A"    length="1" />
+  <field id="hwc-25-system-display"                                       type="A"    length="1" />
+  <field id="hwc-26-media-entry-indicators"                               type="A"    length="1" />
+  <field id="hwc-27-envelope-dispenser"                                   type="A"    length="1" />
+  <field id="hwc-28-document-processing-module"                           type="A"    length="1" />
+  <field id="hwc-29-coin-dispensing-module-tamper-ind"                    type="A"    length="1" />
+  <field id="hwc-30-document-processing-module-tamper-ind"                type="A"    length="1" />
+  <field id="hwc-31-reserved"                                             type="A"    length="1" />
+  <field id="hwc-32-digital-audio-service"                                type="A"    length="1" />
+  <field id="hwc-33-reserved"                                             type="A"    length="1" />
+  <field id="hwc-34-bunch-note-acceptor"                                  type="A"    length="1" />
+  <field id="hwc-35-cheque-processing-module"                             type="A"    length="1" />
+  <field id="hwc-36-reserved"                                             type="A"    length="1" />
+  <field id="hwc-37-reserved"                                             type="AFS"  length="1" />
+  <!-- Supplies Status 26 bytes -->
+  <field id="sup-00-reserved"                                             type="N"    length="1" />
+  <field id="sup-01-reserved"                                             type="N"    length="1" />
+  <field id="sup-02-not-used"                                             type="N"    length="1" />
+  <field id="sup-03-card-capture-bin"                                     type="N"    length="1" />
+  <field id="sup-04-cash-handler-reject-bin"                              type="N"    length="1" />
+  <field id="sup-05-deposit-bin"                                          type="N"    length="1" />
+  <field id="sup-06-receipt-paper"                                        type="N"    length="1" />
+  <field id="sup-07-journal-paper"                                        type="N"    length="1" />
+  <field id="sup-08-not-used"                                             type="N"    length="1" />
+  <field id="sup-09-not-used"                                             type="N"    length="1" />
+  <field id="sup-10-night-safe"                                           type="N"    length="1" />
+  <field id="sup-11-not-used"                                             type="N"    length="1" />
+  <field id="sup-12-not-used"                                             type="N"    length="1" />
+  <field id="sup-13-not-used"                                             type="N"    length="1" />
+  <field id="sup-14-not-used"                                             type="N"    length="1" />
+  <field id="sup-15-cassette-type-1"                                      type="N"    length="1" />
+  <field id="sup-16-cassette-type-2"                                      type="N"    length="1" />
+  <field id="sup-17-cassette-type-3"                                      type="N"    length="1" />
+  <field id="sup-18-cassette-type-4"                                      type="N"    length="1" />
+  <field id="sup-19-not-used"                                             type="N"    length="1" />
+  <field id="sup-20-not-used"                                             type="N"    length="1" />
+  <field id="sup-21-statement-paper"                                      type="N"    length="1" />
+  <field id="sup-22-statement-ribbon"                                     type="N"    length="1" />
+  <field id="sup-23-reserved"                                             type="N"    length="1" />
+  <field id="sup-24-reserved"                                             type="N"    length="1" />
+  <field id="sup-25-envelope-dispenser"                                   type="NFS"  length="1" />
+  <!-- Sensor Status 26 bytes -->
+  <field id="sensor-status"                                               type="NFS"  length="12" />
+  <field id="ndc-release-number"                                          type="NFS"  length="6"  />
+  <field id="ndc-software-id"                                             type="AEOF" length="9"  />
+</schema>

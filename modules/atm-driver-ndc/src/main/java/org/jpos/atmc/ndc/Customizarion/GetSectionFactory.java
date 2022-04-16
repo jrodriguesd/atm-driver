@@ -21,37 +21,32 @@
  */
 package org.jpos.atmc.ndc.Customizarion;
 
-public enum NDCCustomizarionSections 
+public class GetSectionFactory 
 {
-	
-	SCREENS("SCREENS"), 
-	STATES("STATES"), 
-	FITS("FITS"),
-	KEY_CHANGE("KEY_CHANGE"),
-	CONFIGID("CONFIGID"),
-    CURRENCY_CASSETTE_MAPPING("CURRENCY_CASSETTE_MAPPING"), 
-    GET_SUPPLY_COUNTERS("GET_SUPPLY_COUNTERS"), 
-	GO_IN_SERVICE("GO_IN_SERVICE"),
-	LAST("LAST");
-
-	private final String description;
-	private static final NDCCustomizarionSections sections[] = NDCCustomizarionSections.values();
-
-	// private enum constructor
-	private NDCCustomizarionSections(String description) 
+	public static GetSection getInstance(NDCCustomizarionSections type)
 	{
-		this.description = description;
+		switch (type)
+		{
+		    case SCREENS:
+		    	return new GetScreens();
+		    case STATES:
+		    	return new GetStates();
+		    case FITS:
+		    	return new GetFits();
+		    case KEY_CHANGE:
+		    	return new GetKeyChange();
+		    case CONFIGID:
+		    	return new GetConfigId();
+		    case GET_SUPPLY_COUNTERS:
+		    	return new GetSupplyCountersCmd();
+		    case CURRENCY_CASSETTE_MAPPING:
+		    	return new GetCurrencyCassetteMapping();
+		    case GO_IN_SERVICE:
+		    	return new GoInServiceCmd();
+		    default:
+			    break; 
+		}
+		return null;
 	}
-
-	public String getDescription() 
-	{
-		return description;
-	}
-
-    public static NDCCustomizarionSections next(NDCCustomizarionSections acs)
-    {
-    	return sections[ acs.ordinal() + 1 ];
-    }
-	
 
 }

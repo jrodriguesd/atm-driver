@@ -21,37 +21,11 @@
  */
 package org.jpos.atmc.ndc.Customizarion;
 
-public enum NDCCustomizarionSections 
+import org.jpos.atmc.model.ATM;
+
+public interface GetSection     
 {
-	
-	SCREENS("SCREENS"), 
-	STATES("STATES"), 
-	FITS("FITS"),
-	KEY_CHANGE("KEY_CHANGE"),
-	CONFIGID("CONFIGID"),
-    CURRENCY_CASSETTE_MAPPING("CURRENCY_CASSETTE_MAPPING"), 
-    GET_SUPPLY_COUNTERS("GET_SUPPLY_COUNTERS"), 
-	GO_IN_SERVICE("GO_IN_SERVICE"),
-	LAST("LAST");
-
-	private final String description;
-	private static final NDCCustomizarionSections sections[] = NDCCustomizarionSections.values();
-
-	// private enum constructor
-	private NDCCustomizarionSections(String description) 
-	{
-		this.description = description;
-	}
-
-	public String getDescription() 
-	{
-		return description;
-	}
-
-    public static NDCCustomizarionSections next(NDCCustomizarionSections acs)
-    {
-    	return sections[ acs.ordinal() + 1 ];
-    }
-	
-
+	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber); 
+	public String  getLastKeySend();
+	public String  getLastKey(String configId);
 }

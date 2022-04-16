@@ -1,3 +1,24 @@
+/*
+ * This file is part of atm-driver.
+ * Copyright (C) 2021-2022
+ *
+ * atm-driver is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
+ *
+ * atm-driver is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with atm-driver. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
+ */
 package org.jpos.atmc.ndc.Customizarion;
 
 import java.io.IOException;
@@ -10,7 +31,7 @@ import org.jpos.iso.BaseChannel;
 import org.jpos.iso.ISOSource;
 import org.jpos.util.FSDMsg;
 
-public class NDCSendCustomizarionCoordinator 
+public class NDCSendCustomisationCoordinator 
 {
 	private ISOSource source;
 	private FSDMsg msgIn;
@@ -19,19 +40,19 @@ public class NDCSendCustomizarionCoordinator
 	private String lastKeySend; 
 	private NDCCustomizarionSections customizarionSection;
 	
-    private static final HashMap<String, NDCSendCustomizarionCoordinator> atmsCustomizarioState = new HashMap<String, NDCSendCustomizarionCoordinator>();
+    private static final HashMap<String, NDCSendCustomisationCoordinator> atmsCustomizarioState = new HashMap<String, NDCSendCustomisationCoordinator>();
 
     public static void init(ISOSource source, FSDMsg msgIn, ATM atm)
     {
         // ATMCustomizarionState customizarionState = new ATMCustomizarionState();
 
-        NDCSendCustomizarionCoordinator customizarionCoordinator = new NDCSendCustomizarionCoordinator();
+        NDCSendCustomisationCoordinator customizarionCoordinator = new NDCSendCustomisationCoordinator();
         customizarionCoordinator.source = source;
         customizarionCoordinator.msgIn = msgIn;
         customizarionCoordinator.atm = atm;
         customizarionCoordinator.customizarionSection = NDCCustomizarionSections.SCREENS;
 
-    	NDCSendCustomization customization = NDCSendCustomizationFactory.getInstance( customizarionCoordinator.customizarionSection );
+    	GetSection customization = GetSectionFactory.getInstance( customizarionCoordinator.customizarionSection );
     	String configId = atm.getConfigId();
         customizarionCoordinator.lastKey = customization.getLastKey(configId);
         customizarionCoordinator.lastKeySend = "";
@@ -41,7 +62,26 @@ public class NDCSendCustomizarionCoordinator
         atmsCustomizarioState.put( baseChannel.getName(), customizarionCoordinator );
     }
 
-    public static NDCSendCustomizarionCoordinator get(String atmName)
+    public NDCCustomizarionSections getCurrentSection()
+    {
+		return this.customizarionSection;
+    	
+    }
+
+    public void setCustomizarionSection(NDCCustomizarionSections customizarionSection)
+    {
+    	GetSection customization = GetSectionFactory.getInstance( customizarionSection );
+
+        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " customization Name " + customization.getClass().getSimpleName());
+
+        this.customizarionSection = customizarionSection;
+    	this.lastKey = customization.getLastKey(this.atm.getConfigId());
+
+    	BaseChannel baseChannel = (BaseChannel) this.source;
+        atmsCustomizarioState.put( baseChannel.getName(), this );
+    }
+
+    public static NDCSendCustomisationCoordinator get(String atmName)
     {
     	return atmsCustomizarioState.get( atmName);
     }
@@ -50,14 +90,17 @@ public class NDCSendCustomizarionCoordinator
      * Send cmd to client (ATM)
      *
      */
-    public void sendMessage(int msgClass, String timeVariantNumber, String data) throws IOException
+    public void sendMessage(String msgClass, String timeVariantNumber, String data) throws IOException
     {
         FSDMsg msgOut = new FSDMsg( this.msgIn.getBasePath() );
 
-		msgOut.set("message-class",       "" + msgClass);
+		msgOut.set("message-class",       msgClass);
 		msgOut.set("luno",                this.msgIn.get("luno") );
 		msgOut.set("time-variant-number", this.msgIn.get("time-variant-number") );
-		msgOut.set("data",                data);
+		
+		if ( msgClass.equals("3") ) msgOut.set("data", data);
+		if ( msgClass.equals("1") ) msgOut.set("command-code", data.substring(0, 1) );
+
 		Util.send(source, msgOut);
 	}
 
@@ -73,11 +116,11 @@ public class NDCSendCustomizarionCoordinator
     public void sendCustomizationMsg(String strLine) throws IOException
     {
         String strMsgClas = strLine.substring(0, 1);
+		String msgLine = strLine.substring(2);
 		int msgClass = Util.str2Int(strMsgClas);
         /* String strMsgSubClas; */
 		
 		String msgSubClas = "";
-		String msgLine = strLine.substring(2);
 		
 		if (msgClass == 3)
 		{
@@ -96,35 +139,36 @@ public class NDCSendCustomizarionCoordinator
 		if ( msgSubClas.equals("1A") )
 		{
 	        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " 1A" );
-			// sendEnhancedConfigutation();
-			return;
 		}
 
 		if ( ( msgSubClas.equals("41") ) || ( msgSubClas.equals("42") ) )
 		{
 	        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " 12" );
 		}
-	    sendMessage(msgClass, null, msgLine);
+	    sendMessage(strMsgClas, null, msgLine);
     }
 
     public String getNextCustomizationMsg()
     {
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.customizarionSection " + this.customizarionSection);
         
-    	NDCSendCustomization customization = NDCSendCustomizationFactory.getInstance( this.customizarionSection );
+    	GetSection customization = GetSectionFactory.getInstance( this.customizarionSection );
     	String configId = this.atm.getConfigId();
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId >" + configId + "<");
     	String custMsg = customization.getNextCustomizationMsg(atm, configId, this.lastKeySend);
     	this.lastKeySend = customization.getLastKeySend();
+    	
+        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.lastKeySend>" + this.lastKeySend + "<" );
+        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.lastKey>" + this.lastKey + "<" );
 
     	if ( this.lastKey.equals(this.lastKeySend) )
     	{
     		this.customizarionSection = NDCCustomizarionSections.next(this.customizarionSection);
-    		customization = NDCSendCustomizationFactory.getInstance( this.customizarionSection );
+    		customization = GetSectionFactory.getInstance( this.customizarionSection );
     		if (customization != null)
     		{
-        		this.lastKey = customization.getLastKey(configId); 
-        		this.lastKeySend = "";
+        	    this.lastKey = customization.getLastKey(configId); 
+        	    this.lastKeySend = "";
     		}
     	}
     	return custMsg;

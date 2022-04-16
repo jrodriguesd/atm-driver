@@ -36,7 +36,7 @@ import java.util.List;
 
 import org.jpos.atmc.model.*;
 
-public class TrnDefinitionTest
+public class CassetteTest
 {
     private PojoClass atmconfigPojo;
     private Validator validator;	
@@ -44,7 +44,7 @@ public class TrnDefinitionTest
 	@Before
 	public void setup() 
 	{
-	    atmconfigPojo = PojoClassFactory.getPojoClass(TrnDefinition.class);
+	    atmconfigPojo = PojoClassFactory.getPojoClass(Cassette.class);
 	}	
 
 	@Test
