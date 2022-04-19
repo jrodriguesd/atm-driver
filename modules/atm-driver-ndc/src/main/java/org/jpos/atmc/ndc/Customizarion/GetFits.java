@@ -79,7 +79,7 @@ public class GetFits implements GetSection
 		} 
 		catch (Exception e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 		return null;
 	}
@@ -90,7 +90,8 @@ public class GetFits implements GetSection
 	}
 
 	@Override
-	public String getLastKey(String configId) {
+	public String getLastKey(ATM atm, String configId)
+	{
 		try 
 		{
 		    Fit fit =  DB.exec(db -> new FitManager(db).getByConfigIdLast(configId) );
@@ -98,7 +99,7 @@ public class GetFits implements GetSection
 		} 
 		catch (Exception e) 
 		{
-		    Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 		return null;
 	}

@@ -53,10 +53,10 @@ public class Util
 		{
             number = Integer.parseInt(str);
         }
-        catch (NumberFormatException ex)
+        catch (NumberFormatException e)
 		{
-	        System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
-	        Log.printStackTrace(ex);
+	        System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + e.getMessage());
+			e.printStackTrace(Log.out);
         }
 		return number;
 	}
@@ -128,19 +128,19 @@ public class Util
 		{
 		    source.send( new FSDISOMsg (msgOut) );
 		}
-		catch (IOException ex)
+		catch (IOException e)
 		{
-	        System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
-	        Log.printStackTrace(ex);
+	        System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + e.getMessage());
+			e.printStackTrace(Log.out);
 		}
-		catch (ISOException ex)
+		catch (ISOException e)
 		{
-	        System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
-	        Log.printStackTrace(ex);
+	        System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + e.getMessage());
+			e.printStackTrace(Log.out);
 		}
 	}
 
-    public static String formatHexDump(byte[] array, int offset, int length) 
+    private static String formatHexDump(byte[] array, int offset, int length) 
 	{
         final int width = 16;
 
@@ -180,9 +180,15 @@ public class Util
         return builder.toString();
     }
 
-    public static String formatHexDump(String str) 
+    public static void printHexDump(PrintStream log, String strParm) 
 	{
-		return formatHexDump(str.getBytes(), 0, str.length());
-	}
+		String str = formatHexDump(strParm.getBytes(), 0, strParm.length());
 
+		String[] parts = str.split("\n");
+    	for (String part : parts) 
+    	{
+            log.println( part );
+    	}
+	}
+    
 }

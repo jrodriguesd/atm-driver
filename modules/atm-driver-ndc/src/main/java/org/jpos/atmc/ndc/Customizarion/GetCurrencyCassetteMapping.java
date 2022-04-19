@@ -45,6 +45,7 @@ public class GetCurrencyCassetteMapping implements GetSection
 		sb.append(cassSize);
 
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+        this.lastkeySend = "";
         for (int i = 0; i < casssetes.size(); i++)
         {
         	Cassette casssete = casssetes.get(i);
@@ -68,7 +69,7 @@ public class GetCurrencyCassetteMapping implements GetSection
 		} 
 		catch (Exception e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 		return null;
 	}
@@ -80,9 +81,23 @@ public class GetCurrencyCassetteMapping implements GetSection
 	}
 
 	@Override
-	public String getLastKey(String configId) 
+	public String getLastKey(ATM atm, String configId) 
 	{
-		return "4";
+		String lastKey = "";
+		try 
+		{
+			List<Cassette> casssetes = DB.exec(db -> new CassetteManager(db).getByLuno(atm.getLuno() ) );
+	        for (int i = 0; i < casssetes.size(); i++)
+	        {
+	        	Cassette casssete = casssetes.get(i);
+	    		lastKey = "" + casssete.getPosition();
+	        }
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace(Log.out);
+		}
+        return lastKey;
  	}
 
 }

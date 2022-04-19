@@ -45,7 +45,7 @@ public class GetConfigId implements GetSection
 	}
 
 	@Override
-	public String getLastKey(String configId) 
+	public String getLastKey(ATM atm, String configId) 
 	{
 		return this.lastConfigIdSend;
 	}

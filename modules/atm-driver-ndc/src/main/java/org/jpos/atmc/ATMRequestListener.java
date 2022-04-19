@@ -35,6 +35,9 @@ import org.jpos.core.VolatileSequencer;
 import org.jpos.iso.*;
 
 import org.jpos.util.FSDMsg;
+import org.jpos.util.Log;
+import org.jpos.util.LogEvent;
+import org.jpos.util.Logger;
 import org.jpos.iso.packager.ISO87APackager;
 
 import org.jpos.transaction.Context;
@@ -52,8 +55,7 @@ import org.jpos.atmc.model.TrnDefinition;
 
 import org.jpos.atmc.dao.ATMManager;
 import org.jpos.atmc.dao.TrnDefinitionManager;
-
-import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.FlatLogListener;
 import org.jpos.atmc.util.Util;
 
 public class ATMRequestListener extends org.jpos.util.Log implements ISORequestListener, Configurable
@@ -71,7 +73,7 @@ public class ATMRequestListener extends org.jpos.util.Log implements ISORequestL
 
     public boolean process(ISOSource src, ISOMsg m)
 	{
-        final Context ctx  = new Context ();
+    	final Context ctx  = new Context ();
         if (remote)
             src = new SpaceSource((LocalSpace<String, Context>)sp, src, timeout);
         ctx.put (timestamp, new Date(), remote);

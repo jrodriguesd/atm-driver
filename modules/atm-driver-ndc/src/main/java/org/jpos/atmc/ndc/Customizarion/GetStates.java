@@ -67,7 +67,7 @@ public class GetStates implements GetSection
 		} 
 		catch (Exception e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 		return null;
 	}
@@ -79,7 +79,7 @@ public class GetStates implements GetSection
 	}
 
 	@Override
-	public String getLastKey(String configId) 
+	public String getLastKey(ATM atm, String configId) 
 	{
 		try 
 		{
@@ -88,7 +88,7 @@ public class GetStates implements GetSection
 		} 
 		catch (Exception e) 
 		{
-		    Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 		return null;
 	}

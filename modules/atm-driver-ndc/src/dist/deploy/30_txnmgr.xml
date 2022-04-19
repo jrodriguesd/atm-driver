@@ -13,7 +13,7 @@
       <participant class="org.jpos.atmc.ndc.CheckTransactionRequestFields"/>
       <participant class="org.jpos.atmc.CreateISOMsg"/>
       <participant class="org.jpos.transaction.participant.QueryHost"/>
-      <participant class="org.jpos.atmc.ndc.ATMSendResponse"/>
+      <participant class="org.jpos.atmc.ndc.NDCSendResponse"/>
   </group>
 
   <group name="NDCUnsolicitedStatus">

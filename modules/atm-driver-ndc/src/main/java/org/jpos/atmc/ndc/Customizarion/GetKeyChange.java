@@ -21,8 +21,8 @@
  */
 package org.jpos.atmc.ndc.Customizarion;
 
-import org.jpos.atmc.Crypto;
 import org.jpos.atmc.model.ATM;
+import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 
@@ -67,7 +67,7 @@ public class GetKeyChange implements GetSection
 	}
 
 	@Override
-	public String getLastKey(String configId) 
+	public String getLastKey(ATM atm, String configId) 
 	{
 		return this.lastNumberSend;
 	}

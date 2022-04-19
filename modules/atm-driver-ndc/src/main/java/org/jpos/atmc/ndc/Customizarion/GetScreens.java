@@ -65,14 +65,9 @@ public class GetScreens implements GetSection
         	scrData = scrData.replaceAll(SI_GLITCH,  si);
         	scrData = scrData.replaceAll(SO_GLITCH,  so);
         	scrData = scrData.replaceAll(ESC_GLITCH, esc);
-
-	        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " scrData " + scrData);
-
-        	// sb.append(x1c + scr.getNumber() + scrData + si);
         	sb.append(x1c + scr.getNumber() + scrData);
 
             this.lastNumberSend = scr.getNumber();
-        	// Log.staticPrintln( scr.toString() );
         }
 
 		return sb.toString();
@@ -88,13 +83,13 @@ public class GetScreens implements GetSection
 		} 
 		catch (Exception e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 		return null;
 	}
 
 	@Override
-	public String getLastKey(String configId)
+	public String getLastKey(ATM atm, String configId) 
 	{
 		try 
 		{
@@ -103,7 +98,7 @@ public class GetScreens implements GetSection
 		} 
 		catch (Exception e) 
 		{
-		    Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 		return null;
 	}

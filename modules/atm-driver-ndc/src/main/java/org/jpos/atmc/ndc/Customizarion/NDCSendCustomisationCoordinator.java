@@ -54,7 +54,7 @@ public class NDCSendCustomisationCoordinator
 
     	GetSection customization = GetSectionFactory.getInstance( customizarionCoordinator.customizarionSection );
     	String configId = atm.getConfigId();
-        customizarionCoordinator.lastKey = customization.getLastKey(configId);
+        customizarionCoordinator.lastKey = customization.getLastKey(atm, configId);
         customizarionCoordinator.lastKeySend = "";
         
 
@@ -75,7 +75,7 @@ public class NDCSendCustomisationCoordinator
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " customization Name " + customization.getClass().getSimpleName());
 
         this.customizarionSection = customizarionSection;
-    	this.lastKey = customization.getLastKey(this.atm.getConfigId());
+    	this.lastKey = customization.getLastKey(atm, this.atm.getConfigId());
 
     	BaseChannel baseChannel = (BaseChannel) this.source;
         atmsCustomizarioState.put( baseChannel.getName(), this );
@@ -169,7 +169,7 @@ public class NDCSendCustomisationCoordinator
         		customization = GetSectionFactory.getInstance( this.customizarionSection );
         		if (customization != null)
         		{
-            	    this.lastKey = customization.getLastKey(configId); 
+            	    this.lastKey = customization.getLastKey(atm, configId); 
             	    this.lastKeySend = "";
         		}
         	}
@@ -183,7 +183,7 @@ public class NDCSendCustomisationCoordinator
     	String nextCustomizationMsg = getNextCustomizationMsg();
     	if (nextCustomizationMsg != null)
     	{
-            Log.staticPrintln( Util.formatHexDump(nextCustomizationMsg) );
+            Util.printHexDump(Log.out, nextCustomizationMsg);
         	sendCustomizationMsg( nextCustomizationMsg );
     	}
     }

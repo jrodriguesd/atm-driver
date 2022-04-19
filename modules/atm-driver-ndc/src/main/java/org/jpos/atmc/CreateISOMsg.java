@@ -132,10 +132,10 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
             isoReqMsg.set( 61, atm.getPointServData());    // "91000000025008620000000000" );              // Point-of-Service Data                      atm_point_serv_data 
             isoReqMsg.set( 63, atm.getNetworkData());      // "CI2000000000" );                            // Network Data                               atm_network_data
 		}
-		catch (Exception ex)
+		catch (Exception e)
 		{
-			Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
-			Log.printStackTrace(ex);
+			Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + e.getMessage());
+			e.printStackTrace(Log.out);
 	        if (td == null)
 	            return ABORTED | READONLY | NO_JOIN;
 		}

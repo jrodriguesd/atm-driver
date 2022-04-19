@@ -64,29 +64,19 @@ public class Log extends PrintStream
 	}
 
 	@Override
+    public void print(String str) 
+    {
+    	staticPrintln(str);
+    }
+
+	@Override
     public void println(String str) 
     {
     	staticPrintln(str);
     }
 
-    public static void printStackTrace(Exception e)
-	{
-        staticPrintln(e.getClass().getCanonicalName() + ": " + e.getMessage());
-    	StackTraceElement[] stack = e.getStackTrace();
-        for (StackTraceElement s : stack) 
-        {
-            staticPrintln("\t" + s.toString());
-        }
-	}
-
     public static void staticPrintln(String str)
 	{
-        // outOld.println(str);
-        // outOld.flush();
-    	String[] parts = str.split("\n");
-    	for (String part : parts) 
-    	{
-    		org.jpos.util.Log.getLog (LOGGER, FlatLogListener.REALM).debug(part);
-    	}
+    	org.jpos.util.Log.getLog (LOGGER, FlatLogListener.REALM).debug(str);
 	}
 }

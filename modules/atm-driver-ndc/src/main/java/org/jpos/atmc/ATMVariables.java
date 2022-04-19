@@ -92,7 +92,7 @@ public class ATMVariables
 		} 
         catch (ISOException e) 
         {
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 		return retStr;
 	}

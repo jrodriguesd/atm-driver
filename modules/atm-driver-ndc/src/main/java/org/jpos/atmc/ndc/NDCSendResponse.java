@@ -36,7 +36,6 @@ import java.text.SimpleDateFormat;
 
 import org.jpos.atmc.dao.IsoError2ATMManager;
 import org.jpos.atmc.dao.ReceiptManager;
-import org.jpos.atmc.ATMTransactionRequest;
 import org.jpos.atmc.ATMVariables;
 import org.jpos.atmc.dao.ATMConfigManager;
 import org.jpos.atmc.dao.ATMManager;
@@ -71,7 +70,7 @@ import org.jpos.util.FSDMsg;
 import freemarker.template.*;
 
 @SuppressWarnings("unused")
-public class ATMSendResponse implements AbortParticipant, Configurable
+public class NDCSendResponse implements AbortParticipant, Configurable
 {
     private String source;
     private String request;
@@ -114,12 +113,12 @@ public class ATMSendResponse implements AbortParticipant, Configurable
 		msgOut.set("next-state-number",           state);
 		msgOut.set("number-notes-dispense",       "00000000");
 		msgOut.set("transaction-serial-number",   isoMsgIn.getString(11).substring(2, 6));
-		msgOut.set("function-identifier",         ATMTransactionRequest.NEXT_STATE_AND_PRINT);
+		msgOut.set("function-identifier",         NDCConstants.NEXT_STATE_AND_PRINT);
 		msgOut.set("screen-number",               screen);
 		// msgOut.set("screen-display-update",       screen);
 		msgOut.set("message-coordination-number", fsdMsgIn.get("message-coordination-number") );
-		msgOut.set("card-return-retain-flag",     ATMTransactionRequest.RETURN_CARD);
-		msgOut.set("printer-flag",                ATMTransactionRequest.RECEIPT_PRINTER_ONLY);
+		msgOut.set("card-return-retain-flag",     NDCConstants.RETURN_CARD);
+		msgOut.set("printer-flag",                NDCConstants.RECEIPT_PRINTER_ONLY);
 		
 		return msgOut;
 	}
@@ -134,8 +133,7 @@ public class ATMSendResponse implements AbortParticipant, Configurable
 
 		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		fsdMsgIn.dump(Log.out, "");
-		
-		
+
 		try
 		{
 	        ATMConfig atmConfig = (ATMConfig) DB.exec(db -> new ATMConfigManager(db).getATMConfig( atm.getConfigId(), fsdMsgIn.get("operation-code-data") ) );
@@ -152,10 +150,10 @@ public class ATMSendResponse implements AbortParticipant, Configurable
 
 	    	return fsdMsgResp;
 		}
-		catch (Exception ex)
+		catch (Exception e)
 		{
-			Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
-			Log.printStackTrace(ex);
+			Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + e.getMessage());
+			e.printStackTrace(Log.out);
 		}
 
 		/*

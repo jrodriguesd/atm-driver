@@ -83,7 +83,7 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
 		} 
 		catch (Exception e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 			return false;
 		}
     	return true;
@@ -109,10 +109,10 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
 			{
 				acc.sendNextCustomizationMsg();
 			}
-            catch (IOException ex) 
+            catch (IOException e) 
             {
-            	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
-                Log.printStackTrace(ex);
+            	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + e.getMessage());
+    			e.printStackTrace(Log.out);
             }
         }
 	}

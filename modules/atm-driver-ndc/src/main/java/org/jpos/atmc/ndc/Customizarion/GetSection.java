@@ -27,5 +27,5 @@ public interface GetSection
 {
 	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber); 
 	public String  getLastKeySend();
-	public String  getLastKey(String configId);
+	public String  getLastKey(ATM atm, String configId);
 }

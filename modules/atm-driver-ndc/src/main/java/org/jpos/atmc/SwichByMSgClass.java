@@ -131,7 +131,7 @@ public class SwichByMSgClass implements GroupSelector, Configurable
 		} 
 		catch (Exception e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 			return null;
 		}
 		ctx.put ("atm", atm, remote );
@@ -152,7 +152,7 @@ public class SwichByMSgClass implements GroupSelector, Configurable
 		} 
 		catch (IOException | JDOMException e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 			return null;
 		}
 
