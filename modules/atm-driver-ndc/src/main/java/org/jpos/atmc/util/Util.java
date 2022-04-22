@@ -140,7 +140,7 @@ public class Util
 		}
 	}
 
-    private static String formatHexDump(byte[] array, int offset, int length) 
+    public static String formatHexDump(byte[] array, int offset, int length) 
 	{
         final int width = 16;
 
@@ -152,7 +152,7 @@ public class Util
 
             for (int index = 0; index < width; index++) 
 			{
-                if (rowOffset + index < array.length) 
+                if (rowOffset + index < (length + offset)) 
 				{
                     builder.append(String.format("%02x ", array[rowOffset + index]));
                 } 
@@ -162,8 +162,8 @@ public class Util
                 }
             }
 
-            if (rowOffset < array.length) {
-                int asciiWidth = Math.min(width, array.length - rowOffset);
+            if (rowOffset < (length + offset)) {
+                int asciiWidth = Math.min(width, (length + offset) - rowOffset);
                 builder.append("  |  ");
                 try 
 				{
@@ -180,6 +180,17 @@ public class Util
         return builder.toString();
     }
 
+    public static void printHexDump(PrintStream log, byte bParm[]) 
+	{
+		String str = formatHexDump(bParm, 0, bParm.length );
+
+		String[] parts = str.split("\n");
+    	for (String part : parts) 
+    	{
+            log.println( part );
+    	}
+	}
+    
     public static void printHexDump(PrintStream log, String strParm) 
 	{
 		String str = formatHexDump(strParm.getBytes(), 0, strParm.length());
@@ -189,6 +200,20 @@ public class Util
     	{
             log.println( part );
     	}
+	}
+
+    public static String byteDecode(byte b[]) 
+    {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < b.length; i++)
+		{
+			Integer decode = Integer.valueOf(b[i] & 0xff);
+			sb.append(Character.toString(decode));
+        }
+
+        String retStr = sb.toString();
+
+	    return retStr;
 	}
     
 }

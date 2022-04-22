@@ -22,6 +22,7 @@
 package org.jpos.atmc.ndc;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -30,12 +31,14 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.math.BigDecimal;
+import java.security.GeneralSecurityException;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import org.jpos.atmc.dao.IsoError2ATMManager;
 import org.jpos.atmc.dao.ReceiptManager;
+import org.jdom2.JDOMException;
 import org.jpos.atmc.ATMVariables;
 import org.jpos.atmc.dao.ATMConfigManager;
 import org.jpos.atmc.dao.ATMManager;
@@ -45,8 +48,10 @@ import org.jpos.atmc.model.ATMConfig;
 import org.jpos.atmc.model.IsoError2ATM;
 import org.jpos.atmc.model.Receipt;
 import org.jpos.atmc.model.TrnDefinition;
-
+import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.NDCFSDMsg;
+import org.jpos.atmc.util.NDCISOMsg;
 import org.jpos.atmc.util.Util;
 
 import org.jpos.core.Configurable;
@@ -55,7 +60,9 @@ import org.jpos.core.ConfigurationException;
 import org.jpos.ee.DB;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.FSDISOMsg;
+import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOSource;
+import org.jpos.iso.ISOUtil;
 import org.jpos.space.LocalSpace;
 import org.jpos.space.SpaceSource;
 import org.jpos.transaction.Context;
@@ -103,16 +110,19 @@ public class NDCSendResponse implements AbortParticipant, Configurable
         sendResponse(id, (Context) context);
     }
 
-    public FSDMsg createFSDMsg(ISOMsg isoMsgIn, FSDMsg fsdMsgIn, String state, String screen)
+    public NDCFSDMsg createFSDMsg(ISOMsg isoMsgIn, NDCFSDMsg fsdMsgIn, String state, String screen)
 	{
-        FSDMsg msgOut = new FSDMsg( fsdMsgIn.getBasePath() );
+    	NDCFSDMsg msgOut = new NDCFSDMsg( fsdMsgIn.getBasePath() );
 
 		msgOut.set("message-class",               "4");
 		msgOut.set("luno",                        fsdMsgIn.get("luno") );
 		msgOut.set("time-variant-number",         fsdMsgIn.get("time-variant-number") );
 		msgOut.set("next-state-number",           state);
 		msgOut.set("number-notes-dispense",       "00000000");
-		msgOut.set("transaction-serial-number",   isoMsgIn.getString(11).substring(2, 6));
+
+		if (isoMsgIn.getString(11) != null)
+		    msgOut.set("transaction-serial-number",   isoMsgIn.getString(11).substring(2, 6));
+
 		msgOut.set("function-identifier",         NDCConstants.NEXT_STATE_AND_PRINT);
 		msgOut.set("screen-number",               screen);
 		// msgOut.set("screen-display-update",       screen);
@@ -125,10 +135,11 @@ public class NDCSendResponse implements AbortParticipant, Configurable
 
     public static final int ISO_RESP_99_ERROR = 99;
 
-    private FSDMsg createErrorFSDMsg(Context ctx, int error)
+    private NDCFSDMsg createErrorFSDMsg(Context ctx, int error)
     {
         ISOMsg m = (ISOMsg) ctx.get(request);
-		FSDMsg fsdMsgIn = (FSDMsg) ctx.get("fsdMsgIn");
+        NDCFSDMsg fsdMsgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
+
 		ATM atm  = (ATM) ctx.get("atm"); 
 
 		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
@@ -146,7 +157,7 @@ public class NDCSendResponse implements AbortParticipant, Configurable
                                                                                                         atm.getConfigId(),
                                                                                                         language639) );
 
-	        FSDMsg fsdMsgResp = createFSDMsg(m, fsdMsgIn, isoError2ATM.getState(), isoError2ATM.getScreenReceipt() );
+            NDCFSDMsg fsdMsgResp = createFSDMsg(m, fsdMsgIn, isoError2ATM.getState(), isoError2ATM.getScreenReceipt() );
 
 	    	return fsdMsgResp;
 		}
@@ -162,12 +173,46 @@ public class NDCSendResponse implements AbortParticipant, Configurable
 		return null;
     }
 
+    private void send(Context ctx, NDCFSDMsg fsdMsgResp) throws IOException, ISOException, JDOMException, GeneralSecurityException
+    {
+        ISOSource src = (ISOSource) ctx.get (source);
+        ISOMsg m = (ISOMsg) ctx.get(request);
+        NDCFSDMsg fsdMsgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
+
+        /*
+         * Queda Pendiente Sacr la Key de Algun Lado 
+         */
+        if (fsdMsgIn.get("mac") != null)
+        {
+          	String key = "0123456789ABCDEF";
+      		byte[] bKey  = ISOUtil.hex2byte(key);
+           
+      		fsdMsgResp.set("mac", null);
+      		byte bReply[] = fsdMsgResp.packToBytes();
+
+            Util.printHexDump(Log.out, bReply);
+      		
+      		byte calculatedMAC[] = Crypto.calculateANSIX9_9MAC(bKey, bReply);
+
+     		String strMAC = Util.byteDecode(calculatedMAC);
+
+            fsdMsgResp.set("mac", strMAC);
+        }
+
+        fsdMsgResp.dump(Log.out, "");
+        NDCISOMsg fsdISOMsgResp = new NDCISOMsg ( (NDCFSDMsg) fsdMsgResp );
+
+        headerStrategy.handleHeader(m, fsdISOMsgResp);
+
+        src.send(fsdISOMsgResp);
+    }
+
     private void sendResponse (long id, Context ctx) 
 	{
 	    Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
         ISOSource src = (ISOSource) ctx.get (source);
         ISOMsg m = (ISOMsg) ctx.get(request);
-		FSDMsg fsdMsgIn = (FSDMsg) ctx.get("fsdMsgIn");
+        NDCFSDMsg fsdMsgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
         ISOMsg resp = (ISOMsg) ctx.get (response);
         try {
             if (ctx.getResult().hasInhibit()) {
@@ -177,12 +222,15 @@ public class NDCSendResponse implements AbortParticipant, Configurable
             } else if (resp == null) {
 	            Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " resp not present"  );
 
-				FSDMsg fsdMsgResp = createErrorFSDMsg(ctx, ISO_RESP_99_ERROR);
+	            NDCFSDMsg fsdMsgResp = createErrorFSDMsg(ctx, ISO_RESP_99_ERROR);
+				/*
 				fsdMsgResp.dump(Log.out, "");
 		        FSDISOMsg fsdISOMsgResp = new FSDISOMsg (fsdMsgResp);
 
                 headerStrategy.handleHeader(m, fsdISOMsgResp);
                 src.send(fsdISOMsgResp);
+                */
+				send(ctx, fsdMsgResp );
                 ctx.log (response + " not present");
             } else if (src == null) {
                 ctx.log (source + " not present");
@@ -201,7 +249,7 @@ public class NDCSendResponse implements AbortParticipant, Configurable
                 		TrnDefinition td = (TrnDefinition) ctx.get ("transactiondefinition");
                 		Receipt rcp = DB.exec(db -> new ReceiptManager(db).getReceipt(atm.getConfigId(), td.getReceiptCode() ) );
 
-					    FSDMsg fsdMsgResp = createFSDMsg(m, fsdMsgIn, td.getState(), td.getScreen());
+                		NDCFSDMsg fsdMsgResp = createFSDMsg(m, fsdMsgIn, td.getState(), td.getScreen());
 
 			    	    Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " td.getScreenUpdate() " + td.getScreenUpdate() );
 
@@ -239,21 +287,27 @@ public class NDCSendResponse implements AbortParticipant, Configurable
 
 		                fsdMsgResp.set("printer-data", printerData);
 
+		                /*
 						fsdMsgResp.dump(Log.out, "");
 						
 		                FSDISOMsg fsdISOMsgResp = new FSDISOMsg (fsdMsgResp);
 					    
                         headerStrategy.handleHeader(m, fsdISOMsgResp);
                         src.send(fsdISOMsgResp);
+                        */
+		                send(ctx, fsdMsgResp);
 		            }
                     else
                     {
-						FSDMsg fsdMsgResp = createErrorFSDMsg(ctx, Integer.parseInt(resp.getString(39)));
+                    	NDCFSDMsg fsdMsgResp = createErrorFSDMsg(ctx, Integer.parseInt(resp.getString(39)));
+						/*
 						fsdMsgResp.dump(Log.out, "");
 		                FSDISOMsg fsdISOMsgResp = new FSDISOMsg (fsdMsgResp);
 					    
                         headerStrategy.handleHeader(m, fsdISOMsgResp);
                         src.send(fsdISOMsgResp);
+                        */
+						send(ctx, fsdMsgResp);
                     }
                 }
             }

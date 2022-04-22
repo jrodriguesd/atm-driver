@@ -19,6 +19,6 @@
   <field id="buffer-id "                    type="N"    length="1"   /> <!-- 5 -->
   <field id="smart-card-data-id"            type="A"    length="3"   /> <!-- CAM -->
   <field id="cam-flags"                     type="A"    length="4"   />
-  <field id="emv-data"                      type="AFS"  length="612" />
-  <field id="mac"                           type="AEOF" length="8"   />
+  <field id="emv-data"                      type="AFS"  length="512" />
+  <field id="mac"                           type="A"    length="8"   />
 </schema>

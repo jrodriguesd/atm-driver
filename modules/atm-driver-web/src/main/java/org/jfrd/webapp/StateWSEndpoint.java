@@ -71,7 +71,7 @@ public class StateWSEndpoint
 		} 
 	    catch (IOException e) 
 	    {
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 	    return builder.toString();
 	}
@@ -89,7 +89,7 @@ public class StateWSEndpoint
 		} 
 		catch (Exception e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 
         return null;
@@ -122,7 +122,7 @@ public class StateWSEndpoint
 		} 
     	catch (Exception e) 
     	{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 			String json = "{\"msg\":\"General Error\"}";
 			return Response.status(Status.METHOD_NOT_ALLOWED).type(MediaType.APPLICATION_JSON).entity(json).build();
 		}
@@ -171,7 +171,7 @@ public class StateWSEndpoint
 		} 
     	catch (Exception e) 
     	{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 			String json = "{\"msg\":\"General Error\"}";
 			return Response.status(Status.METHOD_NOT_ALLOWED).type(MediaType.APPLICATION_JSON).entity(json).build();
 		}
@@ -208,7 +208,7 @@ public class StateWSEndpoint
 		} 
     	catch (Exception e) 
     	{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 			String json = "{\"msg\":\"General Error\"}";
 			return Response.status(Status.METHOD_NOT_ALLOWED).type(MediaType.APPLICATION_JSON).entity(json).build();
 		}

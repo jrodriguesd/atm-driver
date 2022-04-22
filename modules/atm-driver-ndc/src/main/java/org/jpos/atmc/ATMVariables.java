@@ -31,6 +31,7 @@ import java.util.Locale;
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.model.TrnDefinition;
 import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.NDCFSDMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOMsg;
@@ -41,10 +42,10 @@ public class ATMVariables
 {
 	private TrnDefinition td;
 	private ISOMsg isoMsg;
-	private FSDMsg fsdMsgIn;
+	private NDCFSDMsg fsdMsgIn;
 	private ATM atm;
 
-    public ATMVariables(TrnDefinition td, ISOMsg isoMsg, FSDMsg fsdMsgIn, ATM atm)
+    public ATMVariables(TrnDefinition td, ISOMsg isoMsg, NDCFSDMsg fsdMsgIn, ATM atm)
 	{
 		this.td = td;
 		this.isoMsg = isoMsg;

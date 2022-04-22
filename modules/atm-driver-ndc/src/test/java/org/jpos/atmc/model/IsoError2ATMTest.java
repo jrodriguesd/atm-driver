@@ -20,7 +20,7 @@
  * Returns days to New Year.
  * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
  */
-package org.jpos.armc.model;
+package org.jpos.atmc.model;
 
 import org.junit.Test;	
 import org.junit.Before;	
@@ -188,7 +188,7 @@ public class IsoError2ATMTest
 	    validator.validate(atmconfigPojo);
 	}
 
-    private String topLevelPackageName = "org.jpos.armc.model";
+    private String topLevelPackageName = "org.jpos.atmc.model";
 
     @Test
     public void testPojoTestClassMustBeProperlyNamedRule() 

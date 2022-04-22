@@ -7,6 +7,7 @@
     <property name="ndc.11" value="NDCTransactionRequest" />
     <property name="ndc.12" value="NDCUnsolicitedStatus" />
     <property name="ndc.22" value="NDCSolicitedStatus" />
+    <property name="error"  value="Error" />
   </participant>
 
   <group name="NDCTransactionRequest">
@@ -23,5 +24,10 @@
   <group name="NDCSolicitedStatus">
       <participant class="org.jpos.atmc.ndc.ProcessSolicitedStatus"/>
   </group>
+
+  <group name="Error">
+      <participant class="org.jpos.atmc.ndc.NDCSendResponse"/>
+  </group>
+
 
 </txnmgr>

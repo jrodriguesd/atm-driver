@@ -35,6 +35,8 @@ import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.ndc.Customizarion.NDCCustomizarionSections;
 import org.jpos.atmc.ndc.Customizarion.NDCSendCustomisationCoordinator;
 import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.NDCFSDMsg;
+import org.jpos.atmc.util.NDCISOMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
@@ -86,11 +88,12 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
 
         BaseChannel baseChannel = (BaseChannel) source;
 
-	    FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
-        FSDMsg msgOut = new FSDMsg( msgIn.getBasePath() );
+        NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
+        NDCFSDMsg msgOut = new NDCFSDMsg( msgIn.getBasePath() );
+
 		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		msgIn.dump(Log.out, "");
-
+        
 		String deviceIdentificationGraphic = msgIn.get("device-identification-graphic");
 
 		switch (deviceIdentificationGraphic.charAt(0))

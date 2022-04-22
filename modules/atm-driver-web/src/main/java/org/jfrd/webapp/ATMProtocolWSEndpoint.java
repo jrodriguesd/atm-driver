@@ -51,7 +51,7 @@ public class ATMProtocolWSEndpoint
 		} 
 		catch (Exception e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 
         return null;

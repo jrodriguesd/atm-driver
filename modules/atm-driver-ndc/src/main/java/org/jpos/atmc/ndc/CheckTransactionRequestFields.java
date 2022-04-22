@@ -25,6 +25,7 @@ import java.io.Serializable;
 
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.NDCFSDMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
@@ -68,8 +69,10 @@ public class CheckTransactionRequestFields implements AbortParticipant, Configur
         Context ctx = (Context) context;
         ISOSource source = (ISOSource) ctx.get (this.source);
 
-        ISOMsg m = (ISOMsg) ctx.get (this.request);
-	    FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
+        // ISOMsg m = (ISOMsg) ctx.get (this.request);
+	    // FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
+
+        NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
 
         if (source == null || !source.isConnected())
             return ABORTED | READONLY | NO_JOIN;
@@ -78,12 +81,8 @@ public class CheckTransactionRequestFields implements AbortParticipant, Configur
         
         for (String rf : this.requiredFields)
         {
-            Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Mandatorio " + rf );
             if (msgIn.get(rf) == null)
-            {
-                Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Mandatorio " + rf + " No Presente" );
                 return ABORTED | READONLY | NO_JOIN;
-            }
         }
         return PREPARED | READONLY;
 	}
@@ -92,7 +91,7 @@ public class CheckTransactionRequestFields implements AbortParticipant, Configur
 	{
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
         Context ctx = (Context) context;
-	    ISOSource source = (ISOSource) ctx.get (this.source);
+	    // ISOSource source = (ISOSource) ctx.get (this.source);
 	}
 	
     @Override

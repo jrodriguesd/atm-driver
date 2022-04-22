@@ -26,6 +26,7 @@ import java.util.HashMap;
 
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.NDCFSDMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.iso.BaseChannel;
 import org.jpos.iso.ISOSource;
@@ -34,7 +35,7 @@ import org.jpos.util.FSDMsg;
 public class NDCSendCustomisationCoordinator 
 {
 	private ISOSource source;
-	private FSDMsg msgIn;
+	private NDCFSDMsg msgIn;
 	private ATM atm;
 	private String lastKey;
 	private String lastKeySend; 
@@ -42,7 +43,7 @@ public class NDCSendCustomisationCoordinator
 	
     private static final HashMap<String, NDCSendCustomisationCoordinator> atmsCustomizarioState = new HashMap<String, NDCSendCustomisationCoordinator>();
 
-    public static void init(ISOSource source, FSDMsg msgIn, ATM atm)
+    public static void init(ISOSource source, NDCFSDMsg msgIn, ATM atm)
     {
         // ATMCustomizarionState customizarionState = new ATMCustomizarionState();
 

@@ -58,7 +58,7 @@ public class ATMConfigWSEndpoint
 		} 
 		catch (Exception e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 
         return null;
@@ -78,7 +78,7 @@ public class ATMConfigWSEndpoint
 		} 
 		catch (Exception e) 
 		{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 		}
 
         return null;
@@ -111,7 +111,7 @@ public class ATMConfigWSEndpoint
 		} 
     	catch (Exception e) 
     	{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 			String json = "{\"msg\":\"General Error\"}";
 			return Response.status(Status.METHOD_NOT_ALLOWED).type(MediaType.APPLICATION_JSON).entity(json).build();
 		}
@@ -153,7 +153,7 @@ public class ATMConfigWSEndpoint
 		} 
     	catch (Exception e) 
     	{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 			String json = "{\"msg\":\"General Error\"}";
 			return Response.status(Status.METHOD_NOT_ALLOWED).type(MediaType.APPLICATION_JSON).entity(json).build();
 		}
@@ -191,7 +191,7 @@ public class ATMConfigWSEndpoint
 		} 
     	catch (Exception e) 
     	{
-			Log.printStackTrace(e);
+			e.printStackTrace(Log.out);
 			String json = "{\"msg\":\"General Error\"}";
 			return Response.status(Status.METHOD_NOT_ALLOWED).type(MediaType.APPLICATION_JSON).entity(json).build();
 		}

@@ -28,6 +28,7 @@ import org.jpos.atmc.dao.TrnDefinitionManager;
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.model.TrnDefinition;
 import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.NDCFSDMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
@@ -94,8 +95,10 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
         Context ctx = (Context) context;
         ISOSource source = (ISOSource) ctx.get (this.source);
 
-        ISOMsg m = (ISOMsg) ctx.get (this.request);
-	    FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
+        // ISOMsg m = (ISOMsg) ctx.get (this.request);
+	    // FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
+
+        NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
 
         if (source == null || !source.isConnected())
             return ABORTED | READONLY | NO_JOIN;
@@ -104,7 +107,7 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
 
         // Create ISO Message
         ISOMsg isoReqMsg = new ISOMsg();
-        m.setPackager( new ISO87APackager() );
+        // m.setPackager( new ISO87APackager() );
         String normalizedPIN = normalizePIN( msgIn.get("buffer-A-pin") );
         TrnDefinition td = null;
 
@@ -141,7 +144,7 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
 		}
 
         ctx.put("transactiondefinition", td, remote);
-        ctx.put("fsdMsgIn", msgIn, remote);
+        // ctx.put("fsdMsgIn", msgIn, remote);
         ctx.put(request, isoReqMsg, remote); // Para Poder Usar QueryHost
 
         return PREPARED | READONLY;

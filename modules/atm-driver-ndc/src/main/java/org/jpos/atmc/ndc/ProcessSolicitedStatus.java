@@ -31,6 +31,7 @@ import org.jpos.atmc.model.Cassette;
 import org.jpos.atmc.ndc.Customizarion.NDCCustomizarionSections;
 import org.jpos.atmc.ndc.Customizarion.NDCSendCustomisationCoordinator;
 import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.NDCFSDMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
@@ -60,7 +61,7 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
 
 	// ver si los suply counters cuandran con los del atm
 	// Si Cuandran Abrir el ATM
-    private boolean countersMatch(ATM atm, FSDMsg msgIn)
+    private boolean countersMatch(ATM atm, NDCFSDMsg msgIn)
     {
 		try 
 		{
@@ -89,7 +90,7 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
     	return true;
     }
 
-    public void processCustomizarion(char statusDescriptor,  BaseChannel baseChannel, ATM atm, FSDMsg msgIn) 
+    public void processCustomizarion(char statusDescriptor,  BaseChannel baseChannel, ATM atm, NDCFSDMsg msgIn) 
 	{
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Continuacion Envio de Configuracion");
         NDCSendCustomisationCoordinator acc = NDCSendCustomisationCoordinator.get(baseChannel.getName());
@@ -136,11 +137,8 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
 	    ISOSource source = (ISOSource) ctx.get (this.source);
         BaseChannel baseChannel = (BaseChannel) source;
 
-        ISOMsg m = (ISOMsg) ctx.get (this.request);
-        FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
-        FSDMsg msgOut = new FSDMsg( msgIn.getBasePath() );
-		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-		msgIn.dump(Log.out, "");
+        NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
+        NDCFSDMsg msgOut = new NDCFSDMsg( msgIn.getBasePath() );
 
         ATM atm = (ATM) ctx.get ("atm");
 		

@@ -31,12 +31,18 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.nio.charset.StandardCharsets;
+import java.security.GeneralSecurityException;
+import java.util.Arrays;
 
 import org.jdom2.JDOMException;
 import org.jpos.atmc.dao.ATMManager;
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.ndc.ProcessSolicitedStatus.HeaderStrategy;
+import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.NDCFSDMsg;
+import org.jpos.atmc.util.NDCISOMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
@@ -46,6 +52,7 @@ import org.jpos.iso.BaseChannel;
 import org.jpos.iso.FSDISOMsg;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOSource;
+import org.jpos.iso.ISOUtil;
 import org.jpos.space.LocalSpace;
 import org.jpos.transaction.Context;
 import org.jpos.transaction.ContextConstants;
@@ -137,27 +144,88 @@ public class SwichByMSgClass implements GroupSelector, Configurable
 		ctx.put ("atm", atm, remote );
 
 		String atmProtocol = atm.getProtocol().toLowerCase();
-
-	    FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
-
-	    String strMessage = msgIn.get("message");
-		InputStream byteInputStream = new ByteArrayInputStream(strMessage.getBytes());
-
 		String protocolSchema = "file:cfg/" + atmProtocol + "/" + atmProtocol + "-";
-		FSDMsg protocolFSDmsg = new FSDMsg(protocolSchema);
+		
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+		NDCFSDMsg protocolFSDmsg = new NDCFSDMsg(protocolSchema);
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 
+		byte bmsgMAC[] = null;
+		byte msg[] = null;
+		byte msgWrk[] = null;
 		try 
 		{
+			FSDISOMsg msgIn    = ((FSDISOMsg) m);
+			FSDMsg fsdMsgIn = (FSDMsg) msgIn.getFSDMsg();
+			// NDCFSDMsg fsdMsgIn = new NDCFSDMsg(msgIn.getFSDMsg());
+			String strMessage  = fsdMsgIn.get("message");
+
+			msg = fsdMsgIn.packToBytes();
+
+ 			Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+			fsdMsgIn.dump(Log.out, "");
+
+			InputStream byteInputStream = new ByteArrayInputStream(strMessage.getBytes(StandardCharsets.ISO_8859_1));
 			protocolFSDmsg.unpack(byteInputStream);
+
+			String strMAC = protocolFSDmsg.get("mac");
+			if (strMAC != null)
+			{
+			    bmsgMAC = strMAC.getBytes(StandardCharsets.ISO_8859_1);
+
+			    // Quitarle el MAC al msg - Inicio
+				Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+	            Util.printHexDump(Log.out, msg);
+
+	            NDCFSDMsg wrkFSDmsg = (NDCFSDMsg) protocolFSDmsg.clone();
+		  		wrkFSDmsg.set("mac", null);
+		  		msgWrk = wrkFSDmsg.packToBytes();
+				
+		  		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+	            Util.printHexDump(Log.out, msgWrk);
+		  		// Quitarle el MAC al msg - Fin
+			}
 		} 
-		catch (IOException | JDOMException e) 
+		catch (Exception e) 
 		{
 			e.printStackTrace(Log.out);
 			return null;
 		}
 
-		FSDISOMsg fsdIsoMsg = new FSDISOMsg(protocolFSDmsg);
-        ctx.put (request, fsdIsoMsg, remote);
+  		if (bmsgMAC != null)
+		{
+	      	String key = "0123456789ABCDEF";
+	  		byte bKey[]  = ISOUtil.hex2byte(key);
+
+			byte calculatedMAC[] = null; 
+	  		try 
+	  		{
+	  			calculatedMAC = Crypto.calculateANSIX9_9MAC(bKey, msgWrk);
+			} 
+	  		catch (GeneralSecurityException e) 
+	  		{
+				Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+				e.printStackTrace(Log.out);
+			}
+
+	  		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " calculatedMAC " + ISOUtil.byte2hex(calculatedMAC) );
+	  		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " bmsgMAC " + ISOUtil.byte2hex(bmsgMAC) );
+
+	  		if (! Arrays.equals(calculatedMAC,bmsgMAC ) )
+	  		{
+				Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " ** MAC Error ** " );
+	            Util.printHexDump(Log.out, msg);
+
+		        ctx.put ("fsdMsgIn", protocolFSDmsg, remote);
+			    String groups = cfg.get ("error", null);
+			    return groups;
+	  		}
+		}
+
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+		protocolFSDmsg.dump(Log.out, "");
+
+        ctx.put ("fsdMsgIn", protocolFSDmsg, remote);
 
         String key = atmProtocol + "." + protocolFSDmsg.get("message-class"); 
 	    String groups = cfg.get (key, null);
