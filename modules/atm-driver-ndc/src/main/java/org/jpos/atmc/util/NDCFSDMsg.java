@@ -1,21 +1,24 @@
 /*
- * jPOS Project [http://jpos.org]
- * Copyright (C) 2000-2017 jPOS Software SRL
+ * This file is part of atm-driver.
+ * Copyright (C) 2021-2022
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
+ * atm-driver is free software: you can redistribute it and/or modify it
+ * under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at
+ * your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
+ * atm-driver is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public
+ * License for more details.
  *
  * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with atm-driver. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
+ */
 package org.jpos.atmc.util;
 
 import java.io.ByteArrayInputStream;
@@ -359,12 +362,26 @@ public class NDCFSDMsg implements Loggeable, Cloneable
     {
         String keyOff = "";
         String defaultKey = "";
-        for (Element elem : (List<Element>)schema.getChildren("field")) {
+		List<Element> childList = (List<Element>)schema.getChildren();
+		int childListSize = childList.size();
+        for (int i = 0; i < childListSize; i++)
+		{
+        	Element elem = childList.get(i);
+			String name = elem.getName();
+            String separator = elem.getAttributeValue ("separator");
+
+			if (name.equals("field_group") )
+			{
+				inFieldGroup = true;
+				groupSeparator = separator;
+				pack (elem, sb);
+				continue;
+			}
+
             String id    = elem.getAttributeValue ("id");
             int length   = Integer.parseInt (elem.getAttributeValue ("length"));
             String type  = elem.getAttributeValue ("type");
             // For backward compatibility, look for a separator at the end of the type attribute, if no separator has been defined.
-            String separator = elem.getAttributeValue ("separator");
             if (type != null && separator == null) {
             	separator = getSeparatorType (type);
             }
@@ -375,9 +392,23 @@ public class NDCFSDMsg implements Loggeable, Cloneable
             if (!properties.isEmpty()) {
             	defValue = defValue.replace("\n", "").replace("\t", "").replace("\r", "");
             }
-            String value = get (id, type, length, defValue, separator);
+
+            String value;
+			if (inFieldGroup)
+			{
+		        type = type.substring(0, 1) + groupSeparator;
+                value = get (id, type, length, defValue, groupSeparator);
+				
+				if ( i == (childListSize - 1) ) // Ultimo Elemento del field_group
+                    separator = groupSeparator;
+				else
+                    separator = null;
+			}
+			else
+                value = get (id, type, length, defValue, separator);
+
             sb.append (value);
-            
+
             if (isSeparated(separator)) {
                 char c = getSeparator(separator);
                 if (c > 0)
@@ -391,6 +422,7 @@ public class NDCFSDMsg implements Loggeable, Cloneable
         }
         if (keyOff.length() > 0) 
             pack (getSchema (getId (schema), keyOff, defaultKey), sb);
+		if (inFieldGroup) inFieldGroup = false;
     }
 
     private Map loadProperties(Element elem) {
@@ -410,23 +442,55 @@ public class NDCFSDMsg implements Loggeable, Cloneable
     	return ISOUtil.normalize(value);
     }
 
+    private boolean inFieldGroup = false;
+    private String  groupSeparator;
     protected void unpack (InputStreamReader r, Element schema)
         throws IOException, JDOMException {
 
         String keyOff = "";
         String defaultKey = "";
-        for (Element elem :(List<Element>)schema.getChildren("field")) {
+		List<Element> childList = (List<Element>)schema.getChildren();
+		int childListSize = childList.size();
+        // for (Element elem : childList) 
+        for (int i = 0; i < childListSize; i++)
+		{
+        	Element elem = childList.get(i);
+			String name = elem.getName();
+            String separator = elem.getAttributeValue ("separator");
+
+			if (name.equals("field_group") )
+			{
+				inFieldGroup = true;
+				groupSeparator = separator;
+				unpack (r, elem);
+				continue;
+			}
 
             String id    = elem.getAttributeValue ("id");
             int length   = Integer.parseInt (elem.getAttributeValue ("length"));
             String type  = elem.getAttributeValue ("type").toUpperCase();
-            String separator = elem.getAttributeValue ("separator");
             if (type != null && separator == null) {
             	separator = getSeparatorType (type);
             }
             boolean key  = "true".equals (elem.getAttributeValue ("key"));
             Map properties = key ? loadProperties(elem) : Collections.EMPTY_MAP;
-            String value = readField(r, id, length, type, separator);
+			String value;
+			if (inFieldGroup)
+			{   
+		        type = type.substring(0, 1) + groupSeparator;
+				if ( i == (childListSize - 1) ) // Ultimo Elemento del field_group
+                    value = readField(r, id, length, type, groupSeparator, true);
+				else
+                    value = readField(r, id, length, type, groupSeparator, false);
+
+				if (value.length() < length)
+				{
+				    inFieldGroup = false;
+					return;
+				}
+			}
+			else
+                value = readField(r, id, length, type, separator, true);
             
             if (key) {
                 keyOff = keyOff + normalizeKeyValue(value, properties);
@@ -442,12 +506,13 @@ public class NDCFSDMsg implements Loggeable, Cloneable
         if (keyOff.length() > 0) {
             unpack(r, getSchema (getId (schema), keyOff, defaultKey));
         }
+		if (inFieldGroup) inFieldGroup = false;
     }
     private String getId (Element e) {
         String s = e.getAttributeValue ("id");
         return s == null ? "" : s;
     }
-    protected String read (InputStreamReader r, int len, String type, String separator)
+    protected String read (InputStreamReader r, int len, String type, String separator, boolean skip)
         throws IOException 
     {
         StringBuilder sb = new StringBuilder();
@@ -476,9 +541,15 @@ public class NDCFSDMsg implements Loggeable, Cloneable
                 }
                 sb.append(c[0]);
             }
-        } else {
-            for (int i = 0; i < len; i++) {
-                if (r.read(c) < 0) {
+        } 
+		else 
+		{
+			int rc = 0;
+            for (int i = 0; i < len; i++) 
+			{
+				rc = r.read(c);
+                if (rc < 0) 
+				{
                     if (!"EOF".equals(separator))
                         throw new EOFException();
                     else {
@@ -486,14 +557,34 @@ public class NDCFSDMsg implements Loggeable, Cloneable
                         break;
                     }
                 }
-                if (expectSeparator && c[0] == getSeparator(separator)) {
+                if (expectSeparator && c[0] == getSeparator(separator)) 
+				{
                     separated = false;
                     break;
                 }
                 sb.append(c[0]);
             }
 
-            if (separated && !"EOF".equals(separator) && r.read(c) < 0) {
+            if ( separated && skip )
+			{
+				while ( ! (expectSeparator && c[0] == getSeparator(separator)) )
+				{
+				    rc = r.read(c);
+                    if (rc < 0) 
+				    {
+                        if (!"EOF".equals(separator))
+                            throw new EOFException();
+                        else {
+                            separated = false;
+                            break;
+                        }
+                    }
+
+				}
+			}
+
+            if (separated && !"EOF".equals(separator) && rc < 0) 
+			{
                 throw new EOFException();
             }
         }
@@ -501,14 +592,16 @@ public class NDCFSDMsg implements Loggeable, Cloneable
         return sb.toString();
     }
     protected String readField (InputStreamReader r, String fieldName, int len,
-        String type, String separator) throws IOException
+        String type, String separator, boolean skip) throws IOException
     {
-        String fieldValue = read (r, len, type, separator);
+        String fieldValue = read (r, len, type, separator, skip);
         
         if (isBinary(type))
             fieldValue = ISOUtil.hexString (fieldValue.getBytes (charset));
-        fields.put (fieldName, fieldValue);
-        // System.out.println ("++++ "+fieldName + ":" + fieldValue + " " + type + "," + isBinary(type));
+		
+		if (fieldValue.length() > 0)
+            fields.put (fieldName, fieldValue);
+        // System.out.println ("++++ "+fieldName + ":>" + fieldValue + "< " + type + "," + isBinary(type));
         return fieldValue;
     }
     public void set (String name, String value) {

@@ -222,7 +222,7 @@ public class ReplyTest
 
   		String ReplyTimeVariantNumber = reply.get("time-variant-number");
 
- 		assertEquals(ReplyTimeVariantNumber , "");	
+  		assertNull(ReplyTimeVariantNumber);	
 	}
 
 	@Test
@@ -259,8 +259,9 @@ public class ReplyTest
   		NDCFSDMsg reply = InterchangeMsgsWithATMC(request, true);
 
   		String replyScreenDisplayUpdate = reply.get("screen-display-update");
+ 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " replyScreenDisplayUpdate>" + replyScreenDisplayUpdate + "<" );
 
-  		assertEquals(replyScreenDisplayUpdate, "");	
+  		assertNull(replyScreenDisplayUpdate);	
 	}
 
 	@Test
