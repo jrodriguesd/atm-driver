@@ -43,93 +43,102 @@ public class ATM implements Serializable {
 	@Column(name = "atm_id", updatable = false, nullable = false)
     private Long id;    
 
-	@Column(name="atm_aceptor_id")
+	@Column(name="atm_last_trn_log_id")
+	private Long lastTrnLogId;
+
+	@BusinessKey(caseSensitive = false, required = true)
+	@Column(name="atm_ip", length=40)
+	private String ip;
+
+	@Column(name="atm_luno", length=9)
+	private String luno;
+
+	@Column(name="atm_name", length=255)
+	private String name;
+
+	@Column(name="atm_protocol", length=10)
+	private String protocol;
+
+	@Column(name="atm_aceptor_id", length=15)
 	private String aceptorId;
+
+	@Column(name="atm_status", length=20)
+	private String status;
 
 	@Column(name="atm_active")
 	private Byte active;
 
-	@Column(name="atm_address1")
-	private String address1;
+	@Column(name="atm_group", length=255)
+	private String group;
 
-	@Column(name="atm_address2")
-	private String address2;
+	@Column(name="atm_region", length=255)
+	private String region;
 
-	@Column(name="atm_city")
-	private String city;
-
-	@Column(name="atm_communications_key")
-	private String communicationsKey;
-
-	@Column(name="atm_config_id")
-	private String configId;
-
-	@Column(name="atm_contact")
-	private String contact;
-
-	@Column(name="atm_country")
-	private String country;
-
-	@Column(name="atm_currency_code")
-	private String currencyCode;
-
-	@Column(name="atm_institution_code")
-	private String institutionCode;
-
-	@BusinessKey(caseSensitive = false, required = true)
-	@Column(name="atm_ip")
-	private String ip;
-
-	@Column(name="atm_luno")
-	private String luno;
-
-	@Column(name="atm_marca")
-	private String marca;
-
-	@Column(name="atm_master_key")
-	private String masterKey;
-
-	@Column(name="atm_merch_type")
-	private String merchType;
-
-	@Column(name="atm_model")
+	@Column(name="atm_brand", length=20)
+	private String brand;
+	
+	@Column(name="atm_model", length=255)
 	private String model;
 
-	@Column(name="atm_name")
-	private String name;
+	@Column(name="atm_address1", length=255)
+	private String address1;
 
-	@Column(name="atm_network_data")
-	private String networkData;
+	@Column(name="atm_address2", length=255)
+	private String address2;
 
-	@Column(name="atm_phone")
-	private String phone;
+	@Column(name="atm_city", length=255)
+	private String city;
 
-	@Column(name="atm_point_serv_data")
-	private String pointServData;
-
-	@Column(name="atm_pos_entry_mode")
-	private String posEntryMode;
-
-	@Column(name="atm_protocol")
-	private String protocol;
-
-	@Column(name="atm_province")
-	private String province;
-
-	@Column(name="atm_state")
+	@Column(name="atm_state", length=255)
 	private String state;
 
-	@Column(name="atm_status")
-	private String status;
+	@Column(name="atm_province", length=255)
+	private String province;
 
-	@Column(name="atm_terminal_id")
+	@Column(name="atm_country", length=3)
+	private String country;
+
+	@Column(name="atm_zip", length=15)
+	private String zip;
+
+	@Column(name="atm_contact", length=255)
+	private String contact;
+
+	@Column(name="atm_phone", length=20)
+	private String phone;
+
+	@Column(name="atm_master_key", length=64)
+	private String masterKey;
+
+	@Column(name="atm_communications_key", length=64)
+	private String communicationsKey;
+
+	@Column(name="atm_mac_key", length=64)
+	private String macKey;
+
+	@Column(name="atm_config_id", length=4)
+	private String configId;
+
+	@Column(name="atm_institution_code", length=11)
+	private String institutionCode;
+
+	@Column(name="atm_merch_type", length=4)
+	private String merchType;
+
+	@Column(name="atm_network_data", length=255)
+	private String networkData;
+
+	@Column(name="atm_point_serv_data", length=255)
+	private String pointServData;
+
+	@Column(name="atm_pos_entry_mode", length=3)
+	private String posEntryMode;
+
+	@Column(name="atm_terminal_id", length=8)
 	private String terminalId;
 
 	@Column(name="atm_trn_ser_num")
 	private Short trnSerNum;
-
-	@Column(name="atm_zip")
-	private String zip;
 
 	public ATM() {
 	}
@@ -149,6 +158,76 @@ public class ATM implements Serializable {
 	}
 
 	/**
+	 * @return the lastTrnLogId
+	 */
+	public Long getLastTrnLogId() {
+		return lastTrnLogId;
+	}
+
+	/**
+	 * @param lastTrnLogId the lastTrnLogId to set
+	 */
+	public void setLastTrnLogId(Long lastTrnLogId) {
+		this.lastTrnLogId = lastTrnLogId;
+	}
+
+	/**
+	 * @return the ip
+	 */
+	public String getIp() {
+		return ip;
+	}
+
+	/**
+	 * @param ip the ip to set
+	 */
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	/**
+	 * @return the luno
+	 */
+	public String getLuno() {
+		return luno;
+	}
+
+	/**
+	 * @param luno the luno to set
+	 */
+	public void setLuno(String luno) {
+		this.luno = luno;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the protocol
+	 */
+	public String getProtocol() {
+		return protocol;
+	}
+
+	/**
+	 * @param protocol the protocol to set
+	 */
+	public void setProtocol(String protocol) {
+		this.protocol = protocol;
+	}
+
+	/**
 	 * @return the aceptorId
 	 */
 	public String getAceptorId() {
@@ -163,6 +242,20 @@ public class ATM implements Serializable {
 	}
 
 	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	/**
 	 * @return the active
 	 */
 	public Byte getActive() {
@@ -174,6 +267,62 @@ public class ATM implements Serializable {
 	 */
 	public void setActive(Byte active) {
 		this.active = active;
+	}
+
+	/**
+	 * @return the group
+	 */
+	public String getGroup() {
+		return group;
+	}
+
+	/**
+	 * @param group the group to set
+	 */
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
+	/**
+	 * @return the region
+	 */
+	public String getRegion() {
+		return region;
+	}
+
+	/**
+	 * @param region the region to set
+	 */
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	/**
+	 * @return the brand
+	 */
+	public String getBrand() {
+		return brand;
+	}
+
+	/**
+	 * @param brand the brand to set
+	 */
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	/**
+	 * @return the model
+	 */
+	public String getModel() {
+		return model;
+	}
+
+	/**
+	 * @param model the model to set
+	 */
+	public void setModel(String model) {
+		this.model = model;
 	}
 
 	/**
@@ -219,45 +368,31 @@ public class ATM implements Serializable {
 	}
 
 	/**
-	 * @return the communicationsKey
+	 * @return the state
 	 */
-	public String getCommunicationsKey() {
-		return communicationsKey;
+	public String getState() {
+		return state;
 	}
 
 	/**
-	 * @param communicationsKey the communicationsKey to set
+	 * @param state the state to set
 	 */
-	public void setCommunicationsKey(String communicationsKey) {
-		this.communicationsKey = communicationsKey;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	/**
-	 * @return the configId
+	 * @return the province
 	 */
-	public String getConfigId() {
-		return configId;
+	public String getProvince() {
+		return province;
 	}
 
 	/**
-	 * @param configId the configId to set
+	 * @param province the province to set
 	 */
-	public void setConfigId(String configId) {
-		this.configId = configId;
-	}
-
-	/**
-	 * @return the contact
-	 */
-	public String getContact() {
-		return contact;
-	}
-
-	/**
-	 * @param contact the contact to set
-	 */
-	public void setContact(String contact) {
-		this.contact = contact;
+	public void setProvince(String province) {
+		this.province = province;
 	}
 
 	/**
@@ -275,73 +410,45 @@ public class ATM implements Serializable {
 	}
 
 	/**
-	 * @return the currencyCode
+	 * @return the zip
 	 */
-	public String getCurrencyCode() {
-		return currencyCode;
+	public String getZip() {
+		return zip;
 	}
 
 	/**
-	 * @param currencyCode the currencyCode to set
+	 * @param zip the zip to set
 	 */
-	public void setCurrencyCode(String currencyCode) {
-		this.currencyCode = currencyCode;
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 
 	/**
-	 * @return the institutionCode
+	 * @return the contact
 	 */
-	public String getInstitutionCode() {
-		return institutionCode;
+	public String getContact() {
+		return contact;
 	}
 
 	/**
-	 * @param institutionCode the institutionCode to set
+	 * @param contact the contact to set
 	 */
-	public void setInstitutionCode(String institutionCode) {
-		this.institutionCode = institutionCode;
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 
 	/**
-	 * @return the ip
+	 * @return the phone
 	 */
-	public String getIp() {
-		return ip;
+	public String getPhone() {
+		return phone;
 	}
 
 	/**
-	 * @param ip the ip to set
+	 * @param phone the phone to set
 	 */
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	/**
-	 * @return the luno
-	 */
-	public String getLuno() {
-		return luno;
-	}
-
-	/**
-	 * @param luno the luno to set
-	 */
-	public void setLuno(String luno) {
-		this.luno = luno;
-	}
-
-	/**
-	 * @return the marca
-	 */
-	public String getMarca() {
-		return marca;
-	}
-
-	/**
-	 * @param marca the marca to set
-	 */
-	public void setMarca(String marca) {
-		this.marca = marca;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	/**
@@ -359,6 +466,62 @@ public class ATM implements Serializable {
 	}
 
 	/**
+	 * @return the communicationsKey
+	 */
+	public String getCommunicationsKey() {
+		return communicationsKey;
+	}
+
+	/**
+	 * @param communicationsKey the communicationsKey to set
+	 */
+	public void setCommunicationsKey(String communicationsKey) {
+		this.communicationsKey = communicationsKey;
+	}
+
+	/**
+	 * @return the macKey
+	 */
+	public String getMacKey() {
+		return macKey;
+	}
+
+	/**
+	 * @param macKey the macKey to set
+	 */
+	public void setMacKey(String macKey) {
+		this.macKey = macKey;
+	}
+
+	/**
+	 * @return the configId
+	 */
+	public String getConfigId() {
+		return configId;
+	}
+
+	/**
+	 * @param configId the configId to set
+	 */
+	public void setConfigId(String configId) {
+		this.configId = configId;
+	}
+
+	/**
+	 * @return the institutionCode
+	 */
+	public String getInstitutionCode() {
+		return institutionCode;
+	}
+
+	/**
+	 * @param institutionCode the institutionCode to set
+	 */
+	public void setInstitutionCode(String institutionCode) {
+		this.institutionCode = institutionCode;
+	}
+
+	/**
 	 * @return the merchType
 	 */
 	public String getMerchType() {
@@ -373,34 +536,6 @@ public class ATM implements Serializable {
 	}
 
 	/**
-	 * @return the model
-	 */
-	public String getModel() {
-		return model;
-	}
-
-	/**
-	 * @param model the model to set
-	 */
-	public void setModel(String model) {
-		this.model = model;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
 	 * @return the networkData
 	 */
 	public String getNetworkData() {
@@ -412,20 +547,6 @@ public class ATM implements Serializable {
 	 */
 	public void setNetworkData(String networkData) {
 		this.networkData = networkData;
-	}
-
-	/**
-	 * @return the phone
-	 */
-	public String getPhone() {
-		return phone;
-	}
-
-	/**
-	 * @param phone the phone to set
-	 */
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 
 	/**
@@ -457,62 +578,6 @@ public class ATM implements Serializable {
 	}
 
 	/**
-	 * @return the protocol
-	 */
-	public String getProtocol() {
-		return protocol;
-	}
-
-	/**
-	 * @param protocol the protocol to set
-	 */
-	public void setProtocol(String protocol) {
-		this.protocol = protocol;
-	}
-
-	/**
-	 * @return the province
-	 */
-	public String getProvince() {
-		return province;
-	}
-
-	/**
-	 * @param province the province to set
-	 */
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	/**
-	 * @return the state
-	 */
-	public String getState() {
-		return state;
-	}
-
-	/**
-	 * @param state the state to set
-	 */
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	/**
-	 * @return the status
-	 */
-	public String getStatus() {
-		return status;
-	}
-
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	/**
 	 * @return the terminalId
 	 */
 	public String getTerminalId() {
@@ -538,20 +603,6 @@ public class ATM implements Serializable {
 	 */
 	public void setTrnSerNum(Short trnSerNum) {
 		this.trnSerNum = trnSerNum;
-	}
-
-	/**
-	 * @return the zip
-	 */
-	public String getZip() {
-		return zip;
-	}
-
-	/**
-	 * @param zip the zip to set
-	 */
-	public void setZip(String zip) {
-		this.zip = zip;
 	}
 
 	@Override

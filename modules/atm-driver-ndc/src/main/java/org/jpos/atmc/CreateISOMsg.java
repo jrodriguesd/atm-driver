@@ -95,9 +95,6 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
         Context ctx = (Context) context;
         ISOSource source = (ISOSource) ctx.get (this.source);
 
-        // ISOMsg m = (ISOMsg) ctx.get (this.request);
-	    // FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
-
         NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
 
         if (source == null || !source.isConnected())
@@ -113,7 +110,7 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
 
         try
 		{
-            td = DB.exec(db -> new TrnDefinitionManager(db).getTrnDefinition(atm.getConfigId(), msgIn.get("operation-code-data")));
+            td = ctx.get("transactiondefinition");  
 
             isoReqMsg.setMTI(td.getMTI());
             isoReqMsg.set(  3, td.getProcesingCode());
@@ -130,7 +127,7 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
             isoReqMsg.set( 41, atm.getTerminalId());       // "29110001");                                 // Card Acceptor Terminal Identification Code atm_terminal_id
             isoReqMsg.set( 42, atm.getAceptorId());        // "1234567");                                  // Card Acceptor Identification Code
 			isoReqMsg.set( 43, atm.getAddress());                                                          // ATM Address
-            isoReqMsg.set( 49, atm.getCurrencyCode());     // "937");                                      // Currency Code                              atm_currency 
+            isoReqMsg.set( 49, td.getCurrencyCode());      // "937");                                      // Currency Code                              atm_currency 
             isoReqMsg.set( 52, normalizedPIN );
             isoReqMsg.set( 61, atm.getPointServData());    // "91000000025008620000000000" );              // Point-of-Service Data                      atm_point_serv_data 
             isoReqMsg.set( 63, atm.getNetworkData());      // "CI2000000000" );                            // Network Data                               atm_network_data
@@ -143,8 +140,6 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
 	            return ABORTED | READONLY | NO_JOIN;
 		}
 
-        ctx.put("transactiondefinition", td, remote);
-        // ctx.put("fsdMsgIn", msgIn, remote);
         ctx.put(request, isoReqMsg, remote); // Para Poder Usar QueryHost
 
         return PREPARED | READONLY;

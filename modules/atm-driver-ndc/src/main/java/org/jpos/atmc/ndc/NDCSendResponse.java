@@ -35,16 +35,19 @@ import java.security.GeneralSecurityException;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 
 import org.jpos.atmc.dao.IsoError2ATMManager;
 import org.jpos.atmc.dao.ReceiptManager;
 import org.jdom2.JDOMException;
 import org.jpos.atmc.ATMVariables;
 import org.jpos.atmc.dao.ATMConfigManager;
+import org.jpos.atmc.dao.ATMLogManager;
 import org.jpos.atmc.dao.ATMManager;
 
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.model.ATMConfig;
+import org.jpos.atmc.model.ATMLog;
 import org.jpos.atmc.model.IsoError2ATM;
 import org.jpos.atmc.model.Receipt;
 import org.jpos.atmc.model.TrnDefinition;
@@ -199,7 +202,9 @@ public class NDCSendResponse implements AbortParticipant, Configurable
             fsdMsgResp.set("mac", strMAC);
         }
 
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
         fsdMsgResp.dump(Log.out, "");
+        ctx.put("fsdMsgResp", fsdMsgResp);
         NDCISOMsg fsdISOMsgResp = new NDCISOMsg ( (NDCFSDMsg) fsdMsgResp );
 
         headerStrategy.handleHeader(m, fsdISOMsgResp);
@@ -207,13 +212,60 @@ public class NDCSendResponse implements AbortParticipant, Configurable
         src.send(fsdISOMsgResp);
     }
 
+    private void updateLog(Context ctx) 
+    {
+        ATMLog atml =  ctx.get ("atmLog");
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atml.toString() + " " + atml.toString()  );
+    	try 
+    	{
+    		ATMLog atmLog = DB.exec(db -> new ATMLogManager(db).getATMLog( atml.getId() ) );
+
+		    if (atmLog != null)
+		    {
+		    	boolean needUpdate = false;
+		        ISOMsg req  = (ISOMsg) ctx.get(request);
+		        if (req != null)
+		        {
+		        	atmLog.setIsoRequest( Util.dum2Str(req) );
+		        	atmLog.setIsoRequestDt( Instant.now() );
+		        	needUpdate = true;
+		        }
+
+		        ISOMsg resp = (ISOMsg) ctx.get (response);
+		        if (resp != null)
+		        {
+		        	atmLog.setIsoReply( Util.dum2Str(resp) );
+		        	atmLog.setIsoReplyDt( Instant.now() );
+		        	needUpdate = true;
+		        }
+
+		        if (needUpdate)
+		        {
+					DB.execWithTransaction(db -> { 
+		                db.session().update(atmLog);
+						return 1; 
+					} );
+		        }
+
+		    }
+		} 
+    	catch (Exception e) 
+    	{
+			e.printStackTrace(Log.out);
+		}
+    }
+
     private void sendResponse (long id, Context ctx) 
 	{
+    	
 	    Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
         ISOSource src = (ISOSource) ctx.get (source);
         ISOMsg m = (ISOMsg) ctx.get(request);
         NDCFSDMsg fsdMsgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
         ISOMsg resp = (ISOMsg) ctx.get (response);
+
+        updateLog(ctx);
+
         try {
             if (ctx.getResult().hasInhibit()) {
                 ctx.log("*** RESPONSE INHIBITED ***");

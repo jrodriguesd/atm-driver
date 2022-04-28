@@ -25,6 +25,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -33,11 +34,20 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Arrays;
 
 import org.jdom2.JDOMException;
-import org.jpos.atmc.dao.ATMManager;
 import org.jpos.atmc.model.ATM;
+import org.jpos.atmc.model.ATMLog;
+import org.jpos.atmc.model.Currency;
+import org.jpos.atmc.model.TrnDefinition;
+import org.jpos.atmc.dao.ATMLogManager;
+import org.jpos.atmc.dao.ATMManager;
+import org.jpos.atmc.dao.TrnDefinitionManager;
+import org.jpos.atmc.dao.CurrencyManager;
+
 import org.jpos.atmc.ndc.ProcessSolicitedStatus.HeaderStrategy;
 import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
@@ -47,6 +57,8 @@ import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
 import org.jpos.core.ConfigurationException;
+import org.jpos.core.InvalidCardException;
+import org.jpos.core.Track2;
 import org.jpos.ee.DB;
 import org.jpos.iso.BaseChannel;
 import org.jpos.iso.FSDISOMsg;
@@ -119,7 +131,77 @@ public class SwichByMSgClass implements GroupSelector, Configurable
         return PREPARED | READONLY;
 	}
 
-	@Override
+    private String getCard(String trk2) throws InvalidCardException
+    {
+		String validNums = "0123456789";
+		char firstChar = trk2.charAt(0);
+		if ( validNums.indexOf(firstChar) < 0)
+		{
+		    trk2 = trk2.substring(1, trk2.length() - 1);
+		}
+
+        Track2 t2 = Track2.builder()
+            .track( trk2 ).build();        
+
+	    return t2.getPan();
+    }
+
+    private void createATMLog(Context ctx, NDCFSDMsg msgIn) throws Exception
+    {
+    	ATM atm = ctx.get ("atm");
+    	TrnDefinition td = DB.exec(db -> new TrnDefinitionManager(db).getTrnDefinition(atm.getConfigId(), msgIn.get("operation-code-data")));
+    	if (td != null) ctx.put("transactiondefinition", td, remote);
+
+    	ATMLog atmLog = new ATMLog();
+        atmLog.setAtmRequest( Util.dum2Str(msgIn) );
+        atmLog.setAtmRequestDt( Instant.now() );
+        atmLog.setTimezone( ZoneId.systemDefault().toString() );
+        atmLog.setIp(atm.getIp());
+        atmLog.setLuno(atm.getLuno());
+        atmLog.setMessageClass( msgIn.get("message-class") );
+        
+        if ( msgIn.get("message-class").equalsIgnoreCase("11") )
+        {
+        	atmLog.setCard( getCard( msgIn.get("track2") ) );
+        	atmLog.setOpCode( msgIn.get("operation-code-data") );
+        	if (td != null)
+        	{
+            	atmLog.setCurrencyCode(td.getCurrencyCode());
+            	
+            	String amount =  msgIn.get("amount-entered");
+    			Currency currency = DB.exec(db -> new CurrencyManager(db).findByNumber( td.getCurrencyCode() ));
+            	if (amount != null) atmLog.setAmount( new BigDecimal(amount).divide( new BigDecimal( currency.getExponent() ) ) );
+        	}
+        }
+
+        if ( msgIn.get("message-class").equalsIgnoreCase("22") )
+        {
+    		ATMLog atmL = DB.exec(db -> new ATMLogManager(db).getATMLog( atm.getLastTrnLogId() ) );
+
+		    if ( (atmL != null) && (atmL.getAtmReply() != null) )
+		    {
+		    	atmL.setAtmConfirmation( Util.dum2Str(msgIn) );
+		    	atmL. setAtmConfirmationDt( Instant.now() );
+
+			    DB.execWithTransaction(db -> { 
+                    db.session().update(atmL);
+			    	return 1; 
+			    } );
+	    		ctx.put ("atmLog", atmL, remote );
+		    }
+        }
+        else
+        {
+    		DB.execWithTransaction(db -> { 
+    		    db.session().persist(atmLog);
+    		  	return atmLog; 
+    		    } );
+    		ctx.put ("atmLog", atmLog, remote );
+        }
+
+    }
+
+    @Override
 	public String select(long id, Serializable context) 
 	{
 		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
@@ -130,7 +212,10 @@ public class SwichByMSgClass implements GroupSelector, Configurable
         BaseChannel baseChannel = (BaseChannel) source;
 		Socket socket = baseChannel.getSocket();
 		String ip = getIPAddr(socket);
-        
+
+        Instant request_dt = Instant.now();
+        String tz = ZoneId.systemDefault().toString();
+
 		ATM atm = null;
 		try 
 		{
@@ -145,10 +230,8 @@ public class SwichByMSgClass implements GroupSelector, Configurable
 
 		String atmProtocol = atm.getProtocol().toLowerCase();
 		String protocolSchema = "file:cfg/" + atmProtocol + "/" + atmProtocol + "-";
-		
-		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+
 		NDCFSDMsg protocolFSDmsg = new NDCFSDMsg(protocolSchema);
-		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 
 		byte bmsgMAC[] = null;
 		byte msg[] = null;
@@ -168,21 +251,17 @@ public class SwichByMSgClass implements GroupSelector, Configurable
 			InputStream byteInputStream = new ByteArrayInputStream(strMessage.getBytes(StandardCharsets.ISO_8859_1));
 			protocolFSDmsg.unpack(byteInputStream);
 
+			createATMLog(ctx, protocolFSDmsg);
+
 			String strMAC = protocolFSDmsg.get("mac");
 			if (strMAC != null)
 			{
 			    bmsgMAC = strMAC.getBytes(StandardCharsets.ISO_8859_1);
 
 			    // Quitarle el MAC al msg - Inicio
-				Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-	            Util.printHexDump(Log.out, msg);
-
 	            NDCFSDMsg wrkFSDmsg = (NDCFSDMsg) protocolFSDmsg.clone();
 		  		wrkFSDmsg.set("mac", null);
 		  		msgWrk = wrkFSDmsg.packToBytes();
-				
-		  		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-	            Util.printHexDump(Log.out, msgWrk);
 		  		// Quitarle el MAC al msg - Fin
 			}
 		} 

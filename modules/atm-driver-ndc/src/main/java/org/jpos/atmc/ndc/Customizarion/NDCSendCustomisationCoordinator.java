@@ -155,14 +155,10 @@ public class NDCSendCustomisationCoordinator
         
     	GetSection customization = GetSectionFactory.getInstance( this.customizarionSection );
     	String configId = this.atm.getConfigId();
-        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId >" + configId + "<");
         if (customization != null)
         {
         	String custMsg = customization.getNextCustomizationMsg(atm, configId, this.lastKeySend);
         	this.lastKeySend = customization.getLastKeySend();
-        	
-            Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.lastKeySend>" + this.lastKeySend + "<" );
-            Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.lastKey>" + this.lastKey + "<" );
 
         	if ( this.lastKey.equals(this.lastKeySend) )
         	{
@@ -182,6 +178,7 @@ public class NDCSendCustomisationCoordinator
     public void sendNextCustomizationMsg() throws IOException
     {
     	String nextCustomizationMsg = getNextCustomizationMsg();
+        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " nextCustomizationMsg>" + nextCustomizationMsg + "<");
     	if (nextCustomizationMsg != null)
     	{
             Util.printHexDump(Log.out, nextCustomizationMsg);

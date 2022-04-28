@@ -58,7 +58,6 @@ public class NDCISOMsg extends ISOMsg implements Cloneable
 			}
 		}
 	}
-	*/	
 
 	public byte[] getBytes() throws ISOException
 	{
@@ -72,6 +71,7 @@ public class NDCISOMsg extends ISOMsg implements Cloneable
 		}
 		return null;
 	}
+	*/	
 
     public NDCFSDMsg getFSDMsg() 
     {

@@ -22,14 +22,16 @@
         <!-- mapping resource="org/jpos/gl/jfrd-GLUser.hbm.xml"/ -->
 		<mapping class="org.jpos.atmc.model.ATM"/>
 		<mapping class="org.jpos.atmc.model.ATMConfig"/>
+		<mapping class="org.jpos.atmc.model.ATMLog"/>
+		<mapping class="org.jpos.atmc.model.ATMProtocol"/>
+		<mapping class="org.jpos.atmc.model.Cassette"/>
+		<mapping class="org.jpos.atmc.model.Currency"/>
+		<mapping class="org.jpos.atmc.model.Fit"/>
+		<mapping class="org.jpos.atmc.model.IsoError2ATM"/>
+		<mapping class="org.jpos.atmc.model.Receipt"/>
 		<mapping class="org.jpos.atmc.model.Screen"/>
 		<mapping class="org.jpos.atmc.model.State"/>
-		<mapping class="org.jpos.atmc.model.Fit"/>
-		<mapping class="org.jpos.atmc.model.ATMProtocol"/>
-		<mapping class="org.jpos.atmc.model.IsoError2ATM"/>
 		<mapping class="org.jpos.atmc.model.TrnDefinition"/>
-		<mapping class="org.jpos.atmc.model.Receipt"/>
-		<mapping class="org.jpos.atmc.model.Cassette"/>
     </mappings>
 
 </module>

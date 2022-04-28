@@ -91,9 +91,6 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
         NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
         NDCFSDMsg msgOut = new NDCFSDMsg( msgIn.getBasePath() );
 
-		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-		msgIn.dump(Log.out, "");
-        
 		String deviceIdentificationGraphic = msgIn.get("device-identification-graphic");
 
 		switch (deviceIdentificationGraphic.charAt(0))
@@ -113,7 +110,6 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
 		        }
 		        else
 		        {
-			        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId ==");
 		        	acc.setCustomizarionSection(NDCCustomizarionSections.CURRENCY_CASSETTE_MAPPING);
 		        }
 
@@ -127,34 +123,6 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
 	    			e.printStackTrace(Log.out);
                 }
 
-//		        if ( (atm != null) && ( ! atm.getConfigId().equals(configID) ) )
-//				{
-//			        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Iniciar Envio de Configuracion");
-//			        NDCSendCustomisationCoordinator.init( source, msgIn, atm);
-//			        NDCSendCustomisationCoordinator acc = NDCSendCustomisationCoordinator.get(baseChannel.getName());
-//
-//					try
-//					{
-//						acc.sendNextCustomizationMsg();
-//					}
-//		            catch (IOException ex) 
-//		            {
-//		            	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
-//		                Log.printStackTrace(ex);
-//                    }
-//
-//				}
-//				else
-//				{
-//		            msgOut.set("message-class", "1");
-//		            msgOut.set("command-code",  NDCCommand.SEND_SUPPLY_COUNTERS);
-//		            msgOut.dump(Log.out, "");
-//
-//		            Util.send(source, msgOut);
-//
-//		            ATMState atmState = ATMState.SENDING_SUPPLY_COUNTERS;
-//		        	ATMState.put(baseChannel.getName(), atmState);
-//				}
 			    break;
 			case 'D':  //* Card Reader/Writer Status
 			    break;

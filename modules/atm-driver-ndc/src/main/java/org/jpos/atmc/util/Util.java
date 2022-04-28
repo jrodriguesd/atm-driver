@@ -22,6 +22,9 @@
 package org.jpos.atmc.util;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 import org.jpos.iso.*;
 import org.jpos.util.FSDMsg;
 
@@ -215,5 +218,30 @@ public class Util
 
 	    return retStr;
 	}
+
     
+    public static String dum2Str(ISOMsg isoMsg) throws IOException
+    {
+    	final Charset charset = StandardCharsets.UTF_8;
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    	PrintStream ps = new PrintStream(baos, true, charset.name());
+    	isoMsg.dump(ps,"");
+    	String content = new String(baos.toByteArray(), charset);
+    	ps.close();
+    	baos.close();
+    	return content;
+    }
+
+    public static String dum2Str(NDCFSDMsg fsdMsg) throws IOException
+    {
+    	final Charset charset = StandardCharsets.UTF_8;
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    	PrintStream ps = new PrintStream(baos, true, charset.name());
+    	fsdMsg.dump(ps,"");
+    	String content = new String(baos.toByteArray(), charset);
+    	ps.close();
+    	baos.close();
+    	return content;
+    }
+
 }

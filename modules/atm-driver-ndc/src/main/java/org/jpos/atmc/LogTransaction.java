@@ -19,16 +19,22 @@
 /**
  * @author <a href="mailto:j@rodriguesd.org">Jose Rodrigues D.</a>
  */
-package org.jpos.atmc.ndc;
+package org.jpos.atmc;
 
 import java.io.Serializable;
+import java.time.Instant;
 
+import org.jpos.atmc.model.ATM;
+import org.jpos.atmc.model.ATMLog;
+import org.jpos.atmc.dao.ATMLogManager;
+import org.jpos.atmc.dao.ATMManager;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.NDCFSDMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
 import org.jpos.core.ConfigurationException;
+import org.jpos.ee.DB;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOSource;
 import org.jpos.space.LocalSpace;
@@ -37,81 +43,101 @@ import org.jpos.transaction.Context;
 import org.jpos.transaction.ContextConstants;
 import org.jpos.transaction.TransactionManager;
 
-public class CheckTransactionRequestFields implements AbortParticipant, Configurable 
+public class LogTransaction implements AbortParticipant, Configurable 
 {
     private String source;
     private String request;
     private String response;
     private LocalSpace isp;
     private long timeout = 70000L;
-    private Configuration cfg; 
     private HeaderStrategy headerStrategy;
     private freemarker.template.Configuration fmCfg; 
-    private boolean remote = false;
 
-    private String requiredFields[] =
+    private void updateLog(Context ctx) 
+    {
+        ATMLog atml =  ctx.get ("atmLog");
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atml.toString() + " " + atml.toString()  );
+    	try 
     	{
-    		"luno",
-    		"time-variant-number",
-    		"message-coordination-number",
-    		"track2",
-    		"operation-code-data",
-    		"buffer-A-pin",
-    	};
+    		ATMLog atmLog = DB.exec(db -> new ATMLogManager(db).getATMLog( atml.getId() ) );
 
-    @Override
-	public int prepare(long id, Serializable context) 
+		    if (atmLog != null)
+		    {
+		    	// Update ATMLog
+		    	NDCFSDMsg fsdMsgResp = ctx.get("fsdMsgResp");
+		    	if (fsdMsgResp != null)
+		    	{
+		    		String fsdMsgRespDump = Util.dum2Str(fsdMsgResp);
+			        atmLog.setAtmReply( fsdMsgRespDump );
+			        atmLog.setAtmReplyDt( Instant.now() );
+
+				    DB.execWithTransaction(db -> { 
+	                    db.session().update(atmLog);
+				    	return 1; 
+				    } );
+		    	}
+
+		    	// Update ATM Last Transaction Log Id
+		        ATM atm =  ctx.get ("atm");
+				ATM atmReaded = DB.exec(db -> new ATMManager(db).findByIP( atm.getIp() ));
+				if (atmReaded != null)
+				{
+					atmReaded.setLastTrnLogId( atmLog.getId() );
+				    DB.execWithTransaction(db -> { 
+	                    db.session().update(atmReaded);
+				    	return 1; 
+				    } );
+				}
+
+		    }
+		} 
+    	catch (Exception e) 
+    	{
+			e.printStackTrace(Log.out);
+		}
+    }
+
+	@Override
+    public int prepare (long id, Serializable context) 
 	{
-        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+	    Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
         Context ctx = (Context) context;
         ISOSource source = (ISOSource) ctx.get (this.source);
-
-        // ISOMsg m = (ISOMsg) ctx.get (this.request);
-	    // FSDMsg msgIn = ((FSDISOMsg) m).getFSDMsg();
-
-        NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
 
         if (source == null || !source.isConnected())
             return ABORTED | READONLY | NO_JOIN;
 
-        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-        
-        for (String rf : this.requiredFields)
-        {
-            if (msgIn.get(rf) == null)
-                return ABORTED | READONLY | NO_JOIN;
-        }
         return PREPARED | READONLY;
+    }
+
+	public void abort(long id, Serializable context) 
+	{
+        Context ctx = (Context) context;
+        updateLog(ctx);
 	}
 
-    public void commit (long id, Serializable context) 
+	public void commit (long id, Serializable context) 
 	{
-        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
         Context ctx = (Context) context;
-	    // ISOSource source = (ISOSource) ctx.get (this.source);
+        updateLog(ctx);
 	}
-	
+
     @Override
-    public void setConfiguration(Configuration cfg) throws ConfigurationException 
-    {
+    public void setConfiguration(Configuration cfg) throws ConfigurationException {
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-        this.cfg = cfg;
         source   = cfg.get ("source",   ContextConstants.SOURCE.toString());
-        request  = cfg.get ("request",  ContextConstants.REQUEST.toString());
+        request =  cfg.get ("request",  ContextConstants.REQUEST.toString());
         response = cfg.get ("response", ContextConstants.RESPONSE.toString());
         timeout  = cfg.getLong ("timeout", timeout);
         fmCfg = new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_30);
-        try 
-        {
+        try {
             headerStrategy = HeaderStrategy.valueOf(
-            cfg.get("header-strategy", "PRESERVE_RESPONSE").toUpperCase() );
-        } 
-        catch (IllegalArgumentException e) 
-        {
+              cfg.get("header-strategy", "PRESERVE_RESPONSE").toUpperCase()
+            );
+        } catch (IllegalArgumentException e) {
             throw new ConfigurationException (e.getMessage());
         }
     }
-
     public void setTransactionManager(TransactionManager tm) {
         isp = (LocalSpace) tm.getInputSpace();
     }

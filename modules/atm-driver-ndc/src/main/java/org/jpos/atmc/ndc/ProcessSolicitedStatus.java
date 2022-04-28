@@ -90,7 +90,7 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
     	return true;
     }
 
-    public void processCustomizarion(char statusDescriptor,  BaseChannel baseChannel, ATM atm, NDCFSDMsg msgIn) 
+    public void processCustomization(char statusDescriptor,  BaseChannel baseChannel, ATM atm, NDCFSDMsg msgIn) 
 	{
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Continuacion Envio de Configuracion");
         NDCSendCustomisationCoordinator acc = NDCSendCustomisationCoordinator.get(baseChannel.getName());
@@ -156,47 +156,12 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
 			case 'C':  //* Specific Command Reject
 			    break;
 			case 'F':  //* Terminal State
-				processCustomizarion(statusDescriptor, baseChannel, atm, msgIn);
-//			    if ( atmState == ATMState.SENDING_SUPPLY_COUNTERS )
-//			    {
-//					if ( countersMatch(atm, msgIn) )
-//			    	{
-//			            msgOut.set("message-class", "1");
-//			            msgOut.set("command-code",  NDCCommand.GO_IN_SERVICE);
-//			            msgOut.dump(Log.out, "");
-//
-//			            Util.send(source, msgOut);
-//
-//			            atmState = ATMState.GOING_INTO_SERVICE;
-//			        	ATMState.put(baseChannel.getName(), atmState);
-//			    	}
-//					else
-//						Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Contadores ATM != msgIn " );
-//				}
+				processCustomization(statusDescriptor, baseChannel, atm, msgIn);
 			    break;
 			case '8':  //* Device Fault
 			    break;
 			case '9':  //* Ready
-				processCustomizarion(statusDescriptor, baseChannel, atm, msgIn);
-//		        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Continuacion Envio de Configuracion");
-//		        NDCSendCustomisationCoordinator acc = NDCSendCustomisationCoordinator.get(baseChannel.getName());
-//		        if (acc != null)
-//		        {
-//					try
-//					{
-//						acc.sendNextCustomizationMsg();
-//					}
-//		            catch (IOException ex) 
-//		            {
-//		            	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + ex.getMessage());
-//		                Log.printStackTrace(ex);
-//	                }
-//		        }
-//			    if ( atmState == ATMState.GOING_INTO_SERVICE )
-//			    {
-//					atmState = ATMState.IN_SERVICE;
-//		        	ATMState.put(baseChannel.getName(), atmState);
-//				}
+				processCustomization(statusDescriptor, baseChannel, atm, msgIn);
 			    break;
 		}
 	}

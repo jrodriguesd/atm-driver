@@ -22,6 +22,8 @@
  */
 package org.jpos.atmc.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,9 +36,11 @@ import com.openpojo.business.annotation.BusinessKey ;
 
 @Entity
 @Table(name="trndefs")
-public class TrnDefinition 
+public class TrnDefinition implements Serializable 
 {
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "trndef_id", updatable = false, nullable = false)
     private Long id;    
@@ -52,6 +56,9 @@ public class TrnDefinition
 	@Column(name = "trndef_description", updatable = true, nullable = false)
 	private String  description;
 
+	@Column(name = "trndef_currency_code", updatable = true, nullable = false)
+    private String  currencyCode;
+	
 	@Column(name = "trndef_language639", updatable = true, nullable = false)
     private String  language639;
 
@@ -145,6 +152,20 @@ public class TrnDefinition
 	public void setDescription(String description) 
 	{
 		this.description = description;
+	}
+
+	/**
+	 * @return the currencyCode
+	 */
+	public String getCurrencyCode() {
+		return currencyCode;
+	}
+
+	/**
+	 * @param currencyCode the currencyCode to set
+	 */
+	public void setCurrencyCode(String currencyCode) {
+		this.currencyCode = currencyCode;
 	}
 
 	/**

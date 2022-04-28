@@ -15,6 +15,7 @@
       <participant class="org.jpos.atmc.CreateISOMsg"/>
       <participant class="org.jpos.transaction.participant.QueryHost"/>
       <participant class="org.jpos.atmc.ndc.NDCSendResponse"/>
+      <participant class="org.jpos.atmc.LogTransaction"/>
   </group>
 
   <group name="NDCUnsolicitedStatus">
@@ -27,6 +28,7 @@
 
   <group name="Error">
       <participant class="org.jpos.atmc.ndc.NDCSendResponse"/>
+      <participant class="org.jpos.atmc.LogTransaction"/>
   </group>
 
 
