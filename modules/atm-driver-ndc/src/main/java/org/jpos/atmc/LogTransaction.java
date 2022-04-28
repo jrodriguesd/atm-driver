@@ -55,44 +55,36 @@ public class LogTransaction implements AbortParticipant, Configurable
 
     private void updateLog(Context ctx) 
     {
-        ATMLog atml =  ctx.get ("atmLog");
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atml.toString() + " " + atml.toString()  );
-    	try 
-    	{
-    		ATMLog atmLog = DB.exec(db -> new ATMLogManager(db).getATMLog( atml.getId() ) );
+        ATMLog atmLog =  ctx.get ("atmLog");
+        if (atmLog == null) return;
 
-		    if (atmLog != null)
-		    {
-		    	// Update ATMLog
-		    	NDCFSDMsg fsdMsgResp = ctx.get("fsdMsgResp");
-		    	if (fsdMsgResp != null)
-		    	{
-		    		String fsdMsgRespDump = Util.dum2Str(fsdMsgResp);
-			        atmLog.setAtmReply( fsdMsgRespDump );
-			        atmLog.setAtmReplyDt( Instant.now() );
+        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atmLog.toString() );
+		try {
+			Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atmLog.toString()  );
+			// Update ATMLog
+			NDCFSDMsg fsdMsgResp = ctx.get("fsdMsgResp");
+			if (fsdMsgResp != null) {
+				Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atmLog.toString() );
+				String fsdMsgRespDump = Util.dum2Str(fsdMsgResp);
+				atmLog.setAtmReply(fsdMsgRespDump);
+				atmLog.setAtmReplyDt(Instant.now());
 
-				    DB.execWithTransaction(db -> { 
-	                    db.session().update(atmLog);
-				    	return 1; 
-				    } );
-		    	}
+				DB.execWithTransaction(db -> {
+					db.session().update(atmLog);
+					return 1;
+				});
+			}
 
-		    	// Update ATM Last Transaction Log Id
-		        ATM atm =  ctx.get ("atm");
-				ATM atmReaded = DB.exec(db -> new ATMManager(db).findByIP( atm.getIp() ));
-				if (atmReaded != null)
-				{
-					atmReaded.setLastTrnLogId( atmLog.getId() );
-				    DB.execWithTransaction(db -> { 
-	                    db.session().update(atmReaded);
-				    	return 1; 
-				    } );
-				}
-
-		    }
-		} 
-    	catch (Exception e) 
-    	{
+			// Update ATM Last Transaction Log Id
+			ATM atm = ctx.get("atm");
+			if (atm != null) {
+				atm.setLastTrnLogId(atmLog.getId());
+				DB.execWithTransaction(db -> {
+					db.session().update(atm);
+					return 1;
+				});
+			}
+		} catch (Exception e) {
 			e.printStackTrace(Log.out);
 		}
     }

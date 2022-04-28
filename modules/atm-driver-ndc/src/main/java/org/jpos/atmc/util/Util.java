@@ -125,11 +125,11 @@ public class Util
 		return builder.toString();
 	}
 
-    public static void send(ISOSource source, FSDMsg msgOut)
+    public static void send(ISOSource source, NDCFSDMsg msgOut)
 	{
 		try
 		{
-		    source.send( new FSDISOMsg (msgOut) );
+		    source.send( new NDCISOMsg (msgOut) );
 		}
 		catch (IOException e)
 		{

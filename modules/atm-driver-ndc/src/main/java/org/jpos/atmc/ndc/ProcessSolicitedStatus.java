@@ -23,9 +23,11 @@ package org.jpos.atmc.ndc;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.List;
 
 import org.jpos.atmc.model.ATM;
+import org.jpos.atmc.model.ATMLog;
 import org.jpos.atmc.dao.CassetteManager;
 import org.jpos.atmc.model.Cassette;
 import org.jpos.atmc.ndc.Customizarion.NDCCustomizarionSections;
@@ -118,6 +120,47 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
         }
 	}
 
+    private void processReject(Context ctx) {
+    }
+
+    private void processReply(Context ctx)
+    {
+    	ATMLog atmLog = ctx.get("atmLog");
+        NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
+
+        try {
+			atmLog.setAtmReply( Util.dum2Str(msgIn) );
+	    	atmLog.setAtmReplyDt( Instant.now() );
+
+		    DB.execWithTransaction(db -> { 
+	            db.session().update(atmLog);
+		    	return 1; 
+		    } );
+		} catch (Exception e) {
+			e.printStackTrace(Log.out);
+		}
+    }
+    
+    private void processConfirmation(Context ctx)
+    {
+    	ATMLog atmLog = ctx.get("atmLog");
+        if (atmLog == null) return;
+
+        NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
+
+        try {
+			atmLog.setAtmConfirmation( Util.dum2Str(msgIn) );
+	    	atmLog.setAtmConfirmationDt( Instant.now() );
+
+		    DB.execWithTransaction(db -> { 
+	            db.session().update(atmLog);
+		    	return 1; 
+		    } );
+		} catch (Exception e) {
+			e.printStackTrace(Log.out);
+		}
+    }
+
 	@Override
 	public int prepare(long id, Serializable context) 
 	{
@@ -147,20 +190,24 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
 		switch (statusDescriptor)
 		{
 			case 'A':  //* Command Reject
+				processReject(ctx);
 				Log.staticPrintln("************************************************");
 				Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Command Reject - No Debria Pasar ");
 				Log.staticPrintln("************************************************");
 			    break;
 			case 'B':  //* Ready - Transaction Reply was successfully completed
+				processReject(ctx);
 			    break;
 			case 'C':  //* Specific Command Reject
 			    break;
 			case 'F':  //* Terminal State
+				processReply(ctx);
 				processCustomization(statusDescriptor, baseChannel, atm, msgIn);
 			    break;
 			case '8':  //* Device Fault
 			    break;
 			case '9':  //* Ready
+				processConfirmation(ctx);
 				processCustomization(statusDescriptor, baseChannel, atm, msgIn);
 			    break;
 		}

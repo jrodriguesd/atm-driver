@@ -23,27 +23,17 @@ package org.jpos.atmc.ndc;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.Inet4Address;
-import java.net.Inet6Address;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-import java.net.SocketAddress;
 
-import org.jpos.atmc.dao.ATMManager;
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.ndc.Customizarion.NDCCustomizarionSections;
 import org.jpos.atmc.ndc.Customizarion.NDCSendCustomisationCoordinator;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.NDCFSDMsg;
-import org.jpos.atmc.util.NDCISOMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
 import org.jpos.core.ConfigurationException;
-import org.jpos.ee.DB;
 import org.jpos.iso.BaseChannel;
-import org.jpos.iso.FSDISOMsg;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOSource;
 import org.jpos.space.LocalSpace;
@@ -51,7 +41,6 @@ import org.jpos.transaction.AbortParticipant;
 import org.jpos.transaction.Context;
 import org.jpos.transaction.ContextConstants;
 import org.jpos.transaction.TransactionManager;
-import org.jpos.util.FSDMsg;
 
 public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable 
 {
@@ -100,7 +89,8 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
 			case 'B':  //* Power Failure
 		        String configID = msgIn.get("device-status");
 		        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configID >" + configID + "<");
-		        NDCSendCustomisationCoordinator.init( source, msgIn, atm);
+		        // NDCSendCustomisationCoordinator.init( source, msgIn, atm);
+		        NDCSendCustomisationCoordinator.init(ctx);
 		        NDCSendCustomisationCoordinator acc = NDCSendCustomisationCoordinator.get(baseChannel.getName());
 
 		        if ( (atm != null) && ( ! atm.getConfigId().equals(configID) ) )

@@ -214,43 +214,33 @@ public class NDCSendResponse implements AbortParticipant, Configurable
 
     private void updateLog(Context ctx) 
     {
-        ATMLog atml =  ctx.get ("atmLog");
-    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atml.toString() + " " + atml.toString()  );
-    	try 
-    	{
-    		ATMLog atmLog = DB.exec(db -> new ATMLogManager(db).getATMLog( atml.getId() ) );
+        ATMLog atmLog =  ctx.get ("atmLog");
+        if (atmLog == null) return;
+        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atmLog.toString() );
+		try {
+			boolean needUpdate = false;
+			ISOMsg req = (ISOMsg) ctx.get(request);
+			if (req != null) {
+				atmLog.setIsoRequest(Util.dum2Str(req));
+				atmLog.setIsoRequestDt(Instant.now());
+				needUpdate = true;
+			}
 
-		    if (atmLog != null)
-		    {
-		    	boolean needUpdate = false;
-		        ISOMsg req  = (ISOMsg) ctx.get(request);
-		        if (req != null)
-		        {
-		        	atmLog.setIsoRequest( Util.dum2Str(req) );
-		        	atmLog.setIsoRequestDt( Instant.now() );
-		        	needUpdate = true;
-		        }
+			ISOMsg resp = (ISOMsg) ctx.get(response);
+			if (resp != null) {
+				atmLog.setIsoReply(Util.dum2Str(resp));
+				atmLog.setIsoReplyDt(Instant.now());
+				needUpdate = true;
+			}
 
-		        ISOMsg resp = (ISOMsg) ctx.get (response);
-		        if (resp != null)
-		        {
-		        	atmLog.setIsoReply( Util.dum2Str(resp) );
-		        	atmLog.setIsoReplyDt( Instant.now() );
-		        	needUpdate = true;
-		        }
+			if (needUpdate) {
+				DB.execWithTransaction(db -> {
+					db.session().update(atmLog);
+					return 1;
+				});
+			}
 
-		        if (needUpdate)
-		        {
-					DB.execWithTransaction(db -> { 
-		                db.session().update(atmLog);
-						return 1; 
-					} );
-		        }
-
-		    }
-		} 
-    	catch (Exception e) 
-    	{
+		} catch (Exception e) {
 			e.printStackTrace(Log.out);
 		}
     }

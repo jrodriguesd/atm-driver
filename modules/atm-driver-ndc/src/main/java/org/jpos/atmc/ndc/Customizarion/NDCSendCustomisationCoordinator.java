@@ -30,10 +30,13 @@ import org.jpos.atmc.util.NDCFSDMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.iso.BaseChannel;
 import org.jpos.iso.ISOSource;
+import org.jpos.transaction.Context;
+import org.jpos.transaction.ContextConstants;
 import org.jpos.util.FSDMsg;
 
 public class NDCSendCustomisationCoordinator 
 {
+	private Context ctx;
 	private ISOSource source;
 	private NDCFSDMsg msgIn;
 	private ATM atm;
@@ -42,6 +45,29 @@ public class NDCSendCustomisationCoordinator
 	private NDCCustomizarionSections customizarionSection;
 	
     private static final HashMap<String, NDCSendCustomisationCoordinator> atmsCustomizarioState = new HashMap<String, NDCSendCustomisationCoordinator>();
+
+    public static void init(Context ctx)
+    {
+        ISOSource source = ctx.get (ContextConstants.SOURCE.toString()); // <-- Guardar los nombres de donde Saco esto en Configure
+        NDCFSDMsg msgIn = ctx.get("fsdMsgIn");
+        ATM atm = ctx.get("atm");
+
+        NDCSendCustomisationCoordinator customizarionCoordinator = new NDCSendCustomisationCoordinator();
+        customizarionCoordinator.ctx = ctx;
+        customizarionCoordinator.source = source;
+        customizarionCoordinator.msgIn = msgIn;
+        customizarionCoordinator.atm = atm;
+        customizarionCoordinator.customizarionSection = NDCCustomizarionSections.SCREENS;
+
+    	GetSection customization = GetSectionFactory.getInstance( customizarionCoordinator.customizarionSection );
+    	String configId = atm.getConfigId();
+        customizarionCoordinator.lastKey = customization.getLastKey(atm, configId);
+        customizarionCoordinator.lastKeySend = "";
+        
+
+        BaseChannel baseChannel = (BaseChannel) source;
+        atmsCustomizarioState.put( baseChannel.getName(), customizarionCoordinator );
+    }
 
     public static void init(ISOSource source, NDCFSDMsg msgIn, ATM atm)
     {
@@ -93,7 +119,7 @@ public class NDCSendCustomisationCoordinator
      */
     public void sendMessage(String msgClass, String timeVariantNumber, String data) throws IOException
     {
-        FSDMsg msgOut = new FSDMsg( this.msgIn.getBasePath() );
+    	NDCFSDMsg msgOut = new NDCFSDMsg( this.msgIn.getBasePath() );
 
 		msgOut.set("message-class",       msgClass);
 		msgOut.set("luno",                this.msgIn.get("luno") );
@@ -102,6 +128,7 @@ public class NDCSendCustomisationCoordinator
 		if ( msgClass.equals("3") ) msgOut.set("data", data);
 		if ( msgClass.equals("1") ) msgOut.set("command-code", data.substring(0, 1) );
 
+        this.ctx.put("fsdMsgResp", msgOut);
 		Util.send(source, msgOut);
 	}
 

@@ -20,6 +20,7 @@
 
   <group name="NDCUnsolicitedStatus">
       <participant class="org.jpos.atmc.ndc.ProcessUnsolicitedStatus"/>
+      <participant class="org.jpos.atmc.LogTransaction"/>
   </group>
 
   <group name="NDCSolicitedStatus">
