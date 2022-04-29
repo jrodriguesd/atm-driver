@@ -123,7 +123,7 @@ public class NDCSendResponse implements AbortParticipant, Configurable
 		msgOut.set("next-state-number",           state);
 		msgOut.set("number-notes-dispense",       "00000000");
 
-		if (isoMsgIn.getString(11) != null)
+		if ( (isoMsgIn != null ) && (isoMsgIn.getString(11) != null) )
 		    msgOut.set("transaction-serial-number",   isoMsgIn.getString(11).substring(2, 6));
 
 		msgOut.set("function-identifier",         NDCConstants.NEXT_STATE_AND_PRINT);
@@ -181,21 +181,18 @@ public class NDCSendResponse implements AbortParticipant, Configurable
         ISOSource src = (ISOSource) ctx.get (source);
         ISOMsg m = (ISOMsg) ctx.get(request);
         NDCFSDMsg fsdMsgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
+        ATM atm = ctx.get("atm");
 
-        /*
-         * Queda Pendiente Sacr la Key de Algun Lado 
-         */
         if (fsdMsgIn.get("mac") != null)
         {
-          	String key = "0123456789ABCDEF";
-      		byte[] bKey  = ISOUtil.hex2byte(key);
+	  		byte bKey[]  = ISOUtil.hex2byte( atm.getMacKey() );
            
       		fsdMsgResp.set("mac", null);
       		byte bReply[] = fsdMsgResp.packToBytes();
 
             Util.printHexDump(Log.out, bReply);
       		
-      		byte calculatedMAC[] = Crypto.calculateANSIX9_9MAC(bKey, bReply);
+      		byte calculatedMAC[] = Crypto.calculateANSIX9_MAC(bKey, bReply);
 
      		String strMAC = Util.byteDecode(calculatedMAC);
 

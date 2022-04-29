@@ -72,7 +72,7 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
         
         Context ctx = (Context) context;
 	    ISOSource source = (ISOSource) ctx.get (this.source);
-        ISOMsg m = (ISOMsg) ctx.get (this.request);
+        // ISOMsg m = (ISOMsg) ctx.get (this.request);
         ATM atm = (ATM) ctx.get ("atm");
 
         BaseChannel baseChannel = (BaseChannel) source;

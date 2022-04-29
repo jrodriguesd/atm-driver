@@ -52,7 +52,6 @@ import org.jpos.atmc.ndc.ProcessSolicitedStatus.HeaderStrategy;
 import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.NDCFSDMsg;
-import org.jpos.atmc.util.NDCISOMsg;
 import org.jpos.atmc.util.Util;
 import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
@@ -263,15 +262,17 @@ public class SwichByMSgClass implements GroupSelector, Configurable
 			return null;
 		}
 
+        ctx.put ("fsdMsgIn", protocolFSDmsg, remote);
+        ctx.put (this.request, null, remote);
+
   		if (bmsgMAC != null)
 		{
-	      	String key = "0123456789ABCDEF";
-	  		byte bKey[]  = ISOUtil.hex2byte(key);
+	  		byte bKey[]  = ISOUtil.hex2byte( atm.getMacKey() );
 
 			byte calculatedMAC[] = null; 
 	  		try 
 	  		{
-	  			calculatedMAC = Crypto.calculateANSIX9_9MAC(bKey, msgWrk);
+	  			calculatedMAC = Crypto.calculateANSIX9_MAC(bKey, msgWrk);
 			} 
 	  		catch (GeneralSecurityException e) 
 	  		{
@@ -287,7 +288,6 @@ public class SwichByMSgClass implements GroupSelector, Configurable
 				Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " ** MAC Error ** " );
 	            Util.printHexDump(Log.out, msg);
 
-		        ctx.put ("fsdMsgIn", protocolFSDmsg, remote);
 			    String groups = cfg.get ("error", null);
 			    return groups;
 	  		}
@@ -295,8 +295,6 @@ public class SwichByMSgClass implements GroupSelector, Configurable
 
 		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		protocolFSDmsg.dump(Log.out, "");
-
-        ctx.put ("fsdMsgIn", protocolFSDmsg, remote);
 
         String key = atmProtocol + "." + protocolFSDmsg.get("message-class"); 
 	    String groups = cfg.get (key, null);

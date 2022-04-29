@@ -102,9 +102,7 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
 
 	    ATM atm = (ATM) ctx.get("atm");
 
-        // Create ISO Message
         ISOMsg isoReqMsg = new ISOMsg();
-        // m.setPackager( new ISO87APackager() );
         String normalizedPIN = normalizePIN( msgIn.get("buffer-A-pin") );
         TrnDefinition td = null;
 

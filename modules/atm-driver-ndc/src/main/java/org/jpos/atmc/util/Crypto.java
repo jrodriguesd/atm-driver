@@ -424,4 +424,16 @@ public class Crypto
 		return Crypto.encryptByDesEcb(resultTemp, keyLeft);
 	}
 
+	public static byte[] calculateANSIX9_MAC(byte[] key, byte[] data) throws GeneralSecurityException
+	{
+		switch (key.length)
+		{
+		    case 8:
+		    	return calculateANSIX9_9MAC(key, data);
+		    case 16:
+		    	return calculateANSIX9_19MAC(key, data);
+		    default:
+		    	throw new GeneralSecurityException();
+		}
+	}
 }

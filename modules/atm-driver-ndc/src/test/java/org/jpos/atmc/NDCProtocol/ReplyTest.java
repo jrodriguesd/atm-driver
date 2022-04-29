@@ -29,7 +29,6 @@ import org.jpos.atmc.util.Util;
 import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOUtil;
 import org.junit.Before;
-import org.jpos.util.FSDMsg;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
@@ -56,7 +55,7 @@ public class ReplyTest
     private PrintWriter out;
     private PrintStream ps;
 
-	private String key = "0123456789ABCDEF";
+	private String key = "0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F";
 	private byte bKey[];
 
 	@Before
@@ -121,14 +120,14 @@ public class ReplyTest
     private NDCFSDMsg InterchangeMsgsWithATMC(NDCFSDMsg request, boolean generateBadMAC) throws IOException, JDOMException, ISOException, GeneralSecurityException
     {
  		request.set("mac", null);
- 	    this.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " pack " + request.pack() );
+ 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " pack " + request.pack() );
   		byte bRequest[] = request.packToBytes();
   		
 	    String dumpString = Util.formatHexDump(bRequest, 0, bRequest.length);
  	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 	    println(dumpString);
 
-		byte calculatedMAC[] = Crypto.calculateANSIX9_9MAC(this.bKey, bRequest);
+		byte calculatedMAC[] = Crypto.calculateANSIX9_19MAC(this.bKey, bRequest);
 
  	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " calculatedMAC " + ISOUtil.byte2hex(calculatedMAC) );
 
@@ -154,6 +153,11 @@ public class ReplyTest
 
     	byte bReply[] = receiveMessage();
 
+		String strConfirmation = "220009";
+		byte bConfirmation[] = strConfirmation.getBytes(StandardCharsets.ISO_8859_1);
+ 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+    	sendMessage( bConfirmation );
+
     	NDCFSDMsg reply = new NDCFSDMsg( request.getBasePath() );
         reply.unpack(bReply);
     	return reply;
@@ -165,7 +169,7 @@ public class ReplyTest
  		this.out.flush();
     }
 
-	@Test
+    @Test
 	public void testUnsolicitedStatus() throws IOException, JDOMException, ISOException, GeneralSecurityException 
 	{
 		String strUnsolicitedStatus = "12000B0870";
