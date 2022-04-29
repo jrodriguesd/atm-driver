@@ -31,12 +31,9 @@ import org.jpos.iso.ISOUtil;
 import org.junit.Before;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
@@ -48,15 +45,14 @@ public class ReplyTest
 {
 	private static final String HOSTNAME = "127.0.0.1";
 	private static final int    PORT = 8000;
-	
+
     private Socket socket;
     private InputStream input;
     private OutputStream output;
-    private PrintWriter out;
-    private PrintStream ps;
+
+	private byte bKey[];
 
 	private String key = "0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F";
-	private byte bKey[];
 
 	@Before
 	public void setup()  throws IOException 
@@ -65,10 +61,8 @@ public class ReplyTest
 		this.input  = this.socket.getInputStream();
 		this.output = this.socket.getOutputStream();
 
-		FileOutputStream fout = new FileOutputStream("LogPeriquete.txt", true); 
-		this.ps = new PrintStream(fout);
-		this.out = new PrintWriter(ps);
 	  	this.bKey = ISOUtil.hex2byte(this.key);
+		System.out.println(" ");
 	}
 
     /**
@@ -78,7 +72,6 @@ public class ReplyTest
      */
     public void sendMessage(byte [] cmd) throws IOException
     {
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
     	byte[] buffer = new byte[4096];
 
 		buffer[0] = (byte) (cmd.length >> 8);
@@ -86,9 +79,9 @@ public class ReplyTest
         System.arraycopy(cmd, 0, buffer, 2, cmd.length);
 		
 		String dumpString = Util.formatHexDump(buffer, 0, cmd.length + 2);
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-		println(">> " + (cmd.length + 2) + " bytes sent:");
-		println(dumpString);
+		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+		System.out.println(">> " + (cmd.length + 2) + " bytes sent:");
+		System.out.println(dumpString);
 		
         output.write(buffer, 0, cmd.length + 2);
     }
@@ -110,9 +103,9 @@ public class ReplyTest
         System.arraycopy(buffer, 2, msg, 0, count - 2);
 
 		String dumpString = Util.formatHexDump(msg, 0, msg.length);
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-		println(">> " + msg.length + " bytes received:");
-		println(dumpString);
+		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+		System.out.println(">> " + msg.length + " bytes received:");
+		System.out.println(dumpString);
 
 		return msg;
 	}
@@ -120,16 +113,11 @@ public class ReplyTest
     private NDCFSDMsg InterchangeMsgsWithATMC(NDCFSDMsg request, boolean generateBadMAC) throws IOException, JDOMException, ISOException, GeneralSecurityException
     {
  		request.set("mac", null);
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " pack " + request.pack() );
   		byte bRequest[] = request.packToBytes();
-  		
-	    String dumpString = Util.formatHexDump(bRequest, 0, bRequest.length);
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-	    println(dumpString);
 
 		byte calculatedMAC[] = Crypto.calculateANSIX9_19MAC(this.bKey, bRequest);
 
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " calculatedMAC " + ISOUtil.byte2hex(calculatedMAC) );
+		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " calculatedMAC " + ISOUtil.byte2hex(calculatedMAC) );
 
  		if (generateBadMAC)
  		{
@@ -139,12 +127,6 @@ public class ReplyTest
  		}
 
  		String strMAC = Util.byteDecode(calculatedMAC);
-        byte[] bytes = strMAC.getBytes(StandardCharsets.ISO_8859_1);
-
-		dumpString = Util.formatHexDump(bytes, 0, bytes.length);
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
-		println(">> " + (bytes.length) + " bytes sent:");
-		println(dumpString);
 
  		request.set("mac", strMAC);
  		bRequest = request.packToBytes();
@@ -155,23 +137,17 @@ public class ReplyTest
 
 		String strConfirmation = "220009";
 		byte bConfirmation[] = strConfirmation.getBytes(StandardCharsets.ISO_8859_1);
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
     	sendMessage( bConfirmation );
 
     	NDCFSDMsg reply = new NDCFSDMsg( request.getBasePath() );
         reply.unpack(bReply);
     	return reply;
     }
-    
-    private void println(String str)
-    {
- 	    this.out.println(str);
- 		this.out.flush();
-    }
 
     @Test
 	public void testUnsolicitedStatus() throws IOException, JDOMException, ISOException, GeneralSecurityException 
 	{
+		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		String strUnsolicitedStatus = "12000B0870";
 
 		String Schema = "file:src/dist/cfg/ndc/ndc-";
@@ -183,7 +159,6 @@ public class ReplyTest
   		NDCFSDMsg reply = InterchangeMsgsWithATMC(request, false);
 
 		String replyData = reply.get("data");
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " replyData>" + replyData + "<" );
 
   		assertNotEquals(replyData, "");	
 	}
@@ -191,7 +166,7 @@ public class ReplyTest
 	@Test
 	public void testReplyWithTimeVariantNumber() throws IOException, JDOMException, ISOException, GeneralSecurityException 
 	{
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		String balanceInquiryRq = "1100001A2E16615;41073741454145=251210110000232?AIA     000000000000>354619447=;078?";
 
 		String Schema = "file:src/dist/cfg/ndc/ndc-";
@@ -205,6 +180,8 @@ public class ReplyTest
   		NDCFSDMsg reply = InterchangeMsgsWithATMC(request, false);
   		
 		String ReplyTimeVariantNumber = reply.get("time-variant-number");
+		
+		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " RequestTimeVariantNumber " + RequestTimeVariantNumber + " ReplyTimeVariantNumber " + ReplyTimeVariantNumber);
 
  		assertEquals(RequestTimeVariantNumber, ReplyTimeVariantNumber);	
 	}
@@ -212,7 +189,7 @@ public class ReplyTest
 	@Test
 	public void testReplyWithoutTimeVariantNumber() throws IOException, JDOMException, ISOException, GeneralSecurityException 
 	{
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		String balanceInquiryRq = "1100001A2E16615;41073741454145=251210110000232?AIA     000000000000>354619447=;078?";
 
 		String Schema = "file:src/dist/cfg/ndc/ndc-";
@@ -232,7 +209,7 @@ public class ReplyTest
 	@Test
 	public void testRequestWithGoodMAC() throws IOException, JDOMException, ISOException, GeneralSecurityException 
 	{
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		String balanceInquiryRq = "1100100000101A2E16612;41073741454145=251210110000232?AIA     000000000000>354619447=;078?21639100000000000000000000U5CAM00008C159F02069F03069F1A0295055F2A029A039C019F37049F02060000000000009F0306000000000000820218005A095022654000890000925F3401019F360209B79F2608B2746052B28B64139F34030200009F2701809F1E0830303030303030319F100706010A03A0A0009F090200969F33036040E89F1A0206089F35011495058000040000570F502265400089000092D2708620951F5F2A0206089F080200969A031810019F4104000038169B0260009C01309F3704039690459F53015A9F0607A000000635101050105068696C697070696E652044656269745F201A4544204241524741444F2F2020202020202020202020202020205F24032708313FF7AA85";
 
 		String Schema = "file:src/dist/cfg/ndc/ndc-";
@@ -251,7 +228,7 @@ public class ReplyTest
 	@Test
 	public void testRequestBadMAC() throws IOException, JDOMException, ISOException, GeneralSecurityException 
 	{
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		String balanceInquiryRq = "1100100000101A2E1661241073741454145=211210110000232AIA     000000000000>354619447=;078?21639100000000000000000000U5CAM00008C159F02069F03069F1A0295055F2A029A039C019F37049F02060000000000009F0306000000000000820218005A095022654000890000925F3401019F360209B79F2608B2746052B28B64139F34030200009F2701809F1E0830303030303030319F100706010A03A0A0009F090200969F33036040E89F1A0206089F35011495058000040000570F502265400089000092D2708620951F5F2A0206089F080200969A031810019F4104000038169B0260009C01309F3704039690459F53015A9F0607A000000635101050105068696C697070696E652044656269745F201A4544204241524741444F2F2020202020202020202020202020205F24032708313FF7AA85";
 
 		String Schema = "file:src/dist/cfg/ndc/ndc-";
@@ -263,7 +240,7 @@ public class ReplyTest
   		NDCFSDMsg reply = InterchangeMsgsWithATMC(request, true);
 
   		String replyScreenDisplayUpdate = reply.get("screen-display-update");
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " replyScreenDisplayUpdate>" + replyScreenDisplayUpdate + "<" );
+  		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " replyScreenDisplayUpdate>" + replyScreenDisplayUpdate + "<" );
 
   		assertNull(replyScreenDisplayUpdate);	
 	}
@@ -271,7 +248,7 @@ public class ReplyTest
 	@Test
 	public void testReplyWithGoodMAC() throws IOException, JDOMException, ISOException, GeneralSecurityException 
 	{
- 	    println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+		System.out.println("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
 		String balanceInquiryRq = "1100100000101A2E16612;41073741454145=251210110000232?AIA     000000000000>354619447=;078?21639100000000000000000000U5CAM00008C159F02069F03069F1A0295055F2A029A039C019F37049F02060000000000009F0306000000000000820218005A095022654000890000925F3401019F360209B79F2608B2746052B28B64139F34030200009F2701809F1E0830303030303030319F100706010A03A0A0009F090200969F33036040E89F1A0206089F35011495058000040000570F502265400089000092D2708620951F5F2A0206089F080200969A031810019F4104000038169B0260009C01309F3704039690459F53015A9F0607A000000635101050105068696C697070696E652044656269745F201A4544204241524741444F2F2020202020202020202020202020205F24032708313FF7AA85";
 
 		String Schema = "file:src/dist/cfg/ndc/ndc-";
