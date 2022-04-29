@@ -88,7 +88,13 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
 		return sb.toString();
 	}
 
-    @Override
+	public int prepareForAbort(long id, Serializable context) 
+	{
+        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
+        return ABORTED | READONLY | NO_JOIN;
+	}
+
+	@Override
 	public int prepare(long id, Serializable context) 
 	{
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );

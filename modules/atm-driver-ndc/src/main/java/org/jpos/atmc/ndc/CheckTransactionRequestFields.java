@@ -52,7 +52,6 @@ public class CheckTransactionRequestFields implements AbortParticipant, Configur
     private String requiredFields[] =
     	{
     		"luno",
-    		"time-variant-number",
     		"message-coordination-number",
     		"track2",
     		"operation-code-data",
@@ -80,7 +79,9 @@ public class CheckTransactionRequestFields implements AbortParticipant, Configur
         {
             if (msgIn.get(rf) == null)
                 return ABORTED | READONLY | NO_JOIN;
+
         }
+
         return PREPARED | READONLY;
 	}
 
