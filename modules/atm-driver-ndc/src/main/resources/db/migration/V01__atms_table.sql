@@ -55,19 +55,19 @@ CREATE TABLE `atmlog` (
   `atmlog_amount` decimal(7,2) DEFAULT NULL,
   `atmlog_timezone` varchar(20) DEFAULT NULL,
   `atmlog_atm_request_dt` datetime(6) NOT NULL,
-  `atmlog_atm_request` text NOT NULL,
+  `atmlog_atm_request` longtext NOT NULL,
   `atmlog_iso_request_dt` datetime(6) DEFAULT NULL,
-  `atmlog_iso_request` text DEFAULT NULL,
+  `atmlog_iso_request` longtext DEFAULT NULL,
   `atmlog_iso_reply_dt` datetime(6) DEFAULT NULL,
-  `atmlog_iso_reply` text DEFAULT NULL,
+  `atmlog_iso_reply` longtext DEFAULT NULL,
   `atmlog_atm_reply_dt` datetime(6) DEFAULT NULL,
-  `atmlog_atm_reply` text DEFAULT NULL,
+  `atmlog_atm_reply` longtext DEFAULT NULL,
   `atmlog_atm_confirmation_dt` datetime(6) DEFAULT NULL,
-  `atmlog_atm_confirmation` text DEFAULT NULL,
+  `atmlog_atm_confirmation` longtext DEFAULT NULL,
   `atmlog_iso_confirmation_request_dt` datetime(6) DEFAULT NULL,
-  `atmlog_iso_confirmation_request` text DEFAULT NULL,
+  `atmlog_iso_confirmation_request` longtext DEFAULT NULL,
   `atmlog_iso_confirmation_reply_dt` datetime(6) DEFAULT NULL,
-  `atmlog_iso_confirmation_reply` text DEFAULT NULL,
+  `atmlog_iso_confirmation_reply` longtext DEFAULT NULL,
   `atmlog_created_ts` timestamp NOT NULL DEFAULT current_timestamp(),
   `atmlog_updated_ts` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
   `aud_usr_id` int(11) DEFAULT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE `atmlog` (
   `aud_last_update_log_entry_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`atmlog_id`),
   UNIQUE KEY `atmlog_uk` (`atmlog_ip`,`atmlog_message_class`,`atmlog_atm_request_dt`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `atmlog` */
 
