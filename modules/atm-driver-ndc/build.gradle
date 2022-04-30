@@ -4,6 +4,7 @@ version = '0.1.0-SNAPSHOT'
 buildscript {
   repositories {
     maven {
+      mavenLocal()
 	  mavenCentral()
       url "https://plugins.gradle.org/m2/"
     }
@@ -41,7 +42,7 @@ apply from: "${rootProject.projectDir}/jpos-app.gradle"
 flyway {
     def tcfg= targetConfiguration
     driver = "org.mariadb.jdbc.Driver"
-	url= "jdbc:mariadb://${tcfg.dbhost}:${tcfg.dbport}/${tcfg.dbname}?autoReconnect=true"
+    url= "jdbc:mariadb://${tcfg.dbhost}:${tcfg.dbport}/${tcfg.dbname}?autoReconnect=true"
     user= tcfg.dbuser
     password= tcfg.dbpass
     baselineOnMigrate= true
