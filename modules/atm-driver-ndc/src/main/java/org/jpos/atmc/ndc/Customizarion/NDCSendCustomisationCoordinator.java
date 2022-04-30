@@ -36,7 +36,6 @@ import org.jpos.util.FSDMsg;
 
 public class NDCSendCustomisationCoordinator 
 {
-	private Context ctx;
 	private ISOSource source;
 	private NDCFSDMsg msgIn;
 	private ATM atm;
@@ -45,29 +44,6 @@ public class NDCSendCustomisationCoordinator
 	private NDCCustomizarionSections customizarionSection;
 	
     private static final HashMap<String, NDCSendCustomisationCoordinator> atmsCustomizarioState = new HashMap<String, NDCSendCustomisationCoordinator>();
-
-    public static void init(Context ctx)
-    {
-        ISOSource source = ctx.get (ContextConstants.SOURCE.toString()); // <-- Guardar los nombres de donde Saco esto en Configure
-        NDCFSDMsg msgIn = ctx.get("fsdMsgIn");
-        ATM atm = ctx.get("atm");
-
-        NDCSendCustomisationCoordinator customizarionCoordinator = new NDCSendCustomisationCoordinator();
-        customizarionCoordinator.ctx = ctx;
-        customizarionCoordinator.source = source;
-        customizarionCoordinator.msgIn = msgIn;
-        customizarionCoordinator.atm = atm;
-        customizarionCoordinator.customizarionSection = NDCCustomizarionSections.SCREENS;
-
-    	GetSection customization = GetSectionFactory.getInstance( customizarionCoordinator.customizarionSection );
-    	String configId = atm.getConfigId();
-        customizarionCoordinator.lastKey = customization.getLastKey(atm, configId);
-        customizarionCoordinator.lastKeySend = "";
-        
-
-        BaseChannel baseChannel = (BaseChannel) source;
-        atmsCustomizarioState.put( baseChannel.getName(), customizarionCoordinator );
-    }
 
     public static void init(ISOSource source, NDCFSDMsg msgIn, ATM atm)
     {
@@ -117,7 +93,7 @@ public class NDCSendCustomisationCoordinator
      * Send cmd to client (ATM)
      *
      */
-    public void sendMessage(String msgClass, String timeVariantNumber, String data) throws IOException
+    public void sendMessage(Context ctx, String msgClass, String timeVariantNumber, String data) throws IOException
     {
     	NDCFSDMsg msgOut = new NDCFSDMsg( this.msgIn.getBasePath() );
 
@@ -128,7 +104,7 @@ public class NDCSendCustomisationCoordinator
 		if ( msgClass.equals("3") ) msgOut.set("data", data);
 		if ( msgClass.equals("1") ) msgOut.set("command-code", data.substring(0, 1) );
 
-        this.ctx.put("fsdMsgResp", msgOut);
+        ctx.put("fsdMsgResp", msgOut);
 		Util.send(source, msgOut);
 	}
 
@@ -141,7 +117,7 @@ public class NDCSendCustomisationCoordinator
 	 * 42 Extended Encryption Key Change (Communications Key)     468 10-34
      *
      */
-    public void sendCustomizationMsg(String strLine) throws IOException
+    public void sendCustomizationMsg(Context ctx, String strLine) throws IOException
     {
         String strMsgClas = strLine.substring(0, 1);
 		String msgLine = strLine.substring(2);
@@ -173,7 +149,7 @@ public class NDCSendCustomisationCoordinator
 		{
 	        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " 12" );
 		}
-	    sendMessage(strMsgClas, null, msgLine);
+	    sendMessage(ctx, strMsgClas, null, msgLine);
     }
 
     public String getNextCustomizationMsg()
@@ -202,14 +178,14 @@ public class NDCSendCustomisationCoordinator
         return null;
     }
 
-    public void sendNextCustomizationMsg() throws IOException
+    public void sendNextCustomizationMsg(Context ctx) throws IOException
     {
     	String nextCustomizationMsg = getNextCustomizationMsg();
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " nextCustomizationMsg>" + nextCustomizationMsg + "<");
     	if (nextCustomizationMsg != null)
     	{
             Util.printHexDump(Log.out, nextCustomizationMsg);
-        	sendCustomizationMsg( nextCustomizationMsg );
+        	sendCustomizationMsg( ctx, nextCustomizationMsg );
     	}
     }
     

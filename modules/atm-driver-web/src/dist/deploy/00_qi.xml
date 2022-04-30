@@ -136,6 +136,29 @@
     <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.fit.js" />
   </view>
 
+  <view route="atmlogs" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+    <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
+    <property name="id" value="atmconfigs_wrap"/>
+    <!-- this file was taken from the `dist` directory of the source, and copied into
+    the build -->
+    <property name="baseURL" value="http://localhost:8080/atm-driver-web-assets/partials" />
+    <property name="src"     value="atmlog.jsp" />
+
+    <property name="css"     value="/atm-driver-web-assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/shared/style.css" />
+    <property name="css"     value="/atm-driver-web-assets/css/demo_1/style.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/css/bootstrap.min.css" />
+    <property name="css"     value="/atm-driver-web-assets/vendors/multiselect/css/bootstrap-multiselect.css" />
+
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/jquery-2.2.4.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/multiselect/js/bootstrap-multiselect.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/jquery-ui.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/formToJson.min.js" />
+    <property name="script"  value="/atm-driver-web-assets/vendors/js/js.cookie.js" />
+    <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.atmlog.js" />
+  </view>
 
 
   <view route="home" class="org.jpos.qi.views.DefaultView" perm="*" sidebar = "system"/>

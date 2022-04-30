@@ -173,23 +173,11 @@ public class SwichByMSgClass implements GroupSelector, Configurable
         	}
         }
 
-        // message-class 22 is confirmation or reply
-        if (msgIn.get("message-class").equalsIgnoreCase("22") )
-        {
-    		ATMLog atmLogLastTrnLogId = DB.exec(db -> new ATMLogManager(db).getATMLog( atm.getLastTrnLogId() ) );
-
-		    if ( (atmLogLastTrnLogId != null) && (atmLogLastTrnLogId.getAtmReply() != null) )
-	    		ctx.put ("atmLog", atmLogLastTrnLogId, remote );
-        }
-        else
-        {
-    		DB.execWithTransaction(db -> { 
-    		    db.session().persist(atmLog);
-    		  	return atmLog; 
-    		    } );
-    		ctx.put ("atmLog", atmLog, remote );
-        }
-
+		DB.execWithTransaction(db -> { 
+		    db.session().persist(atmLog);
+		  	return atmLog; 
+		    } );
+		ctx.put ("atmLog", atmLog, remote );
     }
 
     @Override

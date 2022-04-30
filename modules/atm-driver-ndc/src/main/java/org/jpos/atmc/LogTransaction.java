@@ -58,13 +58,9 @@ public class LogTransaction implements AbortParticipant, Configurable
         ATMLog atmLog =  ctx.get ("atmLog");
         if (atmLog == null) return;
 
-        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atmLog.toString() );
 		try {
-			Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atmLog.toString()  );
-			// Update ATMLog
 			NDCFSDMsg fsdMsgResp = ctx.get("fsdMsgResp");
 			if (fsdMsgResp != null) {
-				Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " " + atmLog.toString() );
 				String fsdMsgRespDump = Util.dum2Str(fsdMsgResp);
 				atmLog.setAtmReply(fsdMsgRespDump);
 				atmLog.setAtmReplyDt(Instant.now());
@@ -79,6 +75,7 @@ public class LogTransaction implements AbortParticipant, Configurable
 			ATM atm = ctx.get("atm");
 			if (atm != null) {
 				atm.setLastTrnLogId(atmLog.getId());
+		        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " atm.getLastTrnLogId " + atm.getLastTrnLogId() );
 				DB.execWithTransaction(db -> {
 					db.session().update(atm);
 					return 1;

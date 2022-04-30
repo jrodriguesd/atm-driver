@@ -89,8 +89,7 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
 			case 'B':  //* Power Failure
 		        String configID = msgIn.get("device-status");
 		        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configID >" + configID + "<");
-		        // NDCSendCustomisationCoordinator.init( source, msgIn, atm);
-		        NDCSendCustomisationCoordinator.init(ctx);
+		        NDCSendCustomisationCoordinator.init( source, msgIn, atm);
 		        NDCSendCustomisationCoordinator acc = NDCSendCustomisationCoordinator.get(baseChannel.getName());
 
 		        if ( (atm != null) && ( ! atm.getConfigId().equals(configID) ) )
@@ -105,7 +104,7 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
 
 				try
 				{
-					acc.sendNextCustomizationMsg();
+					acc.sendNextCustomizationMsg(ctx);
 				}
 	            catch (IOException e) 
 	            {

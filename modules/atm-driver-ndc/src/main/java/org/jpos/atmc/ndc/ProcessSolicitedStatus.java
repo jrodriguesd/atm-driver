@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.model.ATMLog;
+import org.jpos.atmc.dao.ATMLogManager;
 import org.jpos.atmc.dao.CassetteManager;
 import org.jpos.atmc.model.Cassette;
 import org.jpos.atmc.ndc.Customizarion.NDCCustomizarionSections;
@@ -92,9 +93,19 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
     	return true;
     }
 
-    public void processCustomization(char statusDescriptor,  BaseChannel baseChannel, ATM atm, NDCFSDMsg msgIn) 
+    // public void processCustomization(char statusDescriptor,  BaseChannel baseChannel, ATM atm, NDCFSDMsg msgIn) 
+    public void processCustomization(Context ctx) 
 	{
-        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Continuacion Envio de Configuracion");
+	    ISOSource source = (ISOSource) ctx.get (this.source);
+        BaseChannel baseChannel = (BaseChannel) source;
+
+        NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
+
+        ATM atm = (ATM) ctx.get ("atm");
+		
+        char statusDescriptor = msgIn.get("status-descriptor").charAt(0);
+
+    	Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " Continuacion Envio de Configuracion");
         NDCSendCustomisationCoordinator acc = NDCSendCustomisationCoordinator.get(baseChannel.getName());
 
         if ( (statusDescriptor == 'F') && (acc.getCurrentSection() == NDCCustomizarionSections.GET_SUPPLY_COUNTERS ) )
@@ -110,7 +121,7 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
         {
 			try
 			{
-				acc.sendNextCustomizationMsg();
+				acc.sendNextCustomizationMsg(ctx);
 			}
             catch (IOException e) 
             {
@@ -123,33 +134,19 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
     private void processReject(Context ctx) {
     }
 
-    private void processReply(Context ctx)
-    {
-    	ATMLog atmLog = ctx.get("atmLog");
-        NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
-
-        try {
-			atmLog.setAtmReply( Util.dum2Str(msgIn) );
-	    	atmLog.setAtmReplyDt( Instant.now() );
-
-		    DB.execWithTransaction(db -> { 
-	            db.session().update(atmLog);
-		    	return 1; 
-		    } );
-		} catch (Exception e) {
-			e.printStackTrace(Log.out);
-		}
-    }
-    
     private void processConfirmation(Context ctx)
     {
-    	ATMLog atmLog = ctx.get("atmLog");
-        if (atmLog == null) return;
-
-        NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
+    	// ATMLog atmLog = ctx.get("atmLog");
+    	ATM atm = ctx.get("atm");
 
         try {
-			atmLog.setAtmConfirmation( Util.dum2Str(msgIn) );
+	        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " atm.getLastTrnLogId " + atm.getLastTrnLogId() );
+        	ATMLog atmLog = DB.exec(db -> new ATMLogManager(db).getATMLog( atm.getLastTrnLogId() ) );
+            if (atmLog == null) return;
+
+            NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
+
+            atmLog.setAtmConfirmation( Util.dum2Str(msgIn) );
 	    	atmLog.setAtmConfirmationDt( Instant.now() );
 
 		    DB.execWithTransaction(db -> { 
@@ -201,14 +198,15 @@ public class ProcessSolicitedStatus implements AbortParticipant, Configurable
 			case 'C':  //* Specific Command Reject
 			    break;
 			case 'F':  //* Terminal State
-				processReply(ctx);
-				processCustomization(statusDescriptor, baseChannel, atm, msgIn);
+				// processReply(ctx);
+				processConfirmation(ctx);
+				processCustomization(ctx);
 			    break;
 			case '8':  //* Device Fault
 			    break;
 			case '9':  //* Ready
 				processConfirmation(ctx);
-				processCustomization(statusDescriptor, baseChannel, atm, msgIn);
+				processCustomization(ctx);
 			    break;
 		}
 	}

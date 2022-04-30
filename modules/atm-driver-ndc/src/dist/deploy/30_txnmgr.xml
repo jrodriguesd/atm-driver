@@ -25,6 +25,7 @@
 
   <group name="NDCSolicitedStatus">
       <participant class="org.jpos.atmc.ndc.ProcessSolicitedStatus"/>
+      <participant class="org.jpos.atmc.LogTransaction"/>
   </group>
 
   <group name="Error">
