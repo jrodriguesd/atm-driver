@@ -95,11 +95,11 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
 		        if ( (atm != null) && ( ! atm.getConfigId().equals(configID) ) )
 		        {
 			        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId !=");
-		        	acc.setCustomizarionSection(NDCCustomizarionSections.SCREENS);
+		        	acc.setCustomizarionSection( NDCCustomizarionSections.getFirst() );
 		        }
 		        else
 		        {
-		        	acc.setCustomizarionSection(NDCCustomizarionSections.CURRENCY_CASSETTE_MAPPING);
+		        	acc.setCustomizarionSection( NDCCustomizarionSections.CURRENCY_CASSETTE_MAPPING );
 		        }
 
 				try

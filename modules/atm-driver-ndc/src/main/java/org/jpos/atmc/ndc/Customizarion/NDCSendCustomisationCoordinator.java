@@ -47,13 +47,11 @@ public class NDCSendCustomisationCoordinator
 
     public static void init(ISOSource source, NDCFSDMsg msgIn, ATM atm)
     {
-        // ATMCustomizarionState customizarionState = new ATMCustomizarionState();
-
         NDCSendCustomisationCoordinator customizarionCoordinator = new NDCSendCustomisationCoordinator();
         customizarionCoordinator.source = source;
         customizarionCoordinator.msgIn = msgIn;
         customizarionCoordinator.atm = atm;
-        customizarionCoordinator.customizarionSection = NDCCustomizarionSections.SCREENS;
+        customizarionCoordinator.customizarionSection = NDCCustomizarionSections.getFirst();
 
     	GetSection customization = GetSectionFactory.getInstance( customizarionCoordinator.customizarionSection );
     	String configId = atm.getConfigId();

@@ -23,11 +23,13 @@ package org.jpos.atmc.ndc.Customizarion;
 
 public enum NDCCustomizarionSections 
 {
-	
+	LUNO("LUNO"), 
 	SCREENS("SCREENS"), 
 	STATES("STATES"), 
 	FITS("FITS"),
-	KEY_CHANGE("KEY_CHANGE"),
+	MASTER_KEY_CHANGE("COMMUNICATIONS_KEY_CHANGE"),
+	COMMUNICATIONS_KEY_CHANGE("COMMUNICATIONS_KEY_CHANGE"),
+	MAC_KEY_CHANGE("MAC_KEY_CHANGE"),
 	CONFIGID("CONFIGID"),
     CURRENCY_CASSETTE_MAPPING("CURRENCY_CASSETTE_MAPPING"), 
     GET_SUPPLY_COUNTERS("GET_SUPPLY_COUNTERS"), 
@@ -48,10 +50,14 @@ public enum NDCCustomizarionSections
 		return description;
 	}
 
+    public static NDCCustomizarionSections getFirst()
+    {
+    	return sections[0];
+    }
+	
     public static NDCCustomizarionSections next(NDCCustomizarionSections acs)
     {
     	return sections[ acs.ordinal() + 1 ];
     }
-	
 
 }

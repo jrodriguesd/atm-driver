@@ -27,14 +27,20 @@ public class GetSectionFactory
 	{
 		switch (type)
 		{
+	        case LUNO:
+	    	    return new GetLUNO();
 		    case SCREENS:
 		    	return new GetScreens();
 		    case STATES:
 		    	return new GetStates();
 		    case FITS:
 		    	return new GetFits();
-		    case KEY_CHANGE:
-		    	return new GetKeyChange();
+		    case MASTER_KEY_CHANGE:
+		    	return new GetMasterKeyChange();
+		    case COMMUNICATIONS_KEY_CHANGE:
+		    	return new GetCommunicationsKeyChange();
+		    case MAC_KEY_CHANGE:
+		    	return new GetMACKeyChange();
 		    case CONFIGID:
 		    	return new GetConfigId();
 		    case GET_SUPPLY_COUNTERS:

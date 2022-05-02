@@ -26,19 +26,23 @@ import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 
-public class GetKeyChange implements GetSection 
+public class GetCommunicationsKeyChange implements GetSection 
 {
 	private String lastNumberSend = "000";
 
 	@Override
 	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
 	{
-		String Clearkey  = "0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F";
-		String EncKey    = Crypto.encypt( atm.getMasterKey(), Clearkey);
+		String Clearkey  = atm.getMasterKey();
+		String EncKey    = Crypto.encypt( atm.getCommunicationsKey(), Clearkey);
 		String decEncKey = Util.hex2dec(EncKey);
 		String msgOut;
 
 		StringBuilder sb = new StringBuilder();
+
+		/**********************************************************/
+		/* 42 Extended Encryption Key Change (Communications Key) */
+		/**********************************************************/
 		sb.append("3 42");
 
 		if (decEncKey.length() == 48)
