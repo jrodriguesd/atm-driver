@@ -13,6 +13,13 @@
 	                            state.init();
                             });
 					    </script>
+                        <div class="row page-title-header">
+                            <div class="col-md-12">
+                                <div class="page-header-toolbar">
+                                    <div class="filter-wrapper"></div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- _states.jsp - Inicio -->
                         <div class="row">
                             <div class="col-3" style="border: 0px solid black;">

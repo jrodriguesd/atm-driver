@@ -13,7 +13,13 @@
 	                            atmfit.init();
                             });
 					    </script>
-
+                        <div class="row page-title-header">
+                            <div class="col-md-12">
+                                <div class="page-header-toolbar">
+                                    <div class="filter-wrapper"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-3" style="border: 0px solid black;">
                                 <select class="form-control" style="font-family:'Lucida Console', monospace; font-size: 11px;" size="45" id="fitsDataList"></select>
