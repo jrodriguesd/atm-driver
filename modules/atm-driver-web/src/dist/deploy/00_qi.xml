@@ -40,6 +40,11 @@
   </sidebar>
 
   <!--VIEWS-->
+  <view route="screens" class="org.jfrd.webapp.GenericIframeView" perm="*" sidebar="system">
+    <property name="baseURL" value="http://localhost:8080/atm-driver-web-assets/pages" />
+    <property name="src"     value="screen.jsp" />
+  </view>
+
   <view route="atmconfigs" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
     <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
     <property name="id" value="atmconfigs_wrap"/>
@@ -63,7 +68,7 @@
     <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.atmconfig.js" />
   </view>
 
-  <view route="screens" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+  <view route="XXXXXXscreens" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
     <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
     <property name="id" value="atmconfigs_wrap"/>
     <!-- this file was taken from the `dist` directory of the source, and copied into

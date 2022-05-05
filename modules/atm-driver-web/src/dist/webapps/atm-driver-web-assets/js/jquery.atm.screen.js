@@ -840,7 +840,8 @@ class ATMScreen
 	 {
          $.ajax(
          {
-	     	url: 'api/atmconfigs/unique',
+	     	// url: 'api/atmconfigs/unique',
+	     	url: '/jpos/api/atmconfigs/unique',
              method: "GET",
              success: function(data)
 	         {
@@ -868,7 +869,8 @@ class ATMScreen
 
          $.ajax(
          {
-	     	 url: 'api/screens/' + this.configId,
+	     	 // url: 'api/screens/' + this.configId,
+	     	 url: '/jpos/api/screens/' + this.configId,
              method: "GET",
              success: function(data)
 	         {

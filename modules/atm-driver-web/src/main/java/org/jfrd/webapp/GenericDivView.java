@@ -48,7 +48,9 @@ import org.jpos.atmc.util.Util;
 
 public class GenericDivView extends Label implements View, Configurable
 {
-    private Configuration cfg;
+	private static final long serialVersionUID = 1L;
+
+	private Configuration cfg;
 
     public GenericDivView()
     {
@@ -125,7 +127,7 @@ public class GenericDivView extends Label implements View, Configurable
         attach();       // needed?
 
         // add dependencies
-        Page page= getUI().getPage();
+        Page page = getUI().getPage();
 
         String[] styles= cfg.getAll("css");
         for (String s : styles)

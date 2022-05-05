@@ -6,9 +6,9 @@ buildscript
   {
     maven 
 	{
+      mavenLocal()
 	  mavenCentral()
       url 'https://plugins.gradle.org/m2/'
-      mavenLocal()
     }
   }
 }
