@@ -16,7 +16,6 @@ import javax.persistence.Table;
 
 import javax.persistence.Lob;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.openpojo.business.BusinessIdentity;
 import com.openpojo.business.annotation.BusinessKey ;
 
@@ -136,7 +135,7 @@ public class ATMLog implements Serializable {
 	public ATMLog() {
 	}
 	
-	private final static String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss.SSS a VV";
+    private final static String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss.SSS a VV";
 	
 	private String instantToString(Instant instant)
 	{
