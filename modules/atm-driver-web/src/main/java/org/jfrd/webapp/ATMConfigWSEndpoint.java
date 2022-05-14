@@ -33,6 +33,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.jfrd.jwt.JWTTokenNeeded;
 import org.jpos.atmc.dao.ATMConfigManager;
 import org.jpos.atmc.model.ATMConfig;
 
@@ -47,6 +48,7 @@ public class ATMConfigWSEndpoint
 
 	@GET
     @Path("/unique")
+	@JWTTokenNeeded
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public List<ATMConfig> getUnique() 
 	{
@@ -66,6 +68,7 @@ public class ATMConfigWSEndpoint
 
 	@GET
     @Path("/getall")
+	@JWTTokenNeeded
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public List<ATMConfig> getAll() 
 	{
@@ -86,6 +89,7 @@ public class ATMConfigWSEndpoint
 
     @POST
     @Path("/create")
+	@JWTTokenNeeded
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
     public Response create(ATMConfig atmCnf) 
@@ -122,6 +126,7 @@ public class ATMConfigWSEndpoint
 
     @POST
     @Path("/update")
+	@JWTTokenNeeded
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
     public Response update(ATMConfig atmCnf) 
@@ -164,6 +169,7 @@ public class ATMConfigWSEndpoint
 
     @POST
     @Path("/delete")
+	@JWTTokenNeeded
     @Consumes(MediaType.APPLICATION_JSON + ";charset=utf-8")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(ATMConfig atmCnf) 

@@ -154,7 +154,7 @@ public class SwichByMSgClass implements GroupSelector, Configurable
     	ATMLog atmLog = new ATMLog();
         atmLog.setAtmRequest( Util.dum2Str(msgIn) );
         atmLog.setAtmRequestDt( Instant.now() );
-        atmLog.setTimezone( ZoneId.systemDefault().toString() );
+        atmLog.setTimezone(atm.getTimezone());
         atmLog.setIp(atm.getIp());
         atmLog.setLuno(atm.getLuno());
         atmLog.setMessageClass( msgIn.get("message-class") );
@@ -165,6 +165,7 @@ public class SwichByMSgClass implements GroupSelector, Configurable
         	atmLog.setOpCode( msgIn.get("operation-code-data") );
         	if (td != null)
         	{
+            	atmLog.setOpDescription( td.getDescription() );
             	atmLog.setCurrencyCode(td.getCurrencyCode());
             	
             	String amount =  msgIn.get("amount-entered");

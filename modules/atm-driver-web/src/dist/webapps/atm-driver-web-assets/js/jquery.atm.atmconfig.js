@@ -37,14 +37,29 @@ class ATMConfig
     constructor() 
 	{
 	    this.atmconfigs = [];
+		this.jwt = "";
+		this.baseURL = "/jpos/api";
+	}
+
+	setJWT(jwt)
+	{
+		this.jwt = jwt;
+	}
+
+	setBaseURL(baseURL)
+	{
+		this.baseURL = baseURL;
 	}
 
     LoadProtocolSelect(protocol) 
 	{
         $.ajax(
         {
-	    	url: 'api/atmprotocols/unique',
+	    	url: this.baseURL + '/atmprotocols/unique',
             method: "GET",
+            headers: {
+              Authorization: 'Bearer ' + this.jwt
+            },
             success: function(data)
 	        {
                 let atmprotocols = JSON.parse( JSON.stringify(data) );
@@ -91,8 +106,11 @@ class ATMConfig
 	    console.log("jquery.atm.atmconfig.js 61 loadAtmconfigs");
         $.ajax(
         {
-            url: 'api/atmconfigs/getall',
+            url: this.baseURL + '/atmconfigs/getall',
             method: "GET",
+            headers: {
+              Authorization: 'Bearer ' + this.jwt
+            },
             success: function(data)
 	        {
                 atmconfig.atmconfigs = JSON.parse( JSON.stringify(data) );
@@ -122,26 +140,31 @@ class ATMConfig
 
     handleSubmit(e) 
 	{
-		let atmconfig = e.data.atmconfig;                  // para poder usarlo en otro contexto (Toda La Funcion)
         e.preventDefault();
+		let atmconfig = e.data.atmconfig;                           // para poder usarlo en otro contexto (Toda La Funcion)
+	    let action    = document.activeElement['value'];            // Value of the submit button clicked
 
-	    let action = document.activeElement['value'];      // Value of the submit button clicked
-        console.log( ' action ' + action );
+        console.log(' action ' + action );
+        console.log(' this.baseURL ' + atmconfig.baseURL );
+        console.log(' this.jwt ' + atmconfig.jwt );
 
 	 	let formData = $(this).formToJson();
 
-        Object.keys(formData).forEach(key =>               // Eliminar los Campos que no son parte del Objeto Screen
+        Object.keys(formData).forEach(key =>                        // Eliminar los Campos que no son parte del Objeto Screen
 	 	{
 	 	    if (! key.startsWith("atmcnf_"))
 	 	        delete formData[key];
         });
 
         $.ajax({
-            type : "POST",                                 // type of action POST || GET
-            url: 'api/atmconfigs/' + action,                   // url where to submit the request
+            url: atmconfig.baseURL + '/atmconfigs/' + action,  // url where to submit the request
+            type : "POST",                                          // type of action POST || GET
+            headers: {
+              Authorization: 'Bearer ' + atmconfig.jwt
+            },
 	    	contentType: 'application/json;charset=utf-8',
-            dataType : 'json',                             // data type
-            data : JSON.stringify( formData ),             // post data || get data
+            dataType : 'json',                                      // data type
+            data : JSON.stringify( formData ),                      // post data || get data
             success : function(resultObj) 
 	    	 {
                 console.log("success :" + resultObj);

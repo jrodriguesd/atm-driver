@@ -137,6 +137,9 @@ public class ATM implements Serializable {
 	@Column(name="atm_terminal_id", length=8)
 	private String terminalId;
 
+	@Column(name="atm_timezone", length=20)
+	private String timezone;
+
 	@Column(name="atm_trn_ser_num")
 	private Short trnSerNum;
 
@@ -603,6 +606,20 @@ public class ATM implements Serializable {
 	 */
 	public void setTrnSerNum(Short trnSerNum) {
 		this.trnSerNum = trnSerNum;
+	}
+
+	/**
+	 * @return the timezone
+	 */
+	public String getTimezone() {
+		return timezone;
+	}
+
+	/**
+	 * @param timezone the timezone to set
+	 */
+	public void setTimezone(String timezone) {
+		this.timezone = timezone;
 	}
 
 	@Override

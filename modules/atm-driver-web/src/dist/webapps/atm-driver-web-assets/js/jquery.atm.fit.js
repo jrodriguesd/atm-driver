@@ -8,14 +8,29 @@ class ATMFit
 	{
 	    this.configId = '0000';
 		this.fitsData = '';
+		this.jwt      = "";
+		this.baseURL  = "/jpos/api";
 	}
-	
+
+	setJWT(jwt)
+	{
+		this.jwt = jwt;
+	}
+
+	setBaseURL(baseURL)
+	{
+		this.baseURL = baseURL;
+	}
+
     LoadConfigIdSelect(configId) 
 	{
         $.ajax(
         {
-	    	url: 'api/atmconfigs/unique',
+            url: this.baseURL + '/atmconfigs/unique',
             method: "GET",
+            headers: {
+              Authorization: 'Bearer ' + this.jwt
+            },
             success: function(data)
 	        {
                 let atmconfigs = JSON.parse( JSON.stringify(data) );
@@ -84,6 +99,8 @@ class ATMFit
 	       $('#fit_idxrefpoints-6').val( fit['fit_idxrefpoints'][5] );
         }
 	    $("#fitsDataList").focus();
+		window.scrollTo(0, 0);
+		
 	}
 
     getValues()
@@ -136,8 +153,11 @@ class ATMFit
 	    console.log('configId: ' + configId);
         $.ajax(
         {
-            url: 'api/fits/' + configId,
+            url: fit.baseURL + '/fits/' + configId,
             method: "GET",
+            headers: {
+              Authorization: 'Bearer ' + fit.jwt
+            },
             success: function(data)
 	        {
                 fit.fitsData = JSON.parse( JSON.stringify(data) );
@@ -175,8 +195,11 @@ class ATMFit
         e.preventDefault();
 
         $.ajax({
+            url: fit.baseURL + '/fits/' + action,          // url where to submit the request
             type : "POST",                                 // type of action POST || GET
-            url: 'api/fits/' + action,                     // url where to submit the request
+            headers: {
+              Authorization: 'Bearer ' + fit.jwt
+            },
 			contentType: 'application/json;charset=utf-8',
             dataType : 'json',                             // data type
             data : JSON.stringify( formData ),             // post data || get data

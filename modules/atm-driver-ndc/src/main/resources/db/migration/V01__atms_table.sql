@@ -36,7 +36,7 @@ CREATE TABLE `atmconfigs` (
 /*Data for the table `atmconfigs` */
 
 insert  into `atmconfigs`(`atmcnf_id`,`atmcnf_config_id`,`atmcnf_protocol`,`atmcnf_desc`,`atmcnf_language639`,`atmcnf_languageatm`,`atmcnf_languageindex`,`atmcnf_screengroupbase`) values 
-(1,'0850','NDC','NDC Configuration with EMV English jfrd','eng','A',0,0),
+(1,'0850','NDC','NDC Configuration with EMV English','eng','A',0,0),
 (2,'0870','NDC','NDC Configuration without EMV English','eng','A',0,0),
 (3,'0870','NDC','NDC Configuration without EMV Indonesian','ind','B',0,400);
 
@@ -51,6 +51,7 @@ CREATE TABLE `atmlog` (
   `atmlog_ip` varchar(20) NOT NULL,
   `atmlog_card` varchar(20) DEFAULT NULL,
   `atmlog_op_code` varchar(20) DEFAULT NULL,
+  `atmlog_op_desc` varchar(255) DEFAULT NULL,
   `atmlog_currency_code` varchar(10) DEFAULT NULL,
   `atmlog_amount` decimal(7,2) DEFAULT NULL,
   `atmlog_timezone` varchar(20) DEFAULT NULL,
@@ -75,16 +76,9 @@ CREATE TABLE `atmlog` (
   `aud_last_update_log_entry_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`atmlog_id`),
   UNIQUE KEY `atmlog_uk` (`atmlog_ip`,`atmlog_message_class`,`atmlog_atm_request_dt`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `atmlog` */
-
-insert  into `atmlog`(`atmlog_id`,`atmlog_luno`,`atmlog_message_class`,`atmlog_ip`,`atmlog_card`,`atmlog_op_code`,`atmlog_currency_code`,`atmlog_amount`,`atmlog_timezone`,`atmlog_atm_request_dt`,`atmlog_atm_request`,`atmlog_iso_request_dt`,`atmlog_iso_request`,`atmlog_iso_reply_dt`,`atmlog_iso_reply`,`atmlog_atm_reply_dt`,`atmlog_atm_reply`,`atmlog_atm_confirmation_dt`,`atmlog_atm_confirmation`,`atmlog_iso_confirmation_request_dt`,`atmlog_iso_confirmation_request`,`atmlog_iso_confirmation_reply_dt`,`atmlog_iso_confirmation_reply`,`atmlog_created_ts`,`atmlog_updated_ts`,`aud_usr_id`,`aud_created_log_entry_id`,`aud_last_update_log_entry_id`) values 
-(1,'001','12','127.0.0.1',NULL,NULL,NULL,NULL,'America/Guayaquil','2022-04-28 10:22:10.288000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'12\'\r\n  luno: \'000\'\r\n  device-identification-graphic: \'B\'\r\n  device-status: \'0000\'\r\n</fsdmsg>\r\n',NULL,NULL,NULL,NULL,'2022-04-28 10:22:36.354000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'22\'\r\n  luno: \'000\'\r\n  status-descriptor: \'F\'\r\n  message-identifier: \'2\'\r\n  tsn: \'0000\'\r\n  transaction_count_acum: \'0000000\'\r\n  notes_in_cassette-1: \'00000\'\r\n  notes_in_cassette-2: \'00000\'\r\n  notes_in_cassette-3: \'00000\'\r\n  notes_in_cassette-4: \'00000\'\r\n  EOF: \'true\'\r\n</fsdmsg>\r\n','2022-04-28 10:22:37.413000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'22\'\r\n  luno: \'000\'\r\n  status-descriptor: \'9\'\r\n</fsdmsg>\r\n',NULL,NULL,NULL,NULL,'2022-04-28 10:22:10','2022-04-28 10:22:37',NULL,NULL,NULL),
-(2,'001','12','127.0.0.1',NULL,NULL,NULL,NULL,'America/Guayaquil','2022-04-28 10:23:30.514000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'12\'\r\n  luno: \'000\'\r\n  device-identification-graphic: \'B\'\r\n  device-status: \'0870\'\r\n</fsdmsg>\r\n',NULL,NULL,NULL,NULL,'2022-04-28 10:23:30.638000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'22\'\r\n  luno: \'000\'\r\n  status-descriptor: \'F\'\r\n  message-identifier: \'2\'\r\n  tsn: \'0000\'\r\n  transaction_count_acum: \'0000000\'\r\n  notes_in_cassette-1: \'00000\'\r\n  notes_in_cassette-2: \'00000\'\r\n  notes_in_cassette-3: \'00000\'\r\n  notes_in_cassette-4: \'00000\'\r\n  EOF: \'true\'\r\n</fsdmsg>\r\n','2022-04-28 10:23:30.685000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'22\'\r\n  luno: \'000\'\r\n  status-descriptor: \'9\'\r\n</fsdmsg>\r\n',NULL,NULL,NULL,NULL,'2022-04-28 10:23:30','2022-04-28 10:23:30',NULL,NULL,NULL),
-(3,'001','11','127.0.0.1','41073741454145','AIA     ','840',0.00,'America/Guayaquil','2022-04-28 10:23:40.814000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'11\'\r\n  luno: \'000\'\r\n  time-variant-number: \'01A2E166\'\r\n  top-of-receipt-flag: \'1\'\r\n  message-coordination-number: \'1\'\r\n  track2: \';41073741454145=251210110000232?\'\r\n  operation-code-data: \'AIA     \'\r\n  amount-entered: \'000000000000\'\r\n  buffer-A-pin: \'>354619447=;078?\'\r\n  EOF: \'true\'\r\n</fsdmsg>\r\n','2022-04-28 10:23:40.842000','<isomsg>\r\n  <!-- org.jpos.iso.packager.XMLPackager -->\r\n  <field id=\"0\" value=\"0200\"/>\r\n  <field id=\"3\" value=\"301000\"/>\r\n  <field id=\"7\" value=\"220428\"/>\r\n  <field id=\"11\" value=\"000002\"/>\r\n  <field id=\"12\" value=\"102340\"/>\r\n  <field id=\"13\" value=\"2204\"/>\r\n  <field id=\"15\" value=\"2204\"/>\r\n  <field id=\"17\" value=\"2204\"/>\r\n  <field id=\"18\" value=\"6011\"/>\r\n  <field id=\"22\" value=\"051\"/>\r\n  <field id=\"32\" value=\"1111\"/>\r\n  <field id=\"35\" value=\";41073741454145=251210110000232?\"/>\r\n  <field id=\"41\" value=\"29110001\"/>\r\n  <field id=\"42\" value=\"1234567\"/>\r\n  <field id=\"43\" value=\"SUCURSAL CENTRAL       CARACAS   VE\"/>\r\n  <field id=\"49\" value=\"840\"/>\r\n  <field id=\"52\" value=\"E354619447DB078F\"/>\r\n  <field id=\"61\" value=\"91000000025008620000000000\"/>\r\n  <field id=\"63\" value=\"CI2000000000\"/>\r\n</isomsg>\r\n','2022-04-28 10:23:40.842000','<isomsg direction=\"incoming\">\r\n  <!-- org.jpos.iso.packager.XMLPackager -->\r\n  <field id=\"0\" value=\"0210\"/>\r\n  <field id=\"3\" value=\"301000\"/>\r\n  <field id=\"7\" value=\"220428\"/>\r\n  <field id=\"11\" value=\"000002\"/>\r\n  <field id=\"12\" value=\"102340\"/>\r\n  <field id=\"13\" value=\"2204\"/>\r\n  <field id=\"15\" value=\"2204\"/>\r\n  <field id=\"17\" value=\"2204\"/>\r\n  <field id=\"18\" value=\"6011\"/>\r\n  <field id=\"22\" value=\"051\"/>\r\n  <field id=\"32\" value=\"1111\"/>\r\n  <field id=\"35\" value=\";41073741454145=251210110000232?\"/>\r\n  <field id=\"39\" value=\"00\"/>\r\n  <field id=\"41\" value=\"29110001\"/>\r\n  <field id=\"42\" value=\"1234567\"/>\r\n  <field id=\"43\" value=\"SUCURSAL CENTRAL       CARACAS   VE\"/>\r\n  <field id=\"49\" value=\"840\"/>\r\n  <field id=\"52\" value=\"E354619447DB078F\"/>\r\n  <field id=\"54\" value=\"1001356C0000000630001002356C000000063000\"/>\r\n  <field id=\"61\" value=\"91000000025008620000000000\"/>\r\n  <field id=\"63\" value=\"CI2000000000\"/>\r\n</isomsg>\r\n','2022-04-28 10:23:40.869000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'4\'\r\n  luno: \'000\'\r\n  time-variant-number: \'01A2E166\'\r\n  next-state-number: \'171\'\r\n  number-notes-dispense: \'00000000\'\r\n  transaction-serial-number: \'0002\'\r\n  function-identifier: \'5\'\r\n  screen-number: \'171\'\r\n  message-coordination-number: \'1\'\r\n  card-return-retain-flag: \'0\'\r\n  printer-flag: \'2\'\r\n  screen-display-update: \'172FN630.00 \'\r\n  printer-data: \'BANCO DE PRUEBA\r\nCAJERO: 000\r\nTRACE: 0002\r\n\r\nCOMPROBANTE DE OPERACION\r\n\r\nNUMERO DE TARJETA   ---FECHA-- --HORA--\r\n41073741454145      28-04-2022 10:23:40\r\n\r\nSEQ. ----TRANSACCION----- AUTORIZACION\r\n0001 BALANCE INQUIRY SAVINGS\r\n\r\nMONTO OPERACION :\r\nSALDO DISPONIBLE: 630.00\r\nCOM BANCO EMISOR:\r\n\r\nOPERACION EXITOSA\r\n\r\nCONSERVE PARA SU CONTROL\r\n\'\r\n</fsdmsg>\r\n','2022-04-28 10:23:41.140000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'22\'\r\n  luno: \'000\'\r\n  status-descriptor: \'9\'\r\n</fsdmsg>\r\n',NULL,NULL,NULL,NULL,'2022-04-28 10:23:40','2022-04-28 10:23:41',NULL,NULL,NULL),
-(4,'001','12','127.0.0.1',NULL,NULL,NULL,NULL,'America/Guayaquil','2022-04-28 10:57:06.335000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'12\'\r\n  luno: \'000\'\r\n  device-identification-graphic: \'B\'\r\n  device-status: \'0000\'\r\n</fsdmsg>\r\n',NULL,NULL,NULL,NULL,'2022-04-28 10:57:32.417000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'22\'\r\n  luno: \'000\'\r\n  status-descriptor: \'F\'\r\n  message-identifier: \'2\'\r\n  tsn: \'0000\'\r\n  transaction_count_acum: \'0000000\'\r\n  notes_in_cassette-1: \'00000\'\r\n  notes_in_cassette-2: \'00000\'\r\n  notes_in_cassette-3: \'00000\'\r\n  notes_in_cassette-4: \'00000\'\r\n  EOF: \'true\'\r\n</fsdmsg>\r\n','2022-04-28 10:57:33.483000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'22\'\r\n  luno: \'000\'\r\n  status-descriptor: \'9\'\r\n</fsdmsg>\r\n',NULL,NULL,NULL,NULL,'2022-04-28 10:57:06','2022-04-28 10:57:33',NULL,NULL,NULL),
-(5,'001','11','127.0.0.1','41073741454145','AIA     ','840',0.00,'America/Guayaquil','2022-04-28 10:58:01.436000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'11\'\r\n  luno: \'000\'\r\n  time-variant-number: \'01A2E166\'\r\n  top-of-receipt-flag: \'1\'\r\n  message-coordination-number: \'1\'\r\n  track2: \';41073741454145=251210110000232?\'\r\n  operation-code-data: \'AIA     \'\r\n  amount-entered: \'000000000000\'\r\n  buffer-A-pin: \'>354619447=;078?\'\r\n  EOF: \'true\'\r\n</fsdmsg>\r\n','2022-04-28 10:58:01.469000','<isomsg>\r\n  <!-- org.jpos.iso.packager.XMLPackager -->\r\n  <field id=\"0\" value=\"0200\"/>\r\n  <field id=\"3\" value=\"301000\"/>\r\n  <field id=\"7\" value=\"220428\"/>\r\n  <field id=\"11\" value=\"000001\"/>\r\n  <field id=\"12\" value=\"105801\"/>\r\n  <field id=\"13\" value=\"2204\"/>\r\n  <field id=\"15\" value=\"2204\"/>\r\n  <field id=\"17\" value=\"2204\"/>\r\n  <field id=\"18\" value=\"6011\"/>\r\n  <field id=\"22\" value=\"051\"/>\r\n  <field id=\"32\" value=\"1111\"/>\r\n  <field id=\"35\" value=\";41073741454145=251210110000232?\"/>\r\n  <field id=\"41\" value=\"29110001\"/>\r\n  <field id=\"42\" value=\"1234567\"/>\r\n  <field id=\"43\" value=\"SUCURSAL CENTRAL       CARACAS   VE\"/>\r\n  <field id=\"49\" value=\"840\"/>\r\n  <field id=\"52\" value=\"E354619447DB078F\"/>\r\n  <field id=\"61\" value=\"91000000025008620000000000\"/>\r\n  <field id=\"63\" value=\"CI2000000000\"/>\r\n</isomsg>\r\n','2022-04-28 10:58:01.469000','<isomsg direction=\"incoming\">\r\n  <!-- org.jpos.iso.packager.XMLPackager -->\r\n  <field id=\"0\" value=\"0210\"/>\r\n  <field id=\"3\" value=\"301000\"/>\r\n  <field id=\"7\" value=\"220428\"/>\r\n  <field id=\"11\" value=\"000001\"/>\r\n  <field id=\"12\" value=\"105801\"/>\r\n  <field id=\"13\" value=\"2204\"/>\r\n  <field id=\"15\" value=\"2204\"/>\r\n  <field id=\"17\" value=\"2204\"/>\r\n  <field id=\"18\" value=\"6011\"/>\r\n  <field id=\"22\" value=\"051\"/>\r\n  <field id=\"32\" value=\"1111\"/>\r\n  <field id=\"35\" value=\";41073741454145=251210110000232?\"/>\r\n  <field id=\"39\" value=\"00\"/>\r\n  <field id=\"41\" value=\"29110001\"/>\r\n  <field id=\"42\" value=\"1234567\"/>\r\n  <field id=\"43\" value=\"SUCURSAL CENTRAL       CARACAS   VE\"/>\r\n  <field id=\"49\" value=\"840\"/>\r\n  <field id=\"52\" value=\"E354619447DB078F\"/>\r\n  <field id=\"54\" value=\"1001356C0000000630001002356C000000063000\"/>\r\n  <field id=\"61\" value=\"91000000025008620000000000\"/>\r\n  <field id=\"63\" value=\"CI2000000000\"/>\r\n</isomsg>\r\n','2022-04-28 10:58:01.541000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'4\'\r\n  luno: \'000\'\r\n  time-variant-number: \'01A2E166\'\r\n  next-state-number: \'171\'\r\n  number-notes-dispense: \'00000000\'\r\n  transaction-serial-number: \'0001\'\r\n  function-identifier: \'5\'\r\n  screen-number: \'171\'\r\n  message-coordination-number: \'1\'\r\n  card-return-retain-flag: \'0\'\r\n  printer-flag: \'2\'\r\n  screen-display-update: \'172FN630.00 \'\r\n  printer-data: \'BANCO DE PRUEBA\r\nCAJERO: 000\r\nTRACE: 0001\r\n\r\nCOMPROBANTE DE OPERACION\r\n\r\nNUMERO DE TARJETA   ---FECHA-- --HORA--\r\n41073741454145      28-04-2022 10:58:1\r\n\r\nSEQ. ----TRANSACCION----- AUTORIZACION\r\n0001 BALANCE INQUIRY SAVINGS\r\n\r\nMONTO OPERACION :\r\nSALDO DISPONIBLE: 630.00\r\nCOM BANCO EMISOR:\r\n\r\nOPERACION EXITOSA\r\n\r\nCONSERVE PARA SU CONTROL\r\n\'\r\n</fsdmsg>\r\n','2022-04-28 10:58:03.352000','<fsdmsg schema=\'file:cfg/ndc/ndc-base\'>\r\n  message-class: \'22\'\r\n  luno: \'000\'\r\n  status-descriptor: \'9\'\r\n</fsdmsg>\r\n',NULL,NULL,NULL,NULL,'2022-04-28 10:58:01','2022-04-28 10:58:03',NULL,NULL,NULL);
 
 /*Table structure for table `atmprotocols` */
 
@@ -110,10 +104,10 @@ DROP TABLE IF EXISTS `atms`;
 CREATE TABLE `atms` (
   `atm_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `atm_last_trn_log_id` bigint(20) DEFAULT NULL,
-  `atm_ip` varchar(40) DEFAULT NULL,
-  `atm_luno` varchar(9) DEFAULT NULL,
+  `atm_ip` varchar(40) NOT NULL,
+  `atm_luno` varchar(9) NOT NULL,
   `atm_name` varchar(255) DEFAULT NULL,
-  `atm_protocol` varchar(10) DEFAULT NULL,
+  `atm_protocol` varchar(10) NOT NULL,
   `atm_aceptor_id` varchar(15) DEFAULT NULL,
   `atm_status` varchar(20) DEFAULT NULL,
   `atm_active` tinyint(4) DEFAULT NULL,
@@ -141,15 +135,16 @@ CREATE TABLE `atms` (
   `atm_pos_entry_mode` varchar(3) DEFAULT NULL,
   `atm_terminal_id` varchar(8) DEFAULT NULL,
   `atm_trn_ser_num` smallint(6) DEFAULT NULL,
+  `atm_timezone` varchar(20) NOT NULL,
   PRIMARY KEY (`atm_id`),
   UNIQUE KEY `atm_uk` (`atm_ip`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `atms` */
 
-insert  into `atms`(`atm_id`,`atm_last_trn_log_id`,`atm_ip`,`atm_luno`,`atm_name`,`atm_protocol`,`atm_aceptor_id`,`atm_status`,`atm_active`,`atm_group`,`atm_region`,`atm_brand`,`atm_model`,`atm_address1`,`atm_address2`,`atm_city`,`atm_state`,`atm_province`,`atm_country`,`atm_zip`,`atm_contact`,`atm_phone`,`atm_master_key`,`atm_communications_key`,`atm_mac_key`,`atm_config_id`,`atm_institution_code`,`atm_merch_type`,`atm_network_data`,`atm_point_serv_data`,`atm_pos_entry_mode`,`atm_terminal_id`,`atm_trn_ser_num`) values 
-(1,5,'127.0.0.1','001','R200','NDC','1234567',NULL,1,NULL,NULL,'NCR','SELFSERV 22','SUCURSAL CENTRAL',NULL,'CARACAS','DC',NULL,'VE','1060','Pedro Perez','+58 (414) 320-6238','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0870','1111','6011','CI2000000000','91000000025008620000000000','051','29110001',0),
-(2,NULL,'192.168.1.60','001','R200','NDC','1234567',NULL,1,NULL,NULL,'NCR','SELFSERV 22','SUCURSAL CENTRAL',NULL,'CARACAS','DC',NULL,'VE','1060','Pedro Perez','+58 (414) 320-6238','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0870','1111','6011','CI2000000000','91000000025008620000000000','051','29110001',0);
+insert  into `atms`(`atm_id`,`atm_last_trn_log_id`,`atm_ip`,`atm_luno`,`atm_name`,`atm_protocol`,`atm_aceptor_id`,`atm_status`,`atm_active`,`atm_group`,`atm_region`,`atm_brand`,`atm_model`,`atm_address1`,`atm_address2`,`atm_city`,`atm_state`,`atm_province`,`atm_country`,`atm_zip`,`atm_contact`,`atm_phone`,`atm_master_key`,`atm_communications_key`,`atm_mac_key`,`atm_config_id`,`atm_institution_code`,`atm_merch_type`,`atm_network_data`,`atm_point_serv_data`,`atm_pos_entry_mode`,`atm_terminal_id`,`atm_trn_ser_num`,`atm_timezone`) values 
+(1,60,'127.0.0.1','001','R200','NDC','1234567',NULL,1,NULL,NULL,'NCR','SELFSERV 22','SUCURSAL CENTRAL',NULL,'CARACAS','DC',NULL,'VE','1060','Pedro Perez','+58 (414) 320-6238','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0870','1111','6011','CI2000000000','91000000025008620000000000','051','29110001',0,'America/Caracas'),
+(2,NULL,'192.168.1.60','001','R200','NDC','1234567',NULL,1,NULL,NULL,'NCR','SELFSERV 22','SUCURSAL CENTRAL',NULL,'CARACAS','DC',NULL,'VE','1060','Pedro Perez','+58 (414) 320-6238','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0A0F0A0F0A0F0A0F0A0F0A0F0A0F0A0F','0870','1111','6011','CI2000000000','91000000025008620000000000','051','29110001',0,'America/Caracas');
 
 /*Table structure for table `cassettes` */
 
@@ -274,7 +269,7 @@ CREATE TABLE `eeuser` (
 /*Data for the table `eeuser` */
 
 insert  into `eeuser`(`id`,`nick`,`passwordHash`,`name`,`email`,`active`,`deleted`,`verified`,`startDate`,`endDate`,`forcePasswordChange`,`lastLogin`,`passwordChanged`,`loginAttempts`) values 
-(1,'admin','AQAAAAAAAAAAAAAAAAAAAAD9c0H+b9/sE7pfniFyVN8vk3yKd1htAOh7PdcqniN5RRTiYXCuxWi19Q4nN9nh5vdcWf+and/APm4KYE4dqLPSOH4znOBGyK2uOhT5pde6doEWjE02UhPV1taqsS9165dCyURoi15u7aaXLzxObhReytN+GUKyr3RZeXJNaT48QBgwFPFOAHOlM3cnsRgZMUmF84MbXya4g5B35MsN8fl8IqDbLX950tQnbnr/4KktNkDYt0wNphRCARsIMiXlbd9XL7/TRqsiHpCB0JIEQNTr6N6TVGth7GdYBi7IYBroHw/CmgN+OEp8ER43PqxaSzDLamwJErw0LDwn/B87C7bk',NULL,NULL,'Y','N','N',NULL,NULL,'N','2022-04-22 17:33:56','2022-03-28 17:50:32',0);
+(1,'admin','AQAAAAAAAAAAAAAAAAAAAAD9c0H+b9/sE7pfniFyVN8vk3yKd1htAOh7PdcqniN5RRTiYXCuxWi19Q4nN9nh5vdcWf+and/APm4KYE4dqLPSOH4znOBGyK2uOhT5pde6doEWjE02UhPV1taqsS9165dCyURoi15u7aaXLzxObhReytN+GUKyr3RZeXJNaT48QBgwFPFOAHOlM3cnsRgZMUmF84MbXya4g5B35MsN8fl8IqDbLX950tQnbnr/4KktNkDYt0wNphRCARsIMiXlbd9XL7/TRqsiHpCB0JIEQNTr6N6TVGth7GdYBi7IYBroHw/CmgN+OEp8ER43PqxaSzDLamwJErw0LDwn/B87C7bk',NULL,NULL,'Y','N','N',NULL,NULL,'N','2022-05-14 18:01:38','2022-03-28 17:50:32',0);
 
 /*Table structure for table `eeuser_passwordhistory` */
 
@@ -1307,7 +1302,8 @@ CREATE TABLE `visitor` (
 /*Data for the table `visitor` */
 
 insert  into `visitor`(`id`,`lastUpdate`,`eeuser`) values 
-('aa9fd97a-8332-4cac-bad0-6935385ffb27','2022-04-22 17:34:53',NULL);
+('921432ee-4324-4ba8-91a6-9bdf87f7a36f','2022-05-04 15:10:26',NULL),
+('aa9fd97a-8332-4cac-bad0-6935385ffb27','2022-05-14 18:01:19',NULL);
 
 /*Table structure for table `visitor_props` */
 
@@ -1324,8 +1320,10 @@ CREATE TABLE `visitor_props` (
 /*Data for the table `visitor_props` */
 
 insert  into `visitor_props`(`id`,`propName`,`propValue`) values 
-('aa9fd97a-8332-4cac-bad0-6935385ffb27','HOST','[0:0:0:0:0:0:0:1]'),
-('aa9fd97a-8332-4cac-bad0-6935385ffb27','IP','[0:0:0:0:0:0:0:1]'),
+('921432ee-4324-4ba8-91a6-9bdf87f7a36f','HOST','[0:0:0:0:0:0:0:1]'),
+('921432ee-4324-4ba8-91a6-9bdf87f7a36f','IP','[0:0:0:0:0:0:0:1]'),
+('aa9fd97a-8332-4cac-bad0-6935385ffb27','HOST','127.0.0.1'),
+('aa9fd97a-8332-4cac-bad0-6935385ffb27','IP','127.0.0.1'),
 ('aa9fd97a-8332-4cac-bad0-6935385ffb27','USERS','admin(1)');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

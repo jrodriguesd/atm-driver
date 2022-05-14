@@ -284,6 +284,18 @@ class ATMScreen
 
 	     this.util = new Util();
          this.nav  = new Nav(this.util);
+		 this.jwt  = "";
+		 this.baseURL = "/jpos/api";
+	 }
+
+	 setJWT(jwt)
+	 {
+	     this.jwt = jwt;
+	 }
+	 
+	 setBaseURL(baseURL)
+	 {
+	     this.baseURL = baseURL;
 	 }
 
 	 /*
@@ -840,9 +852,11 @@ class ATMScreen
 	 {
          $.ajax(
          {
-	     	// url: 'api/atmconfigs/unique',
-	     	url: '/jpos/api/atmconfigs/unique',
+	     	 url: this.baseURL + '/atmconfigs/unique',
              method: "GET",
+             headers: {
+               Authorization: 'Bearer ' + this.jwt
+             },
              success: function(data)
 	         {
                  let atmconfigs = JSON.parse( JSON.stringify(data) );
@@ -869,9 +883,11 @@ class ATMScreen
 
          $.ajax(
          {
-	     	 // url: 'api/screens/' + this.configId,
-	     	 url: '/jpos/api/screens/' + this.configId,
+	     	 url: screen.baseURL + '/screens/' + this.configId,
              method: "GET",
+             headers: {
+               Authorization: 'Bearer ' + screen.jwt
+             },
              success: function(data)
 	         {
                  screen.screens = JSON.parse( JSON.stringify(data) );
@@ -890,6 +906,7 @@ class ATMScreen
 	             screen.putScreen($("#cmdTxtArea").val());
 	 			 $(ATMScreen.#SCREEN_LIST_DIV_ID).prop('selectedIndex',-1);
 	 	         $(ATMScreen.#SCREEN_LIST_DIV_ID).focus();
+				 window.scrollTo(0, 0);
              }
          });
 	 }
@@ -946,8 +963,11 @@ class ATMScreen
 	 
         $.ajax(
 		{
+	       url: screen.baseURL + '/screens/' + action,    // url where to submit the request
            type : "POST",                                 // type of action POST || GET
-           url: 'api/screens/' + action,                  // url where to submit the request
+           headers: {
+             Authorization: 'Bearer ' + screen.jwt
+           },
 	 	   contentType: 'application/json;charset=utf-8',
            dataType : 'json',                             // data type
            data : JSON.stringify( formData ),             // post data || get data

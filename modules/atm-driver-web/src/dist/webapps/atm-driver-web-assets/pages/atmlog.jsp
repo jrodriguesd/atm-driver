@@ -4,7 +4,7 @@
     UUID uuid = UUID.randomUUID();
     String uuidStr   = uuid.toString();
     String pageTitle = "ATM-CB";
-	String entity    = "screen";
+	String entity    = "atmlog";
     String entityJsp = "partials/_" +  entity + ".jsp";
 %>
 <!DOCTYPE html>
@@ -25,8 +25,14 @@
 		    $("<%=uuidStr%>").ready(function() 
 			{
                 console.log("<%=entity%>.jsp Line 11");
-	            const screen = new ATMScreen();
-	            screen.init();
+				const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const id = urlParams.get('id')
+	            const atmlog = new ATMLog();
+				atmlog.setId(id);
+	            atmlog.setJWT("qwerty-dummy-jwt");
+	            atmlog.setBaseURL("/jpos/api");
+	            atmlog.init();
             });
 		</script>
     </body>

@@ -10,14 +10,29 @@ class ATMState
 	    this.statesData       = '';
 	    this.statesDefinition = '';
 	    this.configId         = '0000';
+		this.jwt              = "";
+		this.baseURL          = "/jpos/api";
+	}
+
+	setJWT(jwt)
+	{
+		this.jwt = jwt;
+	}
+
+	setBaseURL(baseURL)
+	{
+		this.baseURL = baseURL;
 	}
 
 	LoadConfigIdSelect(configId) 
 	{
         $.ajax(
         {
-	    	url: 'api/atmconfigs/unique',
+            url: this.baseURL + '/atmconfigs/unique',
             method: "GET",
+            headers: {
+              Authorization: 'Bearer ' + this.jwt
+            },
             success: function(data)
 	        {
                 let atmconfigs = JSON.parse( JSON.stringify(data) );
@@ -265,6 +280,8 @@ class ATMState
 		}
 
 		$("#statesDataList").focus();
+		window.scrollTo(0, 0);
+
     }
 
 
@@ -275,8 +292,11 @@ class ATMState
 
         $.ajax(
         {
-            url: 'api/states/' + configId,
+            url: state.baseURL + '/states/' + configId,
             method: "GET",
+            headers: {
+              Authorization: 'Bearer ' + state.jwt
+            },
             success: function(data)
 	        {
                 state.statesData = JSON.parse( JSON.stringify(data) );
@@ -298,8 +318,11 @@ class ATMState
 		let state = this;  // para poder usarlo en otro contexto (ajax)
         $.ajax(
         {
-            url: 'api/states/definition',
+            url: state.baseURL + '/states/definition',
             method: "GET",
+            headers: {
+              Authorization: 'Bearer ' + state.jwt
+            },
             success: function(data)
 	        {
                 state.statesDefinition = JSON.parse( JSON.stringify(data) );
@@ -356,8 +379,11 @@ class ATMState
         console.log( formData );
 
         $.ajax({
+            url: state.baseURL + '/states/' + action,      // url where to submit the request
             type : "POST",                                 // type of action POST || GET
-            url: 'api/states/' + action,                   // url where to submit the request
+            headers: {
+              Authorization: 'Bearer ' + state.jwt
+            },
 	    	contentType: 'application/json;charset=utf-8',
             dataType : 'json',                             // data type
             data : JSON.stringify( formData ),             // post data || get data
@@ -369,7 +395,8 @@ class ATMState
 			    $("#ResponseMsg-" + e.data.index).empty();
 			    let msg = "Success : " + resultObj["msg"];
 			    $("#ResponseMsg-" + e.data.index).append( state.createDismissableMsg(msg, "success") );
-	            state.configIdChange();
+			    state.configId = formData["std_config_id"];
+	 	        state.getStatesData(state.configId);
             },
             error: function(xhr, resp, text) 
 	    	{

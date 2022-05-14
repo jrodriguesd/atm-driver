@@ -20,6 +20,7 @@ targetCompatibility = 1.8
 
 repositories 
 {
+    mavenLocal()
     mavenCentral()
     maven { url 'https://jpos.org/maven' }
     maven { url 'http://maven.vaadin.com/vaadin-addons'; allowInsecureProtocol = true }
@@ -54,8 +55,11 @@ dependencies
     providedCompile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.26-b09'
 
     providedCompile 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.2'
+    providedCompile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
 
-    providedCompile    'org.mariadb.jdbc:mariadb-java-client:3.0.3'
+    providedCompile 'org.mariadb.jdbc:mariadb-java-client:3.0.3'
+
+    providedCompile 'io.jsonwebtoken:jjwt:0.9.1'
 }
 
 war 

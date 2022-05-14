@@ -37,15 +37,35 @@
     <option name="Screens" action="screens"/>
     <option name="States" action="states"/>
     <option name="Fits" action="fits"/>
+    <option name="ATM Log" action="atmloggrid"/>
   </sidebar>
 
   <!--VIEWS-->
-  <view route="screens" class="org.jfrd.webapp.GenericIframeView" perm="*" sidebar="system">
-    <property name="baseURL" value="http://localhost:8080/atm-driver-web-assets/pages" />
-    <property name="src"     value="screen.jsp" />
+  <view route="atmconfigs" class="org.jfrd.webapp.GenericIframeView" perm="*" sidebar="system">
+    <property name="src"     value="pages/atmconfig.html" />
   </view>
 
-  <view route="atmconfigs" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+  <view route="screens" class="org.jfrd.webapp.GenericIframeView" perm="*" sidebar="system">
+    <property name="src"     value="pages/screen.html" />
+  </view>
+
+  <view route="states" class="org.jfrd.webapp.GenericIframeView" perm="*" sidebar="system">
+    <property name="src"     value="pages/state.html" />
+  </view>
+
+  <view route="fits" class="org.jfrd.webapp.GenericIframeView" perm="*" sidebar="system">
+    <property name="src"     value="pages/fit.html" />
+  </view>
+
+  <view route="atmloggrid" class="org.jfrd.webapp.GenericIframeView" perm="*" sidebar="system">
+    <property name="src"     value="pages/atmloggrid.html" />
+  </view>
+
+  <view route="atmlog" class="org.jfrd.webapp.GenericIframeView" perm="*" sidebar="system">
+    <property name="src"     value="pages/atmlog.html" />
+  </view>
+
+  <view route="XXXatmconfigs" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
     <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
     <property name="id" value="atmconfigs_wrap"/>
     <!-- this file was taken from the `dist` directory of the source, and copied into
@@ -68,7 +88,7 @@
     <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.atmconfig.js" />
   </view>
 
-  <view route="XXXXXXscreens" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+  <view route="XXXscreens" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
     <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
     <property name="id" value="atmconfigs_wrap"/>
     <!-- this file was taken from the `dist` directory of the source, and copied into
@@ -93,7 +113,7 @@
     <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.screen.js" />
   </view>
 
-  <view route="states" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+  <view route="XXXstates" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
     <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
     <property name="id" value="atmconfigs_wrap"/>
     <!-- this file was taken from the `dist` directory of the source, and copied into
@@ -117,7 +137,7 @@
     <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.state.js" />
   </view>
 
-  <view route="fits" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+  <view route="XXXfits" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
     <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
     <property name="id" value="atmconfigs_wrap"/>
     <!-- this file was taken from the `dist` directory of the source, and copied into
@@ -141,7 +161,7 @@
     <property name="script"  value="/atm-driver-web-assets/js/jquery.atm.fit.js" />
   </view>
 
-  <view route="atmlogs" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
+  <view route="XXXatmlogs" class="org.jfrd.webapp.GenericDivView" perm="*" sidebar="system">
     <!-- this is the id of the <div> element that's going to wrap atmconfigs.html -->
     <property name="id" value="atmconfigs_wrap"/>
     <!-- this file was taken from the `dist` directory of the source, and copied into

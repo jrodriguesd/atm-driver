@@ -3,6 +3,9 @@ package org.jpos.atmc.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +13,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Lob;
 
+import javax.persistence.Lob;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.openpojo.business.BusinessIdentity;
 import com.openpojo.business.annotation.BusinessKey ;
 
@@ -24,83 +29,123 @@ public class ATMLog implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="atmlog_id", unique=true, nullable=false)
+    @JsonProperty("atmlog_id")
     private Long id;    
 
 	@Column(name="atmlog_amount", precision=10, scale=2)
+    @JsonProperty("atmlog_amount")
 	private BigDecimal amount;
 
 	@Lob
 	@Column(name="atmlog_atm_confirmation")
+    @JsonProperty("atmlog_atm_confirmation")
 	private String atmConfirmation;
 
 	@Column(name="atmlog_atm_confirmation_dt")
+    @JsonProperty("atmlog_atm_confirmation_dt")
+	// @JsonSerialize(using = InstantSerializer.class)
 	private Instant atmConfirmationDt;
 
 	@Lob
 	@Column(name="atmlog_atm_reply")
+    @JsonProperty("atmlog_atm_reply")
 	private String atmReply;
 
 	@Column(name="atmlog_atm_reply_dt")
+    @JsonProperty("atmlog_atm_reply_dt")
 	private Instant atmReplyDt;
 
 	@Lob
 	@Column(name="atmlog_atm_request", nullable=false)
+    @JsonProperty("atmlog_atm_request")
 	private String atmRequest;
 
 	@Column(name="atmlog_atm_request_dt", nullable=false)
+    @JsonProperty("atmlog_atm_request_dt")
 	private Instant atmRequestDt;
 
 	@Column(name="atmlog_card", length=20)
+    @JsonProperty("atmlog_card")
 	private String card;
 
 	@Column(name="atmlog_currency_code", length=3)
+    @JsonProperty("atmlog_currency_code")
 	private String currencyCode;
 
 	@BusinessKey(caseSensitive = false, required = true)
 	@Column(name="atmlog_ip", nullable=false, length=20)
+    @JsonProperty("atmlog_ip")
 	private String ip;
 
 	@Lob
 	@Column(name="atmlog_iso_confirmation_reply")
+    @JsonProperty("atmlog_iso_confirmation_reply")
 	private String isoConfirmationReply;
 
 	@Column(name="atmlog_iso_confirmation_reply_dt")
+    @JsonProperty("atmlog_iso_confirmation_reply_dt")
 	private Instant isoConfirmationReplyDt;
 
 	@Lob
 	@Column(name="atmlog_iso_confirmation_request")
+    @JsonProperty("atmlog_iso_confirmation_request")
 	private String isoConfirmationRequest;
 
 	@Column(name="atmlog_iso_confirmation_request_dt")
+    @JsonProperty("atmlog_iso_confirmation_request_dt")
 	private Instant isoConfirmationRequestDt;
 
 	@Lob
 	@Column(name="atmlog_iso_reply")
+    @JsonProperty("atmlog_iso_reply")
 	private String isoReply;
 
 	@Column(name="atmlog_iso_reply_dt")
+    @JsonProperty("atmlog_iso_reply_dt")
 	private Instant isoReplyDt;
 
 	@Lob
 	@Column(name="atmlog_iso_request")
+    @JsonProperty("atmlog_iso_request")
 	private String isoRequest;
 
 	@Column(name="atmlog_iso_request_dt")
+    @JsonProperty("atmlog_iso_request_dt")
 	private Instant isoRequestDt;
 
 	@Column(name="atmlog_luno", nullable=false, length=9)
+    @JsonProperty("atmlog_luno")
 	private String luno;
 
 	@Column(name="atmlog_message_class", nullable=false, length=2)
+    @JsonProperty("atmlog_message_class")
 	private String messageClass;
 
 	@Column(name="atmlog_op_code", length=20)
+    @JsonProperty("atmlog_op_code")
 	private String opCode;
 
+	@Column(name="atmlog_op_desc", length=20)
+    @JsonProperty("atmlog_op_desc")
+	private String opDescription;
+	
 	@Column(name="atmlog_timezone", length=20)
+    @JsonProperty("atmlog_timezone")
 	private String timezone;
 
 	public ATMLog() {
+	}
+	
+	private final static String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss.SSS a VV";
+	
+	private String instantToString(Instant instant)
+	{
+		if (instant != null)
+		{
+		    ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of(this.getTimezone()));
+		    return DateTimeFormatter.ofPattern(DATE_FORMAT).format(zonedDateTime);
+		}
+		return null;
 	}
 
 	/**
@@ -148,8 +193,12 @@ public class ATMLog implements Serializable {
 	/**
 	 * @return the atmConfirmationDt
 	 */
-	public Instant getAtmConfirmationDt() {
-		return atmConfirmationDt;
+//	public Instant getAtmConfirmationDt() {
+//		return atmConfirmationDt;
+//	}
+	
+	public String getAtmConfirmationDt() {
+		return instantToString(atmConfirmationDt);
 	}
 
 	/**
@@ -176,10 +225,14 @@ public class ATMLog implements Serializable {
 	/**
 	 * @return the atmReplyDt
 	 */
-	public Instant getAtmReplyDt() {
-		return atmReplyDt;
-	}
+//	public Instant getAtmReplyDt() {
+//		return atmReplyDt;
+//	}
 
+	public String getAtmReplyDt() {
+		return instantToString(atmReplyDt);
+	}
+	
 	/**
 	 * @param atmReplyDt the atmReplyDt to set
 	 */
@@ -204,8 +257,12 @@ public class ATMLog implements Serializable {
 	/**
 	 * @return the atmRequestDt
 	 */
-	public Instant getAtmRequestDt() {
-		return atmRequestDt;
+//	public Instant getAtmRequestDt() {
+//		return atmRequestDt;
+//	}
+
+	public String getAtmRequestDt() {
+		return instantToString(atmRequestDt);
 	}
 
 	/**
@@ -274,8 +331,12 @@ public class ATMLog implements Serializable {
 	/**
 	 * @return the isoConfirmationReplyDt
 	 */
-	public Instant getIsoConfirmationReplyDt() {
-		return isoConfirmationReplyDt;
+//	public Instant getIsoConfirmationReplyDt() {
+//		return isoConfirmationReplyDt;
+//	}
+
+	public String getIsoConfirmationReplyDt() {
+		return instantToString(isoConfirmationReplyDt);
 	}
 
 	/**
@@ -302,8 +363,12 @@ public class ATMLog implements Serializable {
 	/**
 	 * @return the isoConfirmationRequestDt
 	 */
-	public Instant getIsoConfirmationRequestDt() {
-		return isoConfirmationRequestDt;
+//	public Instant getIsoConfirmationRequestDt() {
+//		return isoConfirmationRequestDt;
+//	}
+
+	public String getIsoConfirmationRequestDt() {
+		return instantToString(isoConfirmationRequestDt);
 	}
 
 	/**
@@ -330,8 +395,12 @@ public class ATMLog implements Serializable {
 	/**
 	 * @return the isoReplyDt
 	 */
-	public Instant getIsoReplyDt() {
-		return isoReplyDt;
+//	public Instant getIsoReplyDt() {
+//		return isoReplyDt;
+//	}
+
+	public String getIsoReplyDt() {
+		return instantToString(isoReplyDt);
 	}
 
 	/**
@@ -358,8 +427,12 @@ public class ATMLog implements Serializable {
 	/**
 	 * @return the isoRequestDt
 	 */
-	public Instant getIsoRequestDt() {
-		return isoRequestDt;
+//	public Instant getIsoRequestDt() {
+//		return isoRequestDt;
+//	}
+
+	public String getIsoRequestDt() {
+		return instantToString(isoRequestDt);
 	}
 
 	/**
@@ -409,6 +482,20 @@ public class ATMLog implements Serializable {
 	 */
 	public void setOpCode(String opCode) {
 		this.opCode = opCode;
+	}
+
+	/**
+	 * @return the opDescription
+	 */
+	public String getOpDescription() {
+		return opDescription;
+	}
+
+	/**
+	 * @param opDescription the opDescription to set
+	 */
+	public void setOpDescription(String opDescription) {
+		this.opDescription = opDescription;
 	}
 
 	/**

@@ -67,7 +67,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>jersey.config.server.provider.packages</param-name>
-			<param-value>org.jfrd.webapp</param-value>
+			<param-value>org.jfrd.webapp;org.jfrd.jwt</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>

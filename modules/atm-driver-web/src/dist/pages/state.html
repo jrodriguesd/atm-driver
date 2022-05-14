@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- head -->
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>ATM-CB</title>
+        <link rel="stylesheet" href="/atm-driver-web-assets/vendors/iconfonts/mdi/css/materialdesignicons.min.css" />
+        <link rel="stylesheet" href="/atm-driver-web-assets/vendors/iconfonts/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="/atm-driver-web-assets/css/shared/style.css" />
+        <link rel="stylesheet" href="/atm-driver-web-assets/css/demo_1/style.css" />
+        <link rel="stylesheet" href="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/atm-driver-web-assets/vendors/multiselect/css/bootstrap-multiselect.css" />
+        <link rel="stylesheet" href="/atm-driver-web-assets/css/screen.css" />
+    </head>
+    <body style="background-color: #fafafa;">
+        <div id="6c1f578b-40a5-4a51-a177-f6e5be1f1150" class="ml-3 mr-4">
+            <div class="row page-title-header">
+                <div class="col-md-12">
+                    <div class="page-header-toolbar">
+                        <div class="filter-wrapper"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- _states.jsp - Inicio -->
+            <div class="row">
+                <div class="col-3" style="border: 0px solid black;">
+                    <select class="form-control" style="font-family: 'Lucida Console', monospace; font-size: 11px;" size="43" id="statesDataList"></select>
+                </div>
+                <div class="col-9" style="border: 0px solid black;">
+                    <div class="col-sm-12">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item active">
+                                <a class="nav-link btn btn-outline-secondary" style="color: rgb(33, 37, 41); outline: none; box-shadow: none;" data-toggle="tab" id="nav-0-tab" href="#nav-0">State</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-secondary" style="color: rgb(33, 37, 41); outline: none; box-shadow: none;" data-toggle="tab" id="nav-1-tab" href="#nav-1">Extension State 1</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-secondary" style="color: rgb(33, 37, 41); outline: none; box-shadow: none;" data-toggle="tab" id="nav-2-tab" href="#nav-2">Extension State 2</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link btn btn-outline-secondary" style="color: rgb(33, 37, 41); outline: none; box-shadow: none;" data-toggle="tab" id="nav-3-tab" href="#nav-3">Extension State 3</a>
+                            </li>
+                        </ul>
+                        <div class="container-fluid border-right border-left border-bottom">
+                            <br />
+                            <div class="tab-content">
+                                <!-- Tab tabpanel nav-0 -->
+                                <!-- form de Estado - Inicio -->
+                                <div role="tabpanel" class="tab-pane active" id="nav-0">
+                                    <!-- *************************************************************************************************************************** -->
+                                    <!-- Mensaje de Respuesta - Inicio -->
+                                    <div id="ResponseMsg-0"></div>
+                                    <!-- Mensaje de Respuesta - Fin -->
+                                    <form id="statesForm-0" action="javascript:alert( 'success!' );">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Configuration Id</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <select class="form-control" id="config_id-0" name="std_config_id"> </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>State Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_number-0" class="form-control" name="std_number" autocomplete="off" value="000" maxlength="3" tabindex="1" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>State Type</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <select id="statesList-0" class="form-control js-select2 select2-hidden-accessible" name="std_type" data-select2-id="input-group" tabindex="2" aria-hidden="true"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_desc-0" class="form-control" name="std_desc" autocomplete="off" value="Time Out" placeholder="Description" tabindex="3" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_1_title-0">Screen Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s1-0" class="form-control" name="std_s1" autocomplete="off" value="000" placeholder="Screen Number" tabindex="4" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_2_title-0">Good Read Next State</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s2-0" class="form-control" name="std_s2" autocomplete="off" value="000" placeholder="Good Read Next State" tabindex="5" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_3_title-0">Error Screen Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s3-0" class="form-control" name="std_s3" autocomplete="off" value="000" placeholder="Error Screen Number" tabindex="6" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_4_title-0">Read Condition 1</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s4-0" class="form-control" name="std_s4" autocomplete="off" value="000" placeholder="Read Condition 1" tabindex="7" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_5_title-0">Read Condition 2</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s5-0" class="form-control" name="std_s5" autocomplete="off" value="000" placeholder="Read Condition 2" tabindex="8" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_6_title-0">Read Condition 3</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s6-0" class="form-control" name="std_s6" autocomplete="off" value="000" placeholder="Read Condition 3" tabindex="9" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_7_title-0">Card Return Flag</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s7-0" class="form-control" name="std_s7" autocomplete="off" value="000" placeholder="Card Return Flag" tabindex="10" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_8_title-0">No FIT Match Next State</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s8-0" class="form-control" name="std_s8" autocomplete="off" value="000" placeholder="No FIT Match Next State" tabindex="11" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- *************************************************************************************************************************** -->
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-success" value="create" tabindex="11" aria-hidden="true">Create</button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-success" value="update" tabindex="12" aria-hidden="true">Update</button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-danger" value="delete" tabindex="13" aria-hidden="true">Delete</button>
+                                            </div>
+                                        </div>
+                                        <!-- *************************************************************************************************************************** -->
+                                    </form>
+                                </div>
+                                <!-- form de Estado - Fin -->
+
+                                <!-- Tab tabpanel nav-1 -->
+                                <!-- form de Estado - Inicio -->
+                                <div role="tabpanel" class="tab-pane fade" id="nav-1">
+                                    <!-- *************************************************************************************************************************** -->
+                                    <!-- Mensaje de Respuesta - Inicio -->
+                                    <div id="ResponseMsg-1"></div>
+                                    <!-- Mensaje de Respuesta - Fin -->
+                                    <form id="statesForm-1" action="javascript:alert( 'success!' );">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Configuration Id</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <select class="form-control" id="config_id-1" name="std_config_id"> </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>State Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_number-1" class="form-control" name="std_number" autocomplete="off" value="000" maxlength="3" tabindex="1" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>State Type</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <select id="statesList-1" class="form-control js-select2 select2-hidden-accessible" name="std_type" data-select2-id="input-group" tabindex="2" aria-hidden="true"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_desc-1" class="form-control" name="std_desc" autocomplete="off" value="Time Out" placeholder="Description" tabindex="3" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_1_title-1">Screen Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s1-1" class="form-control" name="std_s1" autocomplete="off" value="000" placeholder="Screen Number" tabindex="4" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_2_title-1">Good Read Next State</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s2-1" class="form-control" name="std_s2" autocomplete="off" value="000" placeholder="Good Read Next State" tabindex="5" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_3_title-1">Error Screen Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s3-1" class="form-control" name="std_s3" autocomplete="off" value="000" placeholder="Error Screen Number" tabindex="6" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_4_title-1">Read Condition 1</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s4-1" class="form-control" name="std_s4" autocomplete="off" value="000" placeholder="Read Condition 1" tabindex="7" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_5_title-1">Read Condition 2</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s5-1" class="form-control" name="std_s5" autocomplete="off" value="000" placeholder="Read Condition 2" tabindex="8" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_6_title-1">Read Condition 3</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s6-1" class="form-control" name="std_s6" autocomplete="off" value="000" placeholder="Read Condition 3" tabindex="9" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_7_title-1">Card Return Flag</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s7-1" class="form-control" name="std_s7" autocomplete="off" value="000" placeholder="Card Return Flag" tabindex="10" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_8_title-1">No FIT Match Next State</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s8-1" class="form-control" name="std_s8" autocomplete="off" value="000" placeholder="No FIT Match Next State" tabindex="11" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- *************************************************************************************************************************** -->
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-success" value="create" tabindex="11" aria-hidden="true">Create</button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-success" value="update" tabindex="12" aria-hidden="true">Update</button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-danger" value="delete" tabindex="13" aria-hidden="true">Delete</button>
+                                            </div>
+                                        </div>
+                                        <!-- *************************************************************************************************************************** -->
+                                    </form>
+                                </div>
+                                <!-- form de Estado - Fin -->
+
+                                <!-- Tab tabpanel nav-2 -->
+                                <!-- form de Estado - Inicio -->
+                                <div role="tabpanel" class="tab-pane fade" id="nav-2">
+                                    <!-- *************************************************************************************************************************** -->
+                                    <!-- Mensaje de Respuesta - Inicio -->
+                                    <div id="ResponseMsg-2"></div>
+                                    <!-- Mensaje de Respuesta - Fin -->
+                                    <form id="statesForm-2" action="javascript:alert( 'success!' );">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Configuration Id</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <select class="form-control" id="config_id-2" name="std_config_id"> </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>State Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_number-2" class="form-control" name="std_number" autocomplete="off" value="000" maxlength="3" tabindex="1" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>State Type</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <select id="statesList-2" class="form-control js-select2 select2-hidden-accessible" name="std_type" data-select2-id="input-group" tabindex="2" aria-hidden="true"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_desc-2" class="form-control" name="std_desc" autocomplete="off" value="Time Out" placeholder="Description" tabindex="3" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_1_title-2">Screen Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s1-2" class="form-control" name="std_s1" autocomplete="off" value="000" placeholder="Screen Number" tabindex="4" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_2_title-2">Good Read Next State</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s2-2" class="form-control" name="std_s2" autocomplete="off" value="000" placeholder="Good Read Next State" tabindex="5" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_3_title-2">Error Screen Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s3-2" class="form-control" name="std_s3" autocomplete="off" value="000" placeholder="Error Screen Number" tabindex="6" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_4_title-2">Read Condition 1</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s4-2" class="form-control" name="std_s4" autocomplete="off" value="000" placeholder="Read Condition 1" tabindex="7" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_5_title-2">Read Condition 2</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s5-2" class="form-control" name="std_s5" autocomplete="off" value="000" placeholder="Read Condition 2" tabindex="8" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_6_title-2">Read Condition 3</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s6-2" class="form-control" name="std_s6" autocomplete="off" value="000" placeholder="Read Condition 3" tabindex="9" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_7_title-2">Card Return Flag</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s7-2" class="form-control" name="std_s7" autocomplete="off" value="000" placeholder="Card Return Flag" tabindex="10" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_8_title-2">No FIT Match Next State</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s8-2" class="form-control" name="std_s8" autocomplete="off" value="000" placeholder="No FIT Match Next State" tabindex="11" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- *************************************************************************************************************************** -->
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-success" value="create" tabindex="11" aria-hidden="true">Create</button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-success" value="update" tabindex="12" aria-hidden="true">Update</button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-danger" value="delete" tabindex="13" aria-hidden="true">Delete</button>
+                                            </div>
+                                        </div>
+                                        <!-- *************************************************************************************************************************** -->
+                                    </form>
+                                </div>
+                                <!-- form de Estado - Fin -->
+
+                                <!-- Tab tabpanel nav-3 -->
+                                <!-- form de Estado - Inicio -->
+                                <div role="tabpanel" class="tab-pane fade" id="nav-3">
+                                    <!-- *************************************************************************************************************************** -->
+                                    <!-- Mensaje de Respuesta - Inicio -->
+                                    <div id="ResponseMsg-3"></div>
+                                    <!-- Mensaje de Respuesta - Fin -->
+                                    <form id="statesForm-3" action="javascript:alert( 'success!' );">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Configuration Id</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <select class="form-control" id="config_id-3" name="std_config_id"> </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>State Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_number-3" class="form-control" name="std_number" autocomplete="off" value="000" maxlength="3" tabindex="1" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>State Type</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <select id="statesList-3" class="form-control js-select2 select2-hidden-accessible" name="std_type" data-select2-id="input-group" tabindex="2" aria-hidden="true"></select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_desc-3" class="form-control" name="std_desc" autocomplete="off" value="Time Out" placeholder="Description" tabindex="3" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_1_title-3">Screen Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s1-3" class="form-control" name="std_s1" autocomplete="off" value="000" placeholder="Screen Number" tabindex="4" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_2_title-3">Good Read Next State</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s2-3" class="form-control" name="std_s2" autocomplete="off" value="000" placeholder="Good Read Next State" tabindex="5" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_3_title-3">Error Screen Number</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s3-3" class="form-control" name="std_s3" autocomplete="off" value="000" placeholder="Error Screen Number" tabindex="6" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_4_title-3">Read Condition 1</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s4-3" class="form-control" name="std_s4" autocomplete="off" value="000" placeholder="Read Condition 1" tabindex="7" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_5_title-3">Read Condition 2</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s5-3" class="form-control" name="std_s5" autocomplete="off" value="000" placeholder="Read Condition 2" tabindex="8" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_6_title-3">Read Condition 3</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s6-3" class="form-control" name="std_s6" autocomplete="off" value="000" placeholder="Read Condition 3" tabindex="9" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_7_title-3">Card Return Flag</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s7-3" class="form-control" name="std_s7" autocomplete="off" value="000" placeholder="Card Return Flag" tabindex="10" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label id="sta_8_title-3">No FIT Match Next State</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-edit fa-fw"></i>
+                                                        </span>
+                                                        <input type="text" id="std_s8-3" class="form-control" name="std_s8" autocomplete="off" value="000" placeholder="No FIT Match Next State" tabindex="11" aria-hidden="true" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- *************************************************************************************************************************** -->
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-success" value="create" tabindex="11" aria-hidden="true">Create</button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-success" value="update" tabindex="12" aria-hidden="true">Update</button>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <button type="submit" class="btn btn-danger" value="delete" tabindex="13" aria-hidden="true">Delete</button>
+                                            </div>
+                                        </div>
+                                        <!-- *************************************************************************************************************************** -->
+                                    </form>
+                                </div>
+                                <!-- form de Estado - Fin -->
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            <!-- _states.jsp - Fin -->
+        </div>
+
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <!-- endinject -->
+        <!-- Plugin js for this page-->
+        <!-- End plugin js for this page-->
+        <!-- inject:js -->
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <!-- End custom js for this page-->
+
+        <!-- Scripts for Auto Search -->
+        <script type="text/javascript" src="/atm-driver-web-assets/vendors/js/jquery-2.2.4.min.js"></script>
+        <script type="text/javascript" src="/atm-driver-web-assets/vendors/bootstrap-4.5.3-dist/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" src="/atm-driver-web-assets/vendors/multiselect/js/bootstrap-multiselect.js"></script>
+        <script type="text/javascript" src="/atm-driver-web-assets/vendors/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="/atm-driver-web-assets/vendors/js/formToJson.min.js"></script>
+        <script type="text/javascript" src="/atm-driver-web-assets/vendors/js/js.cookie.js"></script>
+
+        <script type="text/javascript" src="/atm-driver-web-assets/js/jquery.atm.state.js"></script>
+        <script>
+            $("6c1f578b-40a5-4a51-a177-f6e5be1f1150").ready(function () {
+                console.log("state.jsp Line 11");
+                const state = new ATMState();
+	            state.setJWT("qwerty-dummy-jwt");
+	            state.setBaseURL("/jpos/api");
+                state.init();
+            });
+        </script>
+    </body>
+</html>
