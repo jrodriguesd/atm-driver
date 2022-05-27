@@ -22,15 +22,17 @@
 package org.jpos.atmc.ndc.Customizarion;
 
 import org.jpos.atmc.model.ATM;
+import org.jpos.transaction.Context;
 
 public class GetConfigId implements GetSection 
 {
 	private String lastConfigIdSend = "0000";
 
 	@Override
-	public String getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
+	public String getNextCustomizationMsg(Context ctx, String lastNumber) 
 	{
-		final String x1c = new String(new byte[] { 0x1c });
+        ATM atm = (ATM) ctx.get ("atm");
+        final String x1c = new String(new byte[] { 0x1c });
 
 		StringBuilder sb = new StringBuilder();
 		sb.append("3 16");

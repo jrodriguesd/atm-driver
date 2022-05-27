@@ -17,6 +17,11 @@ buildscript {
 
 apply plugin: "org.flywaydb.flyway"
 
+compileJava {
+//    options.compilerArgs << '-Xlint'
+}
+
+
 dependencies 
 {
     implementation 'com.openpojo:openpojo:0.9.1'

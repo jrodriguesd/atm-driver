@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema id='AH'>
+    <field id="response-code"                type="N" length="2"  />
+    <field id="stored-key-scheme"            type="A" length="1"  />
+    <field id="stored-key"                   type="A" length="32" />
+    <field id="xxxxx"                        type="A" length="16" />
+</schema>

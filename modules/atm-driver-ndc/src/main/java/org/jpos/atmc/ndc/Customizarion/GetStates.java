@@ -28,6 +28,7 @@ import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.model.State;
 import org.jpos.atmc.util.Log;
 import org.jpos.ee.DB;
+import org.jpos.transaction.Context;
 
 public class GetStates implements GetSection 
 {
@@ -58,8 +59,10 @@ public class GetStates implements GetSection
 	
 	
 	@Override
-	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
+	public String getNextCustomizationMsg(Context ctx, String lastNumber) 
 	{
+        ATM atm = (ATM) ctx.get ("atm");
+    	String configId = atm.getConfigId();
     	try 
 		{
 			List<State> states = DB.exec(db -> new StateManager(db).getByConfigId(MAX_STATES_BY_CUSTOMIZATION_MSG, configId, lastNumber) );       

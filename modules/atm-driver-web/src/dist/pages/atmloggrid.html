@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="/atm-driver-web-assets/vendors/multiselect/css/bootstrap-multiselect.css">
         <link rel="stylesheet" href="/atm-driver-web-assets/css/screen.css">
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css">
+        <link rel="stylesheet" href="/atm-driver-web-assets/vendors/jqGrid-4.15.5/css/ui.jqgrid.min.css">
         <style type="text/css" media="screen">
             /* Bump up the font-size in the grid */
             .ui-jqgrid,
@@ -47,50 +47,363 @@
         <script type="text/javascript" src="/atm-driver-web-assets/vendors/js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="/atm-driver-web-assets/vendors/js/formToJson.min.js"></script>
         <script type="text/javascript" src="/atm-driver-web-assets/vendors/js/js.cookie.js"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js"></script>
+        <script type="text/javascript" src="/atm-driver-web-assets/vendors/jqGrid-4.15.5/js/jquery.jqgrid.min.js"></script>
     	<!-- 
     	  *******************************************************************************
     	  * https://free-jqgrid.github.io/getting-started/index.html
     	  *******************************************************************************
     	  -->
         <script>
+            $.jgrid = $.jgrid || {};
+            $.jgrid.no_legacy_api = true;
+            $.jgrid.useJSON = true;
+        </script>
+        <!--<script src="jqGrid/js/jquery.jqGrid.src.js"></script>-->
+        <script src="http://rawgit.com/free-jqgrid/jqGrid/master/js/jquery.jqgrid.src.js"></script>
+        <script>
         //<![CDATA[
-        function linkFormatter (cellvalue, options, rowObject)
-        {
-    	   return "<a target=\"_parent\" href=\"/jpos/#!/atmlog/" + cellvalue + "\">" + cellvalue + "</a>";
-        }
-    
+        /*global $ */
+        /*jslint browser: true */
         $(function () {
             "use strict";
-            $("#list_records").jqGrid({
-                url: 'http://localhost:8080/jpos/api/atmlogs/atmLoGrid', 
-                loadBeforeSend: function (jqXHR) {
-                    jqXHR.setRequestHeader("Authorization", 'Bearer ' + 'qwerty-dummy-jwt' );
+            var myData = [
+                    {atmlog_id: 1, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"12", atmlog_atm_request_dt:"2022-05-14 07:10:16.647 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id: 2, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:16.697 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id: 3, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:17.064 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id: 4, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:17.560 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id: 5, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:18.235 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id: 6, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:19.086 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id: 7, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:20.090 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id: 8, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:21.289 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id: 9, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:22.715 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:10, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:24.293 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:11, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:26.065 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:12, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:28.054 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:13, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:29.737 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:14, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:37.550 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:15, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:38.693 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:16, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:39.696 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:17, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:40.829 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:18, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:41.878 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:19, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:42.578 PM America/Caracas", atmlog_card:null, atmlog_amount:null},
+	     			{atmlog_id:20, atmlog_ip:"127.0.0.1", atmlog_luno:"001", atmlog_message_class:"22", atmlog_atm_request_dt:"2022-05-14 07:10:44.193 PM America/Caracas", atmlog_card:null, atmlog_amount:null}
+                ],
+                $grid = $("#list"),
+                initDateSearch = function (elem) {
+                    $(elem).datepicker({
+                        dateFormat: "dd-M-yy",
+                        autoSize: true,
+                        changeYear: true,
+                        changeMonth: true,
+                        showButtonPanel: true,
+                        showWeek: true,
+                        onSelect: function () {
+                            if (this.id.substr(0, 3) === "gs_") {
+                                setTimeout(function () {
+                                    $(elem).closest("div.ui-jqgrid-hdiv").next("div.ui-jqgrid-bdiv").find("table.ui-jqgrid-btable").first()[0].triggerToolbar();
+                                }, 50);
+                            } else {
+                                // to refresh the filter
+                                $(this).trigger("change");
+                            }
+                        }
+                    });
                 },
-                mtype: 'GET',
-                datatype: 'json',
-                colModel: [
-    				{ name: "atmlog_id",             label: "Id",            align: "center", width:  "80", formatter:linkFormatter },
-    				{ name: "atmlog_ip",             label: "Ip",            align: "center", width: "120"},
+                numberSearchOptions = ["eq", "ne", "lt", "le", "gt", "ge", "nu", "nn", "in", "ni"],
+                numberTemplate = {formatter: "number", align: "right", sorttype: "number",
+                searchoptions: { sopt: numberSearchOptions }},
+                myDefaultSearch = "cn",
+                refreshSerchingToolbar = function ($grid, myDefaultSearch) {
+                    var p = $grid.jqGrid("getGridParam"), postData = p.postData, filters, i, l,
+                        rules, rule, iCol, cm = p.colModel,
+                        cmi, control, tagName;
+        
+                    for (i = 0, l = cm.length; i < l; i++) {
+                        control = $("#gs_" + $.jgrid.jqID(cm[i].name));
+                        if (control.length > 0) {
+                            tagName = control[0].tagName.toUpperCase();
+                            if (tagName === "SELECT") { // && cmi.stype === "select"
+                                control.find("option[value='']")
+                                    .attr("selected", "selected");
+                            } else if (tagName === "INPUT") {
+                                control.val("");
+                            }
+                        }
+                    }
+        
+                    if (typeof (postData.filters) === "string" &&
+                            typeof ($grid[0].ftoolbar) === "boolean" && $grid[0].ftoolbar) {
+        
+                        filters = $.parseJSON(postData.filters);
+                        if (filters && filters.groupOp === "AND" && filters.groups === undefined) {
+                            // only in case of advance searching without grouping we import filters in the
+                            // searching toolbar
+                            rules = filters.rules;
+                            for (i = 0, l = rules.length; i < l; i++) {
+                                rule = rules[i];
+                                iCol = p.iColByName[rule.field];
+                                if (iCol >= 0) {
+                                    cmi = cm[iCol];
+                                    control = $("#gs_" + $.jgrid.jqID(cmi.name));
+                                    if (control.length > 0 &&
+                                            (((cmi.searchoptions === undefined ||
+                                            cmi.searchoptions.sopt === undefined)
+                                            && rule.op === myDefaultSearch) ||
+                                              (typeof (cmi.searchoptions) === "object" &&
+                                                  $.isArray(cmi.searchoptions.sopt) &&
+                                                  cmi.searchoptions.sopt.length > 0 &&
+                                                  cmi.searchoptions.sopt[0] === rule.op))) {
+                                        tagName = control[0].tagName.toUpperCase();
+                                        if (tagName === "SELECT") { // && cmi.stype === "select"
+                                            control.find("option[value='" + $.jgrid.jqID(rule.data) + "']")
+                                                .attr("selected", "selected");
+                                        } else if (tagName === "INPUT") {
+                                            control.val(rule.data);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                linkFormatter = function (cellvalue, options, rowObject)
+                {
+    	           return "<a target=\"_parent\" href=\"/jpos/#!/atmlog/" + cellvalue + "\">" + cellvalue + "</a>";
+                },
+                cm = [
+        			{ name: "atmlog_id",             label: "Id",            align: "center", width:  "80", formatter:linkFormatter },
+        			{ name: "atmlog_ip",             label: "Ip",            align: "center", width: "120"},
                     { name: "atmlog_luno",           label: "Luno",          align: "center", width:  "80"},
                     { name: "atmlog_message_class",  label: "Msg Class",     align: "center", width:  "80"},
                     { name: "atmlog_atm_request_dt", label: "Request Time",  align: "left",   width: "310"},
                     { name: "atmlog_card",           label: "Card Number",   align: "left",   width: "160"},
                     { name: "atmlog_amount",         label: "Amount",        align: "rigth",  width: "120"}
                 ],
-			    pager: "#perpage",
-			    rowNum: 20,
+				convertFiltersToVars = function (posData) {
+					var filtersStr = posData.filters;
+					if (filtersStr !== undefined && filtersStr !== null)
+					{
+					    var filters = $.parseJSON(filtersStr);
+				        console.log(filters);
+				        console.log(filters.groupOp);
+                        var rules = filters.rules;
+					    console.log(rules);
+                        for (let i = 0, l = rules.length; i < l; i++) {
+                            var rule = rules[i];
+				            console.log("field " + rule.field);
+					    }
+					}
+					// delete posData["filters"];
+					return posData;
+				},
+                saveObjectInLocalStorage = function (storageItemName, object) {
+                    if (window.localStorage !== undefined) {
+                        window.localStorage.setItem(storageItemName, JSON.stringify(object));
+                    }
+                },
+                removeObjectFromLocalStorage = function (storageItemName) {
+                    if (window.localStorage !== undefined) {
+                        window.localStorage.removeItem(storageItemName);
+                    }
+                },
+                getObjectFromLocalStorage = function (storageItemName) {
+                    if (window.localStorage !== undefined) {
+                        return $.parseJSON(window.localStorage.getItem(storageItemName));
+                    }
+                },
+                myColumnStateName = function (grid) {
+                    return parent.window.location.href + "#" + grid[0].id;
+                },
+                idsOfSelectedRows = [],
+                getColumnNamesFromColModel = function () {
+                    var colModel = this.jqGrid("getGridParam", "colModel");
+                    return $.map(colModel, function (cm, iCol) {
+                        // we remove "rn", "cb", "subgrid" columns to hold the column information 
+                        // independent from other jqGrid parameters
+                        return $.inArray(cm.name, ["rn", "cb", "subgrid"]) >= 0 ? null : cm.name;
+                    });
+                },
+                saveColumnState = function () {
+                    var p = this.jqGrid("getGridParam"), colModel = p.colModel, i, l = colModel.length, colItem, cmName,
+                        postData = p.postData,
+                        columnsState = {
+                            search: p.search,
+                            page: p.page,
+                            rowNum: p.rowNum,
+                            sortname: p.sortname,
+                            sortorder: p.sortorder,
+                            cmOrder: getColumnNamesFromColModel.call(this),
+                            selectedRows: idsOfSelectedRows,
+                            colStates: {}
+                        },
+                        colStates = columnsState.colStates;
+        
+                    if (postData.filters !== undefined) {
+                        columnsState.filters = postData.filters;
+                    }
+        
+                    for (i = 0; i < l; i++) {
+                        colItem = colModel[i];
+                        cmName = colItem.name;
+                        if (cmName !== "rn" && cmName !== "cb" && cmName !== "subgrid") {
+                            colStates[cmName] = {
+                                width: colItem.width,
+                                hidden: colItem.hidden
+                            };
+                        }
+                    }
+                    saveObjectInLocalStorage(myColumnStateName(this), columnsState);
+                },
+                myColumnsState,
+                isColState,
+                restoreColumnState = function (colModel) {
+                    var colItem, i, l = colModel.length, colStates, cmName,
+                        columnsState = getObjectFromLocalStorage(myColumnStateName(this));
+        
+                    if (columnsState) {
+                        colStates = columnsState.colStates;
+                        for (i = 0; i < l; i++) {
+                            colItem = colModel[i];
+                            cmName = colItem.name;
+                            if (cmName !== "rn" && cmName !== "cb" && cmName !== "subgrid") {
+                                colModel[i] = $.extend(true, {}, colModel[i], colStates[cmName]);
+                            }
+                        }
+                    }
+                    return columnsState;
+                },
+                updateIdsOfSelectedRows = function (id, isSelected) {
+                    var index = $.inArray(id, idsOfSelectedRows);
+                    if (!isSelected && index >= 0) {
+                        idsOfSelectedRows.splice(index, 1); // remove id from the list
+                    } else if (index < 0) {
+                        idsOfSelectedRows.push(id);
+                    }
+                },
+                firstLoad = true;
+        
+            myColumnsState = restoreColumnState.call($grid, cm);
+            isColState = myColumnsState !== undefined && myColumnsState !== null;
+            idsOfSelectedRows = isColState && myColumnsState.selectedRows !== undefined ? myColumnsState.selectedRows : [];
+        
+            $grid.jqGrid({
+                url: 'http://localhost:8080/jpos/api/atmlogs/atmLogGrid', 
+                loadBeforeSend: function (jqXHR) {
+                    jqXHR.setRequestHeader("Authorization", 'Bearer ' + 'qwerty-dummy-jwt' );
+                },
+                mtype: 'GET',
+                datatype: 'json',
+                // datatype: "local",
+                // data: myData,
+				viewrecords : true,
+                colModel: cm,
+                rowNum: isColState ? myColumnsState.rowNum : 10,
+                rowNum: 20,
 			    rowList: [10,20],
+                pager: true,
+                gridview: true,
+                page: isColState ? myColumnsState.page : 1,
+                search: isColState ? myColumnsState.search : false,
+                postData: isColState ? { filters: myColumnsState.filters } : {},
 			    sortname: "atmlog_id",
 			    sortorder: "asc",
-			    height: 'auto',
-			    viewrecords: true,
-			    gridview: true,
-			    caption: "",
+                // rownumbers: true,
+                ignoreCase: true,
+                iconSet: "fontAwesome",
+                shrinkToFit: false,
+                autoResizing: { compact: true },
                 guiStyle: "bootstrap",
-                iconSet: "fontAwesome"
-            }).jqGrid("filterToolbar");
+                iconSet: "fontAwesome",
+                //multiselect: true,
+                //shrinkToFit: false,
+                //viewrecords: true,
+                caption: "The usage of localStorage to save jqGrid preferences",
+                height: "auto",
+                onSelectRow: function (id, isSelected) {
+                    updateIdsOfSelectedRows(id, isSelected);
+                    saveColumnState.call($grid, $grid[0].p.remapColumns);
+                },
+                sortable: {
+                    update: function () {
+                        saveColumnState.call($grid);
+                    },
+                    options: {
+                        opacity: 0.8
+                    }
+                },
+                onSelectAll: function (aRowids, isSelected) {
+                    var i, count, id;
+                    for (i = 0, count = aRowids.length; i < count; i++) {
+                        id = aRowids[i];
+                        updateIdsOfSelectedRows(id, isSelected);
+                    }
+                    saveColumnState.call($grid, $grid[0].p.remapColumns);
+                },
+                loadComplete: function () {
+                    var $this = $(this), p = $this.jqGrid("getGridParam"), i, count;
+        
+                    if (firstLoad) {
+                        firstLoad = false;
+                        if (isColState && myColumnsState.cmOrder != null && myColumnsState.cmOrder.length > 0) {
+                            // We compares the values from myColumnsState.cmOrder array
+                            // with the current names of colModel and remove wrong names. It could be
+                            // required if the column model are changed and the values from the saved stated
+                            // not corresponds to the 
+                            var fixedOrder = $.map(myColumnsState.cmOrder, function (name) {
+                                    return p.iColByName[name] === undefined ? null : name;
+                                });
+                            $this.jqGrid("remapColumnsByName", fixedOrder, true);
+                        }
+                        if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
+                            // create toolbar if needed
+                            // $this.jqGrid("filterToolbar");
+                            $this.jqGrid("filterToolbar",
+                                {stringResult: true, searchOnEnter: true, defaultSearch: myDefaultSearch});
+                        }
+                    }
+                    refreshSerchingToolbar($this, myDefaultSearch);
+                    for (i = 0, count = idsOfSelectedRows.length; i < count; i++) {
+                        $this.jqGrid("setSelection", idsOfSelectedRows[i], false);
+                    }
+                    saveColumnState.call($this, this.p.remapColumns);
+                },
+                resizeStop: function () {
+                    saveColumnState.call($grid, $grid[0].p.remapColumns);
+                }
+            });
+            $.extend($.jgrid.search, {
+                multipleSearch: true,
+                multipleGroup: true,
+                //recreateFilter: true,
+                closeOnEscape: true,
+                closeAfterSearch: true//,
+                //overlay: 0
+            });
+            $grid.jqGrid("navGrid", {edit: false, add: false, del: false, search:false});
+            // $grid.jqGrid("navButtonAdd", {
+            //     caption: "",
+            //     buttonicon: "fa-table",
+            //     title: "Choose columns",
+            //     onClickButton: function () {
+            //         $(this).jqGrid("columnChooser", {
+            //             done: function (perm) {
+            //                 if (perm) {
+            //                     this.jqGrid("remapColumns", perm, true);
+            //                     saveColumnState.call(this);
+            //                 }
+            //             }
+            //         });
+            //     }
+            // });
+            $grid.jqGrid("navButtonAdd", {
+                caption: "",
+                buttonicon: "fa-times",
+                title: "Clear saved grid's settings",
+                onClickButton: function () {
+                    removeObjectFromLocalStorage(myColumnStateName($(this)));
+                    window.location.reload();
+                }
+            });
         });
         //]]>
         </script>
@@ -102,8 +415,9 @@
             </div>
         </div>
 		<center>
-            <table id="list_records"><tr><td></td></tr></table> 
-		    <div id="perpage"></div>
+            <div id="outerDiv" style="margin: 5px;">
+                <table id="list"></table>
+            </div>
 		</center>
     </body>
 </html>

@@ -110,8 +110,8 @@ public class ATM implements Serializable {
 	@Column(name="atm_master_key", length=64)
 	private String masterKey;
 
-	@Column(name="atm_communications_key", length=64)
-	private String communicationsKey;
+	@Column(name="atm_pin_key", length=64)
+	private String pinKey;
 
 	@Column(name="atm_mac_key", length=64)
 	private String macKey;
@@ -469,17 +469,17 @@ public class ATM implements Serializable {
 	}
 
 	/**
-	 * @return the communicationsKey
+	 * @return the pinKey
 	 */
-	public String getCommunicationsKey() {
-		return communicationsKey;
+	public String getPinKey() {
+		return pinKey;
 	}
 
 	/**
-	 * @param communicationsKey the communicationsKey to set
+	 * @param pinKey the pinKey to set
 	 */
-	public void setCommunicationsKey(String communicationsKey) {
-		this.communicationsKey = communicationsKey;
+	public void setPinKey(String pinKey) {
+		this.pinKey = pinKey;
 	}
 
 	/**

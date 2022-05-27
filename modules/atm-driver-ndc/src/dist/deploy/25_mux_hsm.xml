@@ -1,0 +1,6 @@
+<mux class="org.jpos.q2.iso.QMUX" logger="Q2" name="jPOS-HSM">
+  <key>0</key>
+  <in>hsm-receive</in>
+  <out>hsm-send</out>
+  <ready>hsm-channel.ready</ready>
+</mux>

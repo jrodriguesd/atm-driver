@@ -90,11 +90,12 @@ public class ATMRequestListener extends org.jpos.util.Log implements ISORequestL
         return true;
     }
 
-    public void setConfiguration (Configuration cfg) throws ConfigurationException
+    @SuppressWarnings("unchecked")
+	public void setConfiguration (Configuration cfg) throws ConfigurationException
     {
     	debug("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
         timeout  = cfg.getLong ("timeout", 15000L);
-        sp = (Space<String,Context>) SpaceFactory.getSpace (cfg.get ("space"));
+        sp = SpaceFactory.getSpace (cfg.get ("space"));
         queue = cfg.get ("queue", null);
         if (queue == null)
             throw new ConfigurationException ("queue property not specified");

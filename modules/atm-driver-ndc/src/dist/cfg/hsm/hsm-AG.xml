@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema id='AG'>
+    <field id="TMK"                  type="A" length="33" />
+    <field id="TAK"                  type="A" length="33" />
+    <field id="delimiter"            type="A" length="1"  />
+    <field id="key-scheme-tmk"       type="A" length="1"  />
+    <field id="key-scheme-lmk"       type="A" length="1"  />
+    <field id="key-check-value-type" type="N" length="2"  />
+</schema>

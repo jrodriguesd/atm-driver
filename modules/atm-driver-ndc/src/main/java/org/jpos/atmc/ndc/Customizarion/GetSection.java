@@ -22,10 +22,11 @@
 package org.jpos.atmc.ndc.Customizarion;
 
 import org.jpos.atmc.model.ATM;
+import org.jpos.transaction.Context;
 
 public interface GetSection     
 {
-	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber); 
+	public String  getNextCustomizationMsg(Context ctx, String lastNumber); 
 	public String  getLastKeySend();
 	public String  getLastKey(ATM atm, String configId);
 }

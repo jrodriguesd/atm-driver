@@ -30,6 +30,7 @@ import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 import org.jpos.ee.DB;
 import org.jpos.iso.ISOUtil;
+import org.jpos.transaction.Context;
 
 public class GetCurrencyCassetteMapping implements GetSection 
 {
@@ -60,8 +61,9 @@ public class GetCurrencyCassetteMapping implements GetSection
 	}
 
 	@Override
-	public String getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
+	public String getNextCustomizationMsg(Context ctx, String lastNumber) 
 	{
+        ATM atm = (ATM) ctx.get ("atm");
 		try 
 		{
 			List<Cassette> casssetes = DB.exec(db -> new CassetteManager(db).getByLuno(atm.getLuno() ) );

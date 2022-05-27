@@ -21,22 +21,44 @@
  */
 package org.jpos.atmc.ndc.Customizarion;
 
+import org.jpos.atmc.hsm.HsmFactory;
+import org.jpos.atmc.hsm.HsmThales;
+import org.jpos.atmc.hsm.HsmType;
+import org.jpos.atmc.hsm.KeyType;
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
+import org.jpos.transaction.Context;
 
 public class GetMACKeyChange implements GetSection 
 {
 	private String lastNumberSend = "000";
 
 	@Override
-	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
+	public String getNextCustomizationMsg(Context ctx, String lastNumber) 
 	{
-		String Clearkey  = atm.getMasterKey();
-		String EncKey    = Crypto.encypt( atm.getMacKey(), Clearkey);
-		String decEncKey = Util.hex2dec(EncKey);
+        ATM atm = (ATM) ctx.get ("atm");
+		// String Clearkey  = atm.getMasterKey();
+		// String EncKey    = Crypto.encypt( atm.getMacKey(), Clearkey);
+		String newMacKey = "U2C4EE0409D76A2D2139802D4C15B9FF0";
 		String msgOut;
+
+		String generatedMasterKey = HsmFactory.getInstance(HsmType.getCurrent()).generateKey(KeyType.TAK);
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " generatedMasterKey " + generatedMasterKey );
+        if (generatedMasterKey != null)
+        	newMacKey = generatedMasterKey;
+
+		String newKey = HsmFactory.getInstance(HsmType.getCurrent()).getTAKUnderTMK(atm.getMasterKey(), newMacKey);
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " newKey " + newKey );
+		String decEncKey = null;
+		if (newKey != null)
+			decEncKey = Util.hex2dec(newKey);
+		else
+			return null;
+
+		atm.setMacKey(newMacKey);
+		ctx.put("atm", atm);
 
 		StringBuilder sb = new StringBuilder();
 

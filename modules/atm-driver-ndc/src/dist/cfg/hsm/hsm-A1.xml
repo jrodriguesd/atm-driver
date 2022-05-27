@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema id='A1'>
+    <field id="response-code"   type="N" length="2"  />
+    <field id="key"             type="N" length="33" />
+</schema>

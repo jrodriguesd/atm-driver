@@ -46,6 +46,7 @@ public class ATMLogWSEndpoint {
 
 	@GET
     @Path("/{id}")
+	@JWTTokenNeeded
 	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public ATMLog getById(@PathParam("id")Long id) 
 	{
@@ -74,9 +75,9 @@ public class ATMLogWSEndpoint {
 	}
 
 	@GET
-    @Path("/atmLoGrid")
-	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
+    @Path("/atmLogGrid")
 	@JWTTokenNeeded
+	@Produces(MediaType.APPLICATION_JSON + ";charset=utf-8")
     public AtmLogGrid atmLoGrid(@Context UriInfo uriInfo) 
 	{
 		MultivaluedMap<String, String> queryParams = uriInfo.getQueryParameters(); 

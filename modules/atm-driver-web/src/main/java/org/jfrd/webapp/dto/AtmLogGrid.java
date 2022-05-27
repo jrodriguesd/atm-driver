@@ -33,7 +33,8 @@ import org.jpos.atmc.model.Screen;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 import org.jpos.ee.DB;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jpos.atmc.dao.ATMLogManager;
 
 import org.jpos.atmc.model.ATMLog;
@@ -113,10 +114,36 @@ public class AtmLogGrid {
 		this.rows = rows;
 	}
 
-	private static List<String> reservedParamNames = Arrays.asList("nd", "page", "sord", "rows", "_search", "sidx");
+	// private static List<String> reservedParamNames = Arrays.asList("nd", "page", "sord", "rows", "_search", "sidx");
 	
-	private static String buildWhereCondition(MultivaluedMap<String, String> queryParams)
+	private static String buildWhereCondition(String filtersStr)
 	{
+		if (filtersStr == null || filtersStr.length() <= 1 ) return "";
+
+        JSONObject filters = new JSONObject(filtersStr);
+        JSONArray rules = filters.getJSONArray("rules");
+        
+		StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < rules.length(); i++)
+        {
+            String field = rules.getJSONObject(i).getString("field");
+    		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " field " + field );
+            String op = rules.getJSONObject(i).getString("op");
+    		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " op " + op );
+            String data = rules.getJSONObject(i).getString("data");
+    		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " data " + data );
+
+    		if (sb.length() > 0)
+    			sb.append(" AND ");
+        
+    		sb.append(field + " LIKE '%" + data + "%'");
+        }        
+		if (sb.length() > 0)
+            return " where " + sb.toString();
+		else
+			return "";
+
+        /*		
 		StringBuilder sb = new StringBuilder();
         for (String paramName: queryParams.keySet()) {
         	
@@ -134,20 +161,22 @@ public class AtmLogGrid {
             return " where " + sb.toString();
 		else
 			return "";
+		*/
 	}
 	
 	
 	public static AtmLogGrid getAtmLogGrid(MultivaluedMap<String, String> queryParams) {
         String sidx = queryParams.getFirst("sidx");                        // $_GET['sidx']; 
         String sord = queryParams.getFirst("sord");                        // $_GET['sord'];
+        String filtersStr = queryParams.getFirst("filters");
         String orderBy = sidx + " " + sord; 
         
-        String whereCondition = buildWhereCondition(queryParams);
+        String whereCondition = buildWhereCondition(filtersStr);
 
-        int page       = Util.str2Int( queryParams.getFirst("page") );     // $_GET['page']; 
-        int limit      = Util.str2Int(  queryParams.getFirst("rows") );    // $_GET['rows'];
-        int recordCount      = 0;
-        int totalPages = 0;
+        int page        = Util.str2Int( queryParams.getFirst("page") );    // $_GET['page']; 
+        int limit       = Util.str2Int(  queryParams.getFirst("rows") );   // $_GET['rows'];
+        int recordCount = 0;
+        int totalPages  = 0;
 
     	try 
 		{

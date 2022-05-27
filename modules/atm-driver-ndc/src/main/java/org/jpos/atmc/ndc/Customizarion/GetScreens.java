@@ -29,6 +29,7 @@ import org.jpos.atmc.model.Screen;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 import org.jpos.ee.DB;
+import org.jpos.transaction.Context;
 
 public class GetScreens implements GetSection 
 {
@@ -74,8 +75,10 @@ public class GetScreens implements GetSection
 	}
 
 	@Override
-	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
+	public String getNextCustomizationMsg(Context ctx, String lastNumber) 
 	{
+        ATM atm = (ATM) ctx.get ("atm");
+    	String configId = atm.getConfigId();
     	try 
 		{
 			List<Screen> screens = DB.exec(db -> new ScreenManager(db).getByConfigId(MAX_SCREENS_BY_CUSTOMIZATION_MSG, configId, lastNumber) );       

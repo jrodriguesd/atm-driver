@@ -21,22 +21,45 @@
  */
 package org.jpos.atmc.ndc.Customizarion;
 
+import org.jpos.atmc.hsm.HsmFactory;
+import org.jpos.atmc.hsm.HsmThales;
+import org.jpos.atmc.hsm.HsmType;
+import org.jpos.atmc.hsm.KeyType;
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
+import org.jpos.ee.DB;
+import org.jpos.transaction.Context;
 
 public class GetMasterKeyChange implements GetSection 
 {
 	private String lastNumberSend = "000";
 
 	@Override
-	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
+	public String getNextCustomizationMsg(Context ctx, String lastNumber) 
 	{
-		String Clearkey  = atm.getMasterKey();
-		String EncKey    = Crypto.encypt( atm.getMasterKey(), Clearkey);
-		String decEncKey = Util.hex2dec(EncKey);
+        ATM atm = (ATM) ctx.get ("atm");
+		// String Clearkey  = atm.getMasterKey();
+		// String EncKey    = Crypto.encypt( atm.getMasterKey(), Clearkey);
+		String newMasterKey = "U23F6C66EF9134D69638EC04F87CD2C9A";
 		String msgOut;
+
+		String generatedMasterKey = HsmFactory.getInstance(HsmType.getCurrent()).generateKey(KeyType.TMK);
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " generatedMasterKey " + generatedMasterKey );
+        if (generatedMasterKey != null)
+        	newMasterKey = generatedMasterKey;
+
+		String newKey = HsmFactory.getInstance(HsmType.getCurrent()).getTMKUnderTMK(atm.getMasterKey(), newMasterKey);
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " newKey " + newKey );
+		String decEncKey = null;
+		if (newKey != null)
+			decEncKey = Util.hex2dec(newKey);
+		else
+			return null;
+
+		atm.setMasterKey(newMasterKey);
+		ctx.put("atm", atm);
 
 		StringBuilder sb = new StringBuilder();
 

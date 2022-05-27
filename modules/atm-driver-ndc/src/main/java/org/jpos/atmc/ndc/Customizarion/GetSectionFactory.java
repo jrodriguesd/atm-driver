@@ -37,8 +37,8 @@ public class GetSectionFactory
 		    	return new GetFits();
 		    case MASTER_KEY_CHANGE:
 		    	return new GetMasterKeyChange();
-		    case COMMUNICATIONS_KEY_CHANGE:
-		    	return new GetCommunicationsKeyChange();
+		    case PIN_KEY_CHANGE:
+		    	return new GetPinKeyChange();
 		    case MAC_KEY_CHANGE:
 		    	return new GetMACKeyChange();
 		    case CONFIGID:

@@ -60,6 +60,8 @@ dependencies
     providedCompile 'org.mariadb.jdbc:mariadb-java-client:3.0.3'
 
     providedCompile 'io.jsonwebtoken:jjwt:0.9.1'
+
+    providedCompile 'org.json:json:20220320'
 }
 
 war 

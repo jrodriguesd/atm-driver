@@ -150,7 +150,7 @@ public class NDCSendCustomisationCoordinator
 	    sendMessage(ctx, strMsgClas, null, msgLine);
     }
 
-    public String getNextCustomizationMsg()
+    public String getNextCustomizationMsg(Context ctx)
     {
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " this.customizarionSection " + this.customizarionSection);
         
@@ -158,7 +158,8 @@ public class NDCSendCustomisationCoordinator
     	String configId = this.atm.getConfigId();
         if (customization != null)
         {
-        	String custMsg = customization.getNextCustomizationMsg(atm, configId, this.lastKeySend);
+        	// String custMsg = customization.getNextCustomizationMsg(atm, configId, this.lastKeySend);
+        	String custMsg = customization.getNextCustomizationMsg(ctx, this.lastKeySend);
         	this.lastKeySend = customization.getLastKeySend();
 
         	if ( this.lastKey.equals(this.lastKeySend) )
@@ -178,7 +179,7 @@ public class NDCSendCustomisationCoordinator
 
     public void sendNextCustomizationMsg(Context ctx) throws IOException
     {
-    	String nextCustomizationMsg = getNextCustomizationMsg();
+    	String nextCustomizationMsg = getNextCustomizationMsg(ctx);
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " nextCustomizationMsg>" + nextCustomizationMsg + "<");
     	if (nextCustomizationMsg != null)
     	{

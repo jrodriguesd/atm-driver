@@ -29,6 +29,7 @@ import org.jpos.atmc.model.Fit;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 import org.jpos.ee.DB;
+import org.jpos.transaction.Context;
 
 public class GetFits implements GetSection  
 {
@@ -70,8 +71,10 @@ public class GetFits implements GetSection
 	}
 
 	@Override
-	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
+	public String getNextCustomizationMsg(Context ctx, String lastNumber) 
 	{
+        ATM atm = (ATM) ctx.get ("atm");
+    	String configId = atm.getConfigId();
     	try 
 		{
 			List<Fit> fits = DB.exec(db -> new FitManager(db).getByConfigId(MAX_FITS_BY_CUSTOMIZATION_MSG, configId, lastNumber) );       

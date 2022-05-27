@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema id='CB'>
+    <field id="response-code"                type="N" length="2"  />
+    <field id="pin-length"                   type="N" length="2"  />
+    <field id="destination-pin-block"        type="A" length="16"  />
+    <field id="destination-pin-block-format" type="A" length="2"  />
+</schema>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema id='A0'>
+    <field id="mode"       type="N" length="1" />
+    <field id="key-type"   type="N" length="3" />
+    <field id="key-scheme" type="A" length="1"  />
+</schema>

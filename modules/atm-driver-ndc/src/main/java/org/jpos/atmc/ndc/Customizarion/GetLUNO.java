@@ -22,14 +22,16 @@
 package org.jpos.atmc.ndc.Customizarion;
 
 import org.jpos.atmc.model.ATM;
+import org.jpos.transaction.Context;
 
 public class GetLUNO implements GetSection 
 {
 	private String lastNumberSend = "000";
 
 	@Override
-	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
+	public String getNextCustomizationMsg(Context ctx, String lastNumber) 
 	{
+        ATM atm = (ATM) ctx.get ("atm");
 		final String x1c = new String(new byte[] { 0x1c });
 
 		StringBuilder sb = new StringBuilder();

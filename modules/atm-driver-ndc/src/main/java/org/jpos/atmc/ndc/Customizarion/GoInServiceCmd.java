@@ -22,13 +22,14 @@
 package org.jpos.atmc.ndc.Customizarion;
 
 import org.jpos.atmc.model.ATM;
+import org.jpos.transaction.Context;
 
 public class GoInServiceCmd implements GetSection 
 {
 	private String lastNumberSend = "000";
 
 	@Override
-	public String getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
+	public String getNextCustomizationMsg(Context ctx, String lastNumber) 
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append("1 1");
