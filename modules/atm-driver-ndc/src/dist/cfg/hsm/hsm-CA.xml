@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema id='CA'>
+    <field id="source-tpk"                   type="A" length="33" />
+    <field id="destination-zpk"              type="A" length="33" />
+    <field id="maximum-pin-length"           type="N" length="2" />
+    <field id="source-pin-block"             type="A" length="16" />
+    <field id="Source PIN block format"      type="N" length="2" />
+    <field id="Destination PIN block format" type="N" length="2" />
+    <field id="Account number"               type="N" length="12" />
+</schema>

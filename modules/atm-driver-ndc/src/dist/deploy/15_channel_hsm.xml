@@ -1,0 +1,13 @@
+<channel-adaptor name='hsm-channel' class="org.jpos.q2.iso.ChannelAdaptor" logger="Q2">
+  <channel class="org.jpos.iso.channel.FSDChannel" packager="org.jpos.iso.packager.FSDPackager" logger="Q2">
+    <property name="host" value="localhost" />
+    <property name="port" value="9998" /> 
+	<property name="schema" value="file:cfg/hsm/hsm-" />
+    <property name="connection-timeout" value="15000" /> <!-- 15 seconds -->
+    <property name="timeout" value="0" />
+    <property name="keep-alive" value="true" />
+  </channel>
+  <in>hsm-send</in>
+  <out>hsm-receive</out>
+  <reconnect-delay>10000</reconnect-delay>
+</channel-adaptor>

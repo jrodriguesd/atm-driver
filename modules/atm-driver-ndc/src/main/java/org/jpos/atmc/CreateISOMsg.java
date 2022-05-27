@@ -23,8 +23,12 @@ package org.jpos.atmc;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 import org.jpos.atmc.dao.TrnDefinitionManager;
+import org.jpos.atmc.hsm.HsmFactory;
+import org.jpos.atmc.hsm.HsmThales;
+import org.jpos.atmc.hsm.HsmType;
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.model.TrnDefinition;
 import org.jpos.atmc.util.Log;
@@ -34,14 +38,17 @@ import org.jpos.core.Configurable;
 import org.jpos.core.Configuration;
 import org.jpos.core.ConfigurationException;
 import org.jpos.core.Sequencer;
+import org.jpos.core.Track2;
 import org.jpos.core.VolatileSequencer;
 import org.jpos.ee.DB;
 import org.jpos.iso.FSDISOMsg;
 import org.jpos.iso.ISODate;
+import org.jpos.iso.ISOException;
 import org.jpos.iso.ISOField;
 import org.jpos.iso.ISOMsg;
 import org.jpos.iso.ISOSource;
 import org.jpos.iso.ISOUtil;
+import org.jpos.iso.MUX;
 import org.jpos.iso.packager.ISO87APackager;
 import org.jpos.space.LocalSpace;
 import org.jpos.transaction.AbortParticipant;
@@ -49,17 +56,26 @@ import org.jpos.transaction.Context;
 import org.jpos.transaction.ContextConstants;
 import org.jpos.transaction.TransactionManager;
 import org.jpos.util.FSDMsg;
+import org.jpos.util.NameRegistrar;
 
 public class CreateISOMsg  implements AbortParticipant, Configurable 
 {
-    private String source;
-    private String request;
-    private String response;
+    private static final long DEFAULT_TIMEOUT = 30000L;
+    private static final long DEFAULT_WAIT_TIMEOUT = 3000L;
+
+    private long timeout;
+    private long waitTimeout;
+    private String sourceName;
+    private String requestName;
+    private String responseName;
     private LocalSpace isp;
-    private long timeout = 70000L;
-    private Configuration cfg; 
+    private String destination;
+    private boolean continuations;
+    private Configuration cfg;
     private HeaderStrategy headerStrategy;
-    private freemarker.template.Configuration fmCfg; 
+    // private String request;
+    private boolean ignoreUnreachable;
+    private boolean checkConnected = true;
     private boolean remote = false;
 
     private Sequencer seq = new VolatileSequencer();
@@ -94,12 +110,34 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
         return ABORTED | READONLY | NO_JOIN;
 	}
 
+	/**
+	 * This method extracts the 12 right-most digits of the account number,
+	 * execluding the check digit.
+	 * @param pan consists of the BIN (Bank Identification Number), accountNumber
+	 * and a check digit.
+	 * @return the 12 right-most digits of the account number, execluding the check digit.
+	 *         In case if account number length is lower that 12 proper count of 0 digts is added
+	 *         on the left side for align to 12
+	 */
+	public static String extractAccountNumber (String pan) {
+	  String accountNumber = null;
+	  try {
+	      accountNumber = ISOUtil.takeLastN(pan, 13);
+	      accountNumber = ISOUtil.takeFirstN(accountNumber, 12);
+	  } catch(ISOException e) {
+	      Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " exception: " + e.getMessage());
+		  e.printStackTrace(Log.out);
+	  }
+	  return accountNumber;
+	}	
+	
+	
 	@Override
 	public int prepare(long id, Serializable context) 
 	{
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
         Context ctx = (Context) context;
-        ISOSource source = (ISOSource) ctx.get (this.source);
+        ISOSource source = (ISOSource) ctx.get (this.sourceName);
 
         NDCFSDMsg msgIn = (NDCFSDMsg) ctx.get("fsdMsgIn");
 
@@ -112,9 +150,23 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
         String normalizedPIN = normalizePIN( msgIn.get("buffer-A-pin") );
         TrnDefinition td = null;
 
+        String zpk = "U85EBED468EFE917C3FA3B18174EA38E8"; // Sacarlo de la Tabla Dsstinations 
+
         try
 		{
-            td = ctx.get("transactiondefinition");  
+			String trk2 = msgIn.get("track2");
+        	trk2 = trk2.substring(1, trk2.length() - 1);
+
+        	Track2 t2 = Track2.builder().track( trk2 ).build();
+            String pan = t2.getPan(); 
+            
+            String accountNumber = extractAccountNumber(pan);
+
+    		String translatedPinBlock = HsmFactory.getInstance(HsmType.getCurrent()).translatePin(atm.getPinKey(), zpk, normalizedPIN, accountNumber);
+
+    		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " translatedPinBlock " + translatedPinBlock );
+
+        	td = ctx.get("transactiondefinition");  
 
             isoReqMsg.setMTI(td.getMTI());
             isoReqMsg.set(  3, td.getProcesingCode());
@@ -132,7 +184,7 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
             isoReqMsg.set( 42, atm.getAceptorId());        // "1234567");                                  // Card Acceptor Identification Code
 			isoReqMsg.set( 43, atm.getAddress());                                                          // ATM Address
             isoReqMsg.set( 49, td.getCurrencyCode());      // "937");                                      // Currency Code                              atm_currency 
-            isoReqMsg.set( 52, normalizedPIN );
+            isoReqMsg.set( 52, translatedPinBlock );
             isoReqMsg.set( 61, atm.getPointServData());    // "91000000025008620000000000" );              // Point-of-Service Data                      atm_point_serv_data 
             isoReqMsg.set( 63, atm.getNetworkData());      // "CI2000000000" );                            // Network Data                               atm_network_data
 		}
@@ -144,7 +196,13 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
 	            return ABORTED | READONLY | NO_JOIN;
 		}
 
-        ctx.put(request, isoReqMsg, remote); // Para Poder Usar QueryHost
+		/* Prepare Context to call QueryHost (Begin) */
+        String originalDestination = ctx.getString("orig-destination");
+        if (originalDestination != null)
+            ctx.put(destination, originalDestination, remote);
+
+        ctx.put(requestName, isoReqMsg, remote);
+		/* Prepare Context to call QueryHost (End)   */
 
         return PREPARED | READONLY;
 	}
@@ -159,11 +217,15 @@ public class CreateISOMsg  implements AbortParticipant, Configurable
     {
         Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() );
         this.cfg = cfg;
-        source   = cfg.get ("source",   ContextConstants.SOURCE.toString());
-        request  = cfg.get ("request",  ContextConstants.REQUEST.toString());
-        response = cfg.get ("response", ContextConstants.RESPONSE.toString());
-        timeout  = cfg.getLong ("timeout", timeout);
-        fmCfg = new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_30);
+        timeout = cfg.getLong ("timeout", DEFAULT_TIMEOUT);
+        waitTimeout = cfg.getLong ("wait-timeout", DEFAULT_WAIT_TIMEOUT);
+        sourceName   = cfg.get ("source",   ContextConstants.SOURCE.toString());
+        requestName = cfg.get ("request", ContextConstants.REQUEST.toString());
+        responseName = cfg.get ("response", ContextConstants.RESPONSE.toString());
+        destination = cfg.get ("destination", ContextConstants.DESTINATION.toString());
+        continuations = cfg.getBoolean("continuations", true);
+        ignoreUnreachable = cfg.getBoolean("ignore-host-unreachable", false);
+        checkConnected = cfg.getBoolean("check-connected", checkConnected);
         try 
         {
             headerStrategy = HeaderStrategy.valueOf(

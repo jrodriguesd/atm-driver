@@ -21,27 +21,39 @@
  */
 package org.jpos.atmc.ndc.Customizarion;
 
+import org.jpos.atmc.hsm.HsmFactory;
+import org.jpos.atmc.hsm.HsmThales;
+import org.jpos.atmc.hsm.HsmType;
 import org.jpos.atmc.model.ATM;
 import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 
-public class GetCommunicationsKeyChange implements GetSection 
+public class GetPinKeyChange implements GetSection 
 {
 	private String lastNumberSend = "000";
 
 	@Override
 	public String  getNextCustomizationMsg(ATM atm, String configId, String lastNumber) 
 	{
-		String Clearkey  = atm.getMasterKey();
-		String EncKey    = Crypto.encypt( atm.getCommunicationsKey(), Clearkey);
-		String decEncKey = Util.hex2dec(EncKey);
+		// String Clearkey  = atm.getMasterKey();
+		// String EncKey    = Crypto.encypt( atm.getPinKey(), Clearkey);
+		String newPinKey = "U23F6C66EF9134D69638EC04F87CD2C9A";
 		String msgOut;
+
+		String newKey = HsmFactory.getInstance(HsmType.getCurrent()).getTPKUnderTMK(atm.getMasterKey(), newPinKey);
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " newKey " + newKey );
+		String decEncKey = null;
+		if (newKey != null)
+			decEncKey = Util.hex2dec(newKey);
+		else
+			return null;
 
 		StringBuilder sb = new StringBuilder();
 
 		/**********************************************************/
 		/* 42 Extended Encryption Key Change (Communications Key) */
+		/* Used to PIN Encryption                                 */
 		/**********************************************************/
 		sb.append("3 42");
 
