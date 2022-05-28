@@ -22,11 +22,9 @@
 package org.jpos.atmc.ndc.Customizarion;
 
 import org.jpos.atmc.hsm.HsmFactory;
-import org.jpos.atmc.hsm.HsmThales;
 import org.jpos.atmc.hsm.HsmType;
 import org.jpos.atmc.hsm.KeyType;
 import org.jpos.atmc.model.ATM;
-import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
 import org.jpos.transaction.Context;
@@ -44,10 +42,10 @@ public class GetMACKeyChange implements GetSection
 		String newMacKey = "U2C4EE0409D76A2D2139802D4C15B9FF0";
 		String msgOut;
 
-		String generatedMasterKey = HsmFactory.getInstance(HsmType.getCurrent()).generateKey(KeyType.TAK);
-		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " generatedMasterKey " + generatedMasterKey );
-        if (generatedMasterKey != null)
-        	newMacKey = generatedMasterKey;
+		String generatedMacKey = HsmFactory.getInstance(HsmType.getCurrent()).generateKey(KeyType.TAK);
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " generatedMacKey " + generatedMacKey );
+        if (generatedMacKey != null)
+        	newMacKey = generatedMacKey;
 
 		String newKey = HsmFactory.getInstance(HsmType.getCurrent()).getTAKUnderTMK(atm.getMasterKey(), newMacKey);
 		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " newKey " + newKey );

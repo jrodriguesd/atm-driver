@@ -22,14 +22,11 @@
 package org.jpos.atmc.ndc.Customizarion;
 
 import org.jpos.atmc.hsm.HsmFactory;
-import org.jpos.atmc.hsm.HsmThales;
 import org.jpos.atmc.hsm.HsmType;
 import org.jpos.atmc.hsm.KeyType;
 import org.jpos.atmc.model.ATM;
-import org.jpos.atmc.util.Crypto;
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
-import org.jpos.ee.DB;
 import org.jpos.transaction.Context;
 
 public class GetMasterKeyChange implements GetSection 
@@ -50,8 +47,8 @@ public class GetMasterKeyChange implements GetSection
         if (generatedMasterKey != null)
         	newMasterKey = generatedMasterKey;
 
-		String newKey = HsmFactory.getInstance(HsmType.getCurrent()).getTMKUnderTMK(atm.getMasterKey(), newMasterKey);
-		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " newKey " + newKey );
+        String newKey = HsmFactory.getInstance(HsmType.getCurrent()).getTMKUnderTMK(atm.getMasterKey(), newMasterKey);
+        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " newKey " + newKey );
 		String decEncKey = null;
 		if (newKey != null)
 			decEncKey = Util.hex2dec(newKey);

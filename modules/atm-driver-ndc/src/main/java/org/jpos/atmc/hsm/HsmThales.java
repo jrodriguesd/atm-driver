@@ -2,7 +2,6 @@ package org.jpos.atmc.hsm;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.jpos.atmc.util.Log;
 import org.jpos.atmc.util.Util;
@@ -17,7 +16,7 @@ import org.jpos.iso.MUX;
 import org.jpos.util.FSDMsg;
 import org.jpos.util.NameRegistrar;
 
-public class HsmThales implements HSM    // , ISOResponseListener  
+public class HsmThales implements HSM  
 {
     private Sequencer seq = new VolatileSequencer();
     private Map<KeyType,String> thalesKeyTypesMap = new HashMap<KeyType, String>();
@@ -28,7 +27,6 @@ public class HsmThales implements HSM    // , ISOResponseListener
     	thalesKeyTypesMap.put(KeyType.ZMK,"000");
     	thalesKeyTypesMap.put(KeyType.ZPK,"001");
     }
-
 
 	private String generateFld0(int index)
 	{
@@ -58,14 +56,7 @@ public class HsmThales implements HSM    // , ISOResponseListener
         MUX mux =  NameRegistrar.getIfExists (muxName);
         if (mux != null)
         {
-        	UUID ruuid =  UUID.randomUUID();
-    		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " ruuid " + ruuid.toString() );
-    		String fldZero = ruuid.toString().substring(9, 13);
-    		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " fldZero " + fldZero);
-
-        	// String fldZero = ISOUtil.zeropad(seq.get("hsmSeq", 1), 4);
-    		// fsdHsmMsgOut.set("0", fldZero);
-    		fsdHsmMsgOut.set("0", generateFld0( seq.get("hsmSeq", 1) )); // "BEBE");
+    		fsdHsmMsgOut.set("0", generateFld0( seq.get("hsmSeq", 1) ));
     		fsdHsmMsgOut.dump(Log.out, "");
     		
     		FSDISOMsg isoHsmMsgOut = new FSDISOMsg(fsdHsmMsgOut);
@@ -74,7 +65,6 @@ public class HsmThales implements HSM    // , ISOResponseListener
 
     		try {
 				isoHsmMsgIn = (FSDISOMsg) mux.request(isoHsmMsgOut, 18000L);
-				// mux.request(isoHsmMsgOut, 18000L, this, null);
 			} catch (ISOException e) {
 				e.printStackTrace(Log.out);
 			}
@@ -224,12 +214,12 @@ public class HsmThales implements HSM    // , ISOResponseListener
     		}
 			
 		}
-		
-		
+
 		return null;
 	}
 
-	//        @Override
+
+	//     @Override
 	public void responseReceived(ISOMsg resp, Object handBack) {
 		FSDISOMsg isoHsmMsgIn = (FSDISOMsg) resp;
 		

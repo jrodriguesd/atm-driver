@@ -44,12 +44,12 @@ public class GetPinKeyChange implements GetSection
 		String newPinKey = "U23F6C66EF9134D69638EC04F87CD2C9A";
 		String msgOut;
 
-		String generatedMasterKey = HsmFactory.getInstance(HsmType.getCurrent()).generateKey(KeyType.TPK);
-		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " generatedMasterKey " + generatedMasterKey );
-        if (generatedMasterKey != null)
-        	newPinKey = generatedMasterKey;
+		String generatedPinKey = HsmFactory.getInstance(HsmType.getCurrent()).generateKey(KeyType.TPK);
+		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " generatedPinKey " + generatedPinKey );
+        if (generatedPinKey != null)
+        	newPinKey = generatedPinKey;
 
-		String newKey = HsmFactory.getInstance(HsmType.getCurrent()).getTPKUnderTMK(atm.getMasterKey(), newPinKey);
+        String newKey = HsmFactory.getInstance(HsmType.getCurrent()).getTPKUnderTMK(atm.getMasterKey(), newPinKey);
 		Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " newKey " + newKey );
 		String decEncKey = null;
 		if (newKey != null)
