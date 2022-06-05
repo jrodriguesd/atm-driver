@@ -21,16 +21,19 @@
  */
 package org.jpos.atmc.ndc.Customizarion;
 
+import org.jpos.atmc.util.Log;
+import org.jpos.atmc.util.Util;
+
 public enum NDCCustomizarionSections 
 {
 	LUNO("LUNO"), 
 	SCREENS("SCREENS"), 
 	STATES("STATES"), 
 	FITS("FITS"),
+	CONFIGID("CONFIGID"),
 	MASTER_KEY_CHANGE("PIN_KEY_CHANGE"),
 	PIN_KEY_CHANGE("PIN_KEY_CHANGE"),
 	MAC_KEY_CHANGE("MAC_KEY_CHANGE"),
-	CONFIGID("CONFIGID"),
     CURRENCY_CASSETTE_MAPPING("CURRENCY_CASSETTE_MAPPING"), 
     GET_SUPPLY_COUNTERS("GET_SUPPLY_COUNTERS"), 
 	GO_IN_SERVICE("GO_IN_SERVICE"),
@@ -50,9 +53,12 @@ public enum NDCCustomizarionSections
 		return description;
 	}
 
-    public static NDCCustomizarionSections getFirst()
+    public static NDCCustomizarionSections getFirst(boolean configChange)
     {
-    	return sections[0];
+    	if (configChange)
+    	    return sections[0];
+    	else
+    		return MASTER_KEY_CHANGE;
     }
 	
     public static NDCCustomizarionSections next(NDCCustomizarionSections acs)

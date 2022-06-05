@@ -148,7 +148,12 @@ public class SwichByMSgClass implements GroupSelector, Configurable
     private void createATMLog(Context ctx, NDCFSDMsg msgIn) throws Exception
     {
     	ATM atm = ctx.get ("atm");
-    	TrnDefinition td = DB.exec(db -> new TrnDefinitionManager(db).getTrnDefinition(atm.getConfigId(), msgIn.get("operation-code-data")));
+    	TrnDefinition td = null;
+    	String operationCodeData = msgIn.get("operation-code-data");
+
+    	if (operationCodeData != null)
+    	    td = DB.exec(db -> new TrnDefinitionManager(db).getTrnDefinition(atm.getConfigId(), operationCodeData));
+    	
     	if (td != null) ctx.put("transactiondefinition", td, remote);
 
     	ATMLog atmLog = new ATMLog();
@@ -169,7 +174,8 @@ public class SwichByMSgClass implements GroupSelector, Configurable
             	atmLog.setCurrencyCode(td.getCurrencyCode());
             	
             	String amount =  msgIn.get("amount-entered");
-    			Currency currency = DB.exec(db -> new CurrencyManager(db).findByNumber( td.getCurrencyCode() ));
+            	String currencyCode = td.getCurrencyCode();
+    			Currency currency = DB.exec(db -> new CurrencyManager(db).findByNumber( currencyCode ));
             	if (amount != null) atmLog.setAmount( new BigDecimal(amount).divide( new BigDecimal( currency.getExponent() ) ) );
         	}
         }

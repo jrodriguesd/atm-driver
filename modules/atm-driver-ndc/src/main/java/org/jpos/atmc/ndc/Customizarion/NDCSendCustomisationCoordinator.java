@@ -51,11 +51,11 @@ public class NDCSendCustomisationCoordinator
         customizarionCoordinator.source = source;
         customizarionCoordinator.msgIn = msgIn;
         customizarionCoordinator.atm = atm;
-        customizarionCoordinator.customizarionSection = NDCCustomizarionSections.getFirst();
+        // customizarionCoordinator.customizarionSection = NDCCustomizarionSections.getFirst(true);
 
-    	GetSection customization = GetSectionFactory.getInstance( customizarionCoordinator.customizarionSection );
+    	// GetSection customization = GetSectionFactory.getInstance( customizarionCoordinator.customizarionSection );
     	String configId = atm.getConfigId();
-        customizarionCoordinator.lastKey = customization.getLastKey(atm, configId);
+        // customizarionCoordinator.lastKey = customization.getLastKey(atm, configId);
         customizarionCoordinator.lastKeySend = "";
         
 

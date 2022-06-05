@@ -92,15 +92,19 @@ public class ProcessUnsolicitedStatus implements AbortParticipant, Configurable
 		        NDCSendCustomisationCoordinator.init( source, msgIn, atm);
 		        NDCSendCustomisationCoordinator acc = NDCSendCustomisationCoordinator.get(baseChannel.getName());
 
-		        if ( (atm != null) && ( ! atm.getConfigId().equals(configID) ) )
-		        {
-			        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId !=");
-		        	acc.setCustomizarionSection( NDCCustomizarionSections.getFirst() );
-		        }
-		        else
-		        {
-		        	acc.setCustomizarionSection( NDCCustomizarionSections.CURRENCY_CASSETTE_MAPPING );
-		        }
+		        boolean configChange =  (! atm.getConfigId().equals(configID) );
+	  	        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configChange " + configChange);
+		        if (atm != null) acc.setCustomizarionSection( NDCCustomizarionSections.getFirst(configChange) );
+		        
+//		        if ( (atm != null) && ( ! atm.getConfigId().equals(configID) ) )
+//		        {
+//			        Log.staticPrintln("JFRD " + Util.fileName() + " Line " + Util.lineNumber() + " " + Util.methodName() + " configId !=");
+//		        	acc.setCustomizarionSection( NDCCustomizarionSections.getFirst() );
+//		        }
+//		        else
+//		        {
+//		        	acc.setCustomizarionSection( NDCCustomizarionSections.CURRENCY_CASSETTE_MAPPING );
+//		        }
 
 				try
 				{
